@@ -1,6 +1,6 @@
 """Unit tests for the source registry and canonical observation contract."""
 
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 
 import pytest
 
