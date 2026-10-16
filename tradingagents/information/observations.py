@@ -7,10 +7,11 @@ event timestamp alone never proves historical availability.
 """
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import datetime
 from enum import StrEnum
-from typing import Mapping
+from types import MappingProxyType
 
 
 class ObservationQuality(StrEnum):
@@ -32,6 +33,21 @@ def _require_aware(name: str, value: datetime | None) -> None:
         raise ValueError(f"{name} must be timezone-aware")
 
 
+def _freeze(value: object) -> object:
+    """Copy JSON-like payload containers into recursively immutable forms."""
+    if isinstance(value, Mapping):
+        if any(not isinstance(key, str) for key in value):
+            raise TypeError("payload mapping keys must be strings")
+        return MappingProxyType({key: _freeze(item) for key, item in value.items()})
+    if isinstance(value, (list, tuple)):
+        return tuple(_freeze(item) for item in value)
+    if isinstance(value, (set, frozenset)):
+        return frozenset(_freeze(item) for item in value)
+    if value is None or isinstance(value, (str, int, float, bool, bytes, datetime)):
+        return value
+    raise TypeError(f"unsupported mutable or non-value payload type: {type(value).__name__}")
+
+
 @dataclass(frozen=True, slots=True)
 class Transformation:
     """A reproducible transformation applied to an observation payload."""
@@ -43,7 +59,17 @@ class Transformation:
 
 @dataclass(frozen=True, slots=True)
 class Observation:
-    """Small stable envelope; domain-specific values live in the payload."""
+    """Immutable observation envelope with explicit temporal and revision semantics.
+
+    ``event_time`` is when a reported event/measurement occurred. ``publication_time``
+    is when its source published it; ``first_seen_time`` is when this system first
+    observed it; and ``retrieved_at`` is when this copy was fetched. ``effective_time``
+    marks when the value applies in the modeled world. PIT availability is based on
+    publication and system-observed times, never event/effective time alone.
+
+    A correction or restatement is a new observation that names the prior version in
+    ``supersedes_observation_id``. It does not erase the earlier value from history.
+    """
 
     observation_id: str
     source_id: str
@@ -60,13 +86,24 @@ class Observation:
     quality: ObservationQuality = ObservationQuality.UNKNOWN
     availability: ObservationAvailability = ObservationAvailability.AVAILABLE
     quality_notes: tuple[str, ...] = ()
+    supersedes_observation_id: str | None = None
 
     def __post_init__(self) -> None:
         for name in ("observation_id", "source_id", "subject", "metric"):
             if not getattr(self, name).strip():
                 raise ValueError(f"{name} must not be empty")
+        if not isinstance(self.payload, Mapping):
+            raise TypeError("payload must be a mapping")
         if not self.payload:
             raise ValueError("payload must contain at least one domain value")
+        object.__setattr__(self, "payload", _freeze(self.payload))
+        object.__setattr__(self, "transformations", tuple(self.transformations))
+        object.__setattr__(self, "quality_notes", tuple(self.quality_notes))
+        if self.supersedes_observation_id is not None:
+            if not self.supersedes_observation_id.strip():
+                raise ValueError("supersedes_observation_id must not be empty")
+            if self.supersedes_observation_id == self.observation_id:
+                raise ValueError("an observation cannot supersede itself")
         for name in ("event_time", "first_seen_time", "retrieved_at", "publication_time", "effective_time"):
             _require_aware(name, getattr(self, name))
         if not isinstance(self.quality, ObservationQuality):
@@ -76,10 +113,11 @@ class Observation:
 
     @property
     def available_at(self) -> datetime:
-        """Earliest defensible time this system could use the observation.
+        """Latest known release/acquisition bound for point-in-time eligibility.
 
-        Retrieval and first-seen timestamps bound availability from below.
-        A known publication timestamp can move the bound later, never earlier.
+        This conservative bound is max(first_seen_time, retrieved_at,
+        publication_time when known). Event and effective times describe the
+        world and do not establish when this system knew the value.
         """
         candidates = [self.first_seen_time, self.retrieved_at]
         if self.publication_time is not None:
@@ -97,3 +135,7 @@ class Observation:
         if self.availability is not ObservationAvailability.AVAILABLE:
             return False
         return self.available_at <= decision_time
+
+    def supersedes(self, prior: Observation) -> bool:
+        """Whether this version explicitly replaces ``prior`` by ID."""
+        return self.supersedes_observation_id == prior.observation_id
