@@ -8,9 +8,13 @@ import pytest
 
 from tradingagents.information import (
     BINANCE_SPOT_SOURCE,
+    BINANCE_USDM_CONTRACT_STATUS_SOURCE,
     BINANCE_USDM_FUNDING_SOURCE,
+    BINANCE_USDM_LIQUIDATION_STREAM_SOURCE,
+    BINANCE_USDM_MARK_PRICE_SOURCE,
     BINANCE_USDM_OPEN_INTEREST_SOURCE,
     BLS_RELEASE_CALENDAR_SOURCE,
+    FRED_SERIES,
     BTCSpotMarketState,
     InformationView,
     MarketDataBatch,
@@ -20,6 +24,7 @@ from tradingagents.information import (
     SQLiteInformationStore,
     build_btc_market_state,
     build_btc_spot_market_state,
+    parse_fred_graph_csv,
 )
 
 BASE = datetime(2026, 1, 1, tzinfo=UTC)
@@ -237,6 +242,73 @@ def test_combined_state_replays_funding_by_availability_and_open_interest_by_exc
     )
     assert after_ingestion.funding.funding_rate == Decimal("-0.0001")
     assert after_ingestion.funding.freshness == "stale"
+
+
+def test_combined_state_derives_basis_spot_divergence_status_and_liquidation_evidence():
+    decision_time = BASE + timedelta(minutes=5, seconds=1)
+    spot_observation = candle(4, "100.00", decision_time - timedelta(seconds=1))
+    mark_time = decision_time - timedelta(milliseconds=500)
+    mark = Observation(
+        observation_id="mark-now",
+        source_id=BINANCE_USDM_MARK_PRICE_SOURCE.source_id,
+        subject="BTCUSDT",
+        metric="derivatives.mark_price.usdm",
+        payload={"mark_price": "101", "index_price": "100"},
+        event_time=mark_time,
+        first_seen_time=decision_time - timedelta(milliseconds=250),
+        retrieved_at=decision_time - timedelta(milliseconds=250),
+    )
+    status = Observation(
+        observation_id="contract-status",
+        source_id=BINANCE_USDM_CONTRACT_STATUS_SOURCE.source_id,
+        subject="BTCUSDT",
+        metric="derivatives.contract_status.usdm",
+        payload={"contract_status": "TRADING"},
+        event_time=mark_time,
+        first_seen_time=decision_time - timedelta(milliseconds=250),
+        retrieved_at=decision_time - timedelta(milliseconds=250),
+    )
+    liquidation = Observation(
+        observation_id="liquidation-snapshot",
+        source_id=BINANCE_USDM_LIQUIDATION_STREAM_SOURCE.source_id,
+        subject="BTCUSDT",
+        metric="derivatives.liquidation_snapshot.usdm",
+        payload={"side": "SELL", "snapshot_semantics": "largest observed"},
+        event_time=mark_time - timedelta(seconds=2),
+        first_seen_time=decision_time - timedelta(seconds=1),
+        retrieved_at=decision_time - timedelta(seconds=1),
+    )
+
+    state = build_btc_market_state(
+        InformationView(decision_time, (spot_observation, mark, status, liquidation), ())
+    )
+
+    assert state.perpetual.basis_pct == Decimal(1)
+    assert state.perpetual.spot_perpetual_divergence_pct == Decimal(1)
+    assert state.perpetual.contract_status == "TRADING"
+    assert state.perpetual.mark_freshness == "fresh"
+    assert state.liquidation_snapshot_count_24h == 1
+    assert state.latest_liquidation_snapshot_evidence_observation_id == "liquidation-snapshot"
+
+
+def test_combined_state_includes_only_point_in_time_public_macro_series():
+    retrieved_at = BASE + timedelta(days=10)
+    spec = next(item for item in FRED_SERIES if item.series_id == "DCOILWTICO")
+    batch = parse_fred_graph_csv(
+        "observation_date,DCOILWTICO\n2026-01-08,90.25\n",
+        spec=spec,
+        retrieved_at=retrieved_at,
+    )
+
+    before = build_btc_market_state(
+        InformationView(retrieved_at - timedelta(microseconds=1), batch.observations, ())
+    )
+    after = build_btc_market_state(InformationView(retrieved_at, batch.observations, ()))
+    wti = next(item for item in after.macro.series if item.series_id == "DCOILWTICO")
+
+    assert all(item.value is None for item in before.macro.series)
+    assert wti.value == Decimal("90.25")
+    assert wti.evidence_observation_id == batch.observations[0].observation_id
 
 
 def test_sqlite_replay_rebuilds_combined_btc_state_at_the_availability_cutoff(tmp_path):

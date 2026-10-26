@@ -7,6 +7,8 @@ import pytest
 from tradingagents.information import (
     BLS_RELEASE_CALENDAR_SOURCE,
     FOMC_CALENDAR_SOURCE,
+    BEAReleaseCalendarCollector,
+    BLSReleaseCalendarCollector,
     FOMCCalendarCollector,
     InformationView,
     MarketDataBatch,
@@ -14,6 +16,8 @@ from tradingagents.information import (
     ScheduledMacroEvent,
     SQLiteInformationStore,
     build_btc_market_state,
+    parse_bea_release_calendar,
+    parse_bls_release_calendar,
     parse_fomc_calendar,
     upcoming_macro_events,
 )
@@ -37,6 +41,15 @@ FOMC_HTML = """<!doctype html>
   <div class="fomc-meeting__date">26-27</div>
 </div>
 <p>Note: A two-day meeting is scheduled for January 25-26, 2028. Each meeting date is tentative until confirmed at the meeting immediately preceding it.</p>
+"""
+
+BLS_SCHEDULE_HTML = """<!doctype html>
+<table>
+  <tr><th>Date</th><th>Time</th><th>Release</th></tr>
+  <tr><td>Friday, November 6, 2026</td><td>08:30 AM</td><td>Employment Situation for October 2026</td></tr>
+  <tr><td>Tuesday, November 10, 2026</td><td>08:30 AM</td><td>Consumer Price Index for October 2026</td></tr>
+  <tr><td>Wednesday, November 11, 2026</td><td></td><td>Veterans Day</td></tr>
+</table>
 """
 
 
@@ -74,6 +87,92 @@ def test_future_event_is_visible_only_after_local_first_seen_time():
         ).upcoming_macro_events
         == ()
     )
+
+
+def test_bls_schedule_parser_normalizes_release_times_and_keeps_local_availability():
+    retrieved_at = datetime(2026, 10, 26, 12, tzinfo=UTC)
+    batch = parse_bls_release_calendar(
+        BLS_SCHEDULE_HTML,
+        retrieved_at=retrieved_at,
+        year=2026,
+    )
+
+    assert len(batch.observations) == 2
+    cpi = next(
+        item for item in batch.observations if "Consumer Price Index" in item.payload["title"]
+    )
+    assert cpi.payload["event_type"] == "bls_release"
+    assert cpi.payload["time_precision"] == "instant"
+    assert cpi.event_time == datetime(2026, 11, 10, 13, 30, tzinfo=UTC)
+    assert cpi.available_at == retrieved_at
+    assert cpi.publication_time is None
+
+
+def test_bls_schedule_reschedule_preserves_release_identity_in_replay(tmp_path):
+    original_html = BLS_SCHEDULE_HTML.replace("November 10, 2026", "November 12, 2026")
+    later_html = BLS_SCHEDULE_HTML
+    first_seen = datetime(2026, 10, 26, 12, tzinfo=UTC)
+    revised_at = first_seen + timedelta(days=1)
+    original = parse_bls_release_calendar(original_html, retrieved_at=first_seen, year=2026)
+    revised = parse_bls_release_calendar(later_html, retrieved_at=revised_at, year=2026)
+    original_cpi = next(
+        item for item in original.observations if "Consumer Price Index" in item.payload["title"]
+    )
+    revised_cpi = next(
+        item for item in revised.observations if "Consumer Price Index" in item.payload["title"]
+    )
+    assert original_cpi.observation_id != revised_cpi.observation_id
+    assert original_cpi.subject == revised_cpi.subject
+
+    store = SQLiteInformationStore(tmp_path / "bls.sqlite3")
+    store.append(original)
+    store.append(revised)
+    before_revision = store.view_at(revised_at - timedelta(seconds=1))
+    after_revision = store.view_at(revised_at)
+    assert (
+        next(
+            item
+            for item in upcoming_macro_events(before_revision)
+            if item.subject == original_cpi.subject
+        ).payload["scheduled_at"]
+        == original_cpi.payload["scheduled_at"]
+    )
+    assert (
+        next(
+            item
+            for item in upcoming_macro_events(after_revision)
+            if item.subject == revised_cpi.subject
+        ).payload["scheduled_at"]
+        == revised_cpi.payload["scheduled_at"]
+    )
+
+
+def test_bls_collector_uses_year_schedule_page_and_fixed_clock():
+    class Response:
+        text = BLS_SCHEDULE_HTML
+
+        def raise_for_status(self):
+            return None
+
+    class Session:
+        calls = []
+
+        def get(self, url, *, timeout):
+            self.calls.append((url, timeout))
+            return Response()
+
+    session = Session()
+    retrieved_at = datetime(2026, 10, 26, 12, tzinfo=UTC)
+    collector = BLSReleaseCalendarCollector(
+        session=session,
+        clock=lambda: retrieved_at,
+        year=2026,
+    )
+    batch = collector.collect()
+
+    assert len(batch.observations) == 2
+    assert session.calls[0][0] == "https://www.bls.gov/schedule/2026/"
+    assert all(item.available_at == retrieved_at for item in batch.observations)
 
 
 def test_scheduled_event_stops_being_upcoming_at_event_time():
@@ -265,3 +364,56 @@ def test_store_preserves_simultaneous_events_and_replays_reschedules_and_cancell
     after_update = upcoming_macro_events(reopened.view_at(update_time))
     assert after_update == (rescheduled,)
     assert after_update[0].payload["scheduled_at"] == moved_time.isoformat()
+
+
+def test_bea_schedule_parser_normalizes_eastern_times_and_skips_untimed_entries():
+    html = """<table>
+      <tr><th>Release</th><th>Type</th><th>Title</th></tr>
+      <tr><td>October 29 8:30 AM</td><td>News</td><td>GDP (Advance Estimate), 3rd Quarter 2026</td></tr>
+      <tr><td>November 4 8:30 AM</td><td>News</td><td>U.S. International Trade, September 2026</td></tr>
+      <tr><td>2026</td><td>News</td><td>Outdoor Recreation Economic Statistics, To Be Announced</td></tr>
+    </table>"""
+    retrieved_at = datetime(2026, 10, 26, 12, tzinfo=UTC)
+
+    batch = parse_bea_release_calendar(
+        html,
+        retrieved_at=retrieved_at,
+        year=2026,
+        current_year=2026,
+    )
+
+    assert len(batch.observations) == 2
+    first, second = batch.observations
+    assert first.payload["event_type"] == "bea_release"
+    assert first.event_time == datetime(2026, 10, 29, 12, 30, tzinfo=UTC)
+    assert second.event_time == datetime(2026, 11, 4, 13, 30, tzinfo=UTC)
+    assert first.available_at == retrieved_at
+    assert first.publication_time is None
+
+
+def test_bea_collector_selects_current_or_next_year_public_schedule():
+    class Response:
+        text = """<table><tr><td>October 29 8:30 AM</td><td>News</td><td>GDP Release</td></tr></table>"""
+
+        def raise_for_status(self):
+            return None
+
+    class Session:
+        calls = []
+
+        def get(self, url, *, timeout):
+            self.calls.append((url, timeout))
+            return Response()
+
+    retrieved_at = datetime(2026, 10, 26, 12, tzinfo=UTC)
+    session = Session()
+    collector = BEAReleaseCalendarCollector(
+        session=session,
+        clock=lambda: retrieved_at,
+        year=2026,
+    )
+
+    batch = collector.collect()
+
+    assert len(batch.observations) == 1
+    assert session.calls[0][0] == "https://www.bea.gov/news/schedule/full"

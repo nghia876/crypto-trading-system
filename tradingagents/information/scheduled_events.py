@@ -69,6 +69,70 @@ FOMC_CALENDAR_SOURCE = Source(
     ),
 )
 
+BLS_RELEASE_CALENDAR_BASE_URL = "https://www.bls.gov/schedule"
+
+
+def bls_release_calendar_source(year: int) -> Source:
+    """Return source metadata for the official year-specific BLS release calendar."""
+    if year < 2000 or year > 2100:
+        raise ValueError("year must be between 2000 and 2100")
+    return Source(
+        source_id=f"macro.us.bls.release_calendar.{year}",
+        source_type="government_calendar",
+        provider="U.S. Bureau of Labor Statistics",
+        endpoint=f"{BLS_RELEASE_CALENDAR_BASE_URL}/{year}/",
+        collection_method="Public annual release schedule HTML; caller-driven retrieval",
+        asset_scope=("BTC",),
+        metric_scope=("scheduled_macro_event",),
+        timezone="America/New_York",
+        historical_depth="Current annual release schedule; historical schedule vintages not established",
+        publication_semantics=(
+            "Calendar lists scheduled dates and Eastern Time; per-entry publication history is unavailable, "
+            "so local first-seen/retrieval time bounds replay availability"
+        ),
+        revision_behavior=(
+            "Schedule versions are append-only; stable release identity permits latest-known replay"
+        ),
+        authentication_required=False,
+        reliability="UNKNOWN — one-time read does not measure ongoing availability",
+        limitations=(
+            "BLS national releases only",
+            "The calendar may be revised after initial publication",
+            "A local retrieval does not prove when a date first became public",
+        ),
+    )
+
+
+def bea_release_calendar_source(year: int, *, current_year: int) -> Source:
+    """Return metadata for the public current-year or next-year BEA schedule."""
+    if year not in {current_year, current_year + 1}:
+        raise ValueError("BEA schedule supports the current year and following year")
+    path = "full" if year == current_year else "next-year"
+    return Source(
+        source_id=f"macro.us.bea.release_calendar.{year}",
+        source_type="government_calendar",
+        provider="U.S. Bureau of Economic Analysis",
+        endpoint=f"https://www.bea.gov/news/schedule/{path}",
+        collection_method="Public release schedule HTML; caller-driven retrieval",
+        asset_scope=("BTC",),
+        metric_scope=("scheduled_macro_event",),
+        timezone="America/New_York",
+        historical_depth="Current and next-year schedule; schedule vintages not established",
+        publication_semantics=(
+            "Schedule provides release date/time; local first-seen/retrieval time bounds replay availability"
+        ),
+        revision_behavior=(
+            "Schedule versions are append-only; stable release identity permits latest-known replay"
+        ),
+        authentication_required=False,
+        reliability="UNKNOWN — live collector has not been measured by this project",
+        limitations=(
+            "BEA releases only",
+            "Entries marked To Be Announced have no usable time and are skipped",
+            "Local retrieval does not prove when a schedule entry first became public",
+        ),
+    )
+
 
 @dataclass(frozen=True, slots=True)
 class ScheduledMacroEvent:
@@ -436,3 +500,263 @@ class FOMCCalendarCollector:
         if retrieved_at.tzinfo is None or retrieved_at.utcoffset() is None:
             raise ValueError("clock must return a timezone-aware datetime")
         return parse_fomc_calendar(response.text, retrieved_at=retrieved_at)
+
+
+class _BlsScheduleParser(HTMLParser):
+    """Read date/time/title cells from the BLS annual schedule list view."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.in_row = False
+        self.in_cell = False
+        self.cell_text: list[str] = []
+        self.cells: list[str] = []
+        self.rows: list[tuple[str, str, str]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == "tr" and not self.in_row:
+            self.in_row = True
+            self.cells = []
+        elif self.in_row and tag in {"th", "td"} and not self.in_cell:
+            self.in_cell = True
+            self.cell_text = []
+
+    def handle_endtag(self, tag: str) -> None:
+        if self.in_row and self.in_cell and tag in {"th", "td"}:
+            self.cells.append(" ".join(" ".join(self.cell_text).split()))
+            self.in_cell = False
+        elif self.in_row and tag == "tr":
+            self.in_row = False
+            if len(self.cells) >= 3:
+                self.rows.append((self.cells[0], self.cells[1], self.cells[2]))
+
+    def handle_data(self, data: str) -> None:
+        if self.in_cell:
+            self.cell_text.append(data)
+
+
+def parse_bls_release_calendar(html: str, *, retrieved_at: datetime, year: int) -> MarketDataBatch:
+    """Normalize upcoming BLS release rows without backdating their availability.
+
+    The annual calendar gives Eastern-time publication schedules. It does not
+    publish a per-row first-publication timestamp, so each event becomes known
+    only at the local retrieval time recorded here.
+    """
+    if retrieved_at.tzinfo is None or retrieved_at.utcoffset() is None:
+        raise ValueError("retrieved_at must be timezone-aware")
+    source = bls_release_calendar_source(year)
+    retrieved_at = retrieved_at.astimezone(UTC)
+    parser = _BlsScheduleParser()
+    parser.feed(html)
+    timezone = ZoneInfo("America/New_York")
+    observations = []
+    for date_text, time_text, title in parser.rows:
+        if date_text.strip().lower() == "date" or not time_text.strip() or not title.strip():
+            continue
+        normalized_date = " ".join(date_text.split())
+        normalized_time = " ".join(time_text.split())
+        try:
+            local_date = datetime.strptime(normalized_date, "%A, %B %d, %Y").date()
+            parsed_time = datetime.strptime(normalized_time, "%I:%M %p").time()
+        except ValueError:
+            # Holiday rows have no scheduled release time. Unknown row formats
+            # are skipped rather than guessed or assigned a time.
+            continue
+        if local_date.year != year:
+            raise MarketDataCollectionError("BLS calendar row is outside requested year")
+        scheduled_at = datetime.combine(local_date, parsed_time, timezone)
+        if scheduled_at.astimezone(UTC) <= retrieved_at:
+            continue
+        stable_material = " ".join(title.casefold().split())
+        stable_suffix = hashlib.sha256(stable_material.encode()).hexdigest()[:20]
+        event = ScheduledMacroEvent(
+            event_id=f"bls:{year}:{stable_suffix}",
+            title=" ".join(title.split()),
+            event_type="bls_release",
+            scheduled_at=scheduled_at,
+            source=source,
+            raw_reference=source.endpoint,
+            time_precision="instant",
+        )
+        observations.append(event.to_observation(retrieved_at=retrieved_at))
+    if not observations:
+        raise MarketDataCollectionError(
+            "BLS release calendar contained no recognizable upcoming releases"
+        )
+    observations.sort(key=lambda item: (item.event_time, item.observation_id))
+    return MarketDataBatch(tuple(observations), (), retrieved_at)
+
+
+class BLSReleaseCalendarCollector:
+    """Caller-driven reader for the public BLS annual release calendar."""
+
+    def __init__(
+        self,
+        *,
+        session: requests.Session | None = None,
+        clock=None,
+        year: int | None = None,
+    ) -> None:
+        self._session = session or requests.Session()
+        self._clock = clock or (lambda: datetime.now(UTC))
+        self._year = year
+
+    def collect(self) -> MarketDataBatch:
+        retrieved_at = self._clock()
+        if retrieved_at.tzinfo is None or retrieved_at.utcoffset() is None:
+            raise ValueError("clock must return a timezone-aware datetime")
+        year = self._year or retrieved_at.year
+        source = bls_release_calendar_source(year)
+        try:
+            response = self._session.get(source.endpoint, timeout=(3.05, 10.0))
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            raise MarketDataCollectionError(f"BLS calendar request failed: {exc}") from exc
+        return parse_bls_release_calendar(response.text, retrieved_at=retrieved_at, year=year)
+
+
+class _BeaScheduleParser(HTMLParser):
+    """Collect table rows from the public BEA release schedule page."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.in_row = False
+        self.in_cell = False
+        self.cell_text: list[str] = []
+        self.cells: list[str] = []
+        self.rows: list[tuple[str, ...]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == "tr" and not self.in_row:
+            self.in_row = True
+            self.cells = []
+        elif self.in_row and tag in {"th", "td"} and not self.in_cell:
+            self.in_cell = True
+            self.cell_text = []
+
+    def handle_endtag(self, tag: str) -> None:
+        if self.in_row and self.in_cell and tag in {"th", "td"}:
+            self.cells.append(" ".join(" ".join(self.cell_text).split()))
+            self.in_cell = False
+        elif self.in_row and tag == "tr":
+            self.in_row = False
+            if self.cells:
+                self.rows.append(tuple(self.cells))
+
+    def handle_data(self, data: str) -> None:
+        if self.in_cell:
+            self.cell_text.append(data)
+
+
+def parse_bea_release_calendar(
+    html: str,
+    *,
+    retrieved_at: datetime,
+    year: int,
+    current_year: int | None = None,
+) -> MarketDataBatch:
+    """Normalize future BEA schedule entries with retrieval-time availability."""
+    if retrieved_at.tzinfo is None or retrieved_at.utcoffset() is None:
+        raise ValueError("retrieved_at must be timezone-aware")
+    retrieved_at = retrieved_at.astimezone(UTC)
+    active_year = current_year or retrieved_at.year
+    source = bea_release_calendar_source(year, current_year=active_year)
+    parser = _BeaScheduleParser()
+    parser.feed(html)
+    timezone = ZoneInfo("America/New_York")
+    month_names = (
+        "January|February|March|April|May|June|July|August|September|October|November|December"
+    )
+    date_time_pattern = re.compile(
+        rf"(?P<month>{month_names})\s+(?P<day>\d{{1,2}})(?:,?\s+(?P<time>\d{{1,2}}:\d{{2}}\s*[AP]M))?",
+        re.IGNORECASE,
+    )
+    time_pattern = re.compile(r"\b\d{1,2}:\d{2}\s*[AP]M\b", re.IGNORECASE)
+    observations = []
+    for cells in parser.rows:
+        row_text = [" ".join(cell.split()) for cell in cells if cell.strip()]
+        if not row_text:
+            continue
+        date_match = date_time_pattern.search(row_text[0])
+        if date_match is None:
+            continue
+        time_text = date_match.group("time")
+        if time_text is None:
+            time_text = next(
+                (match.group(0) for cell in row_text[1:] if (match := time_pattern.search(cell))),
+                None,
+            )
+        if time_text is None:
+            continue
+        title = next(
+            (
+                cell
+                for cell in reversed(row_text[1:])
+                if cell.casefold() not in {"news", "data", "visual data", "article", "view"}
+                and not time_pattern.fullmatch(cell)
+            ),
+            None,
+        )
+        if title is None:
+            continue
+        try:
+            local_date = date(
+                year,
+                _FomcCalendarParser._MONTHS[date_match.group("month").title()],
+                int(date_match.group("day")),
+            )
+            parsed_time = datetime.strptime(" ".join(time_text.upper().split()), "%I:%M %p").time()
+        except (ValueError, KeyError) as exc:
+            raise MarketDataCollectionError(
+                "BEA calendar contains an invalid date or time"
+            ) from exc
+        scheduled_at = datetime.combine(local_date, parsed_time, timezone)
+        if scheduled_at.astimezone(UTC) <= retrieved_at:
+            continue
+        stable_material = " ".join(title.casefold().split())
+        stable_suffix = hashlib.sha256(stable_material.encode()).hexdigest()[:20]
+        event = ScheduledMacroEvent(
+            event_id=f"bea:{year}:{stable_suffix}",
+            title=title,
+            event_type="bea_release",
+            scheduled_at=scheduled_at,
+            source=source,
+            raw_reference=source.endpoint,
+            time_precision="instant",
+        )
+        observations.append(event.to_observation(retrieved_at=retrieved_at))
+    if not observations:
+        raise MarketDataCollectionError(
+            "BEA release calendar contained no recognizable upcoming releases"
+        )
+    observations.sort(key=lambda item: (item.event_time, item.observation_id))
+    return MarketDataBatch(tuple(observations), (), retrieved_at)
+
+
+class BEAReleaseCalendarCollector:
+    """Caller-driven reader for the public BEA release schedule."""
+
+    def __init__(
+        self, *, session: requests.Session | None = None, clock=None, year: int | None = None
+    ):
+        self._session = session or requests.Session()
+        self._clock = clock or (lambda: datetime.now(UTC))
+        self._year = year
+
+    def collect(self) -> MarketDataBatch:
+        retrieved_at = self._clock()
+        if retrieved_at.tzinfo is None or retrieved_at.utcoffset() is None:
+            raise ValueError("clock must return a timezone-aware datetime")
+        year = self._year or retrieved_at.year
+        source = bea_release_calendar_source(year, current_year=retrieved_at.year)
+        try:
+            response = self._session.get(source.endpoint, timeout=(3.05, 10.0))
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            raise MarketDataCollectionError(f"BEA calendar request failed: {exc}") from exc
+        return parse_bea_release_calendar(
+            response.text,
+            retrieved_at=retrieved_at,
+            year=year,
+            current_year=retrieved_at.year,
+        )

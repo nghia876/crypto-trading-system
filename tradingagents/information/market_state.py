@@ -8,6 +8,8 @@ from decimal import Decimal, InvalidOperation, localcontext
 from itertools import pairwise
 
 from tradingagents.information.binance_spot import BINANCE_SPOT_SOURCE
+from tradingagents.information.binance_usdm_streams import BINANCE_USDM_LIQUIDATION_STREAM_SOURCE
+from tradingagents.information.macro_series import MacroState, build_macro_state
 from tradingagents.information.observations import Observation
 from tradingagents.information.scheduled_events import upcoming_macro_events
 from tradingagents.information.store import InformationView
@@ -61,15 +63,42 @@ class BTCOpenInterestState:
 
 
 @dataclass(frozen=True, slots=True)
+class BTCPerpetualState:
+    """USDⓈ-M mark/index basis, spot divergence, and contract status."""
+
+    mark_price: Decimal | None
+    index_price: Decimal | None
+    basis_pct: Decimal | None
+    spot_perpetual_divergence_pct: Decimal | None
+    mark_event_time: datetime | None
+    mark_available_at: datetime | None
+    mark_age: timedelta | None
+    mark_freshness: str
+    mark_evidence_observation_id: str | None
+    contract_status: str | None
+    status_event_time: datetime | None
+    status_available_at: datetime | None
+    status_age: timedelta | None
+    status_freshness: str
+    status_evidence_observation_id: str | None
+
+
+@dataclass(frozen=True, slots=True)
 class BTCMarketState:
-    """Initial combined BTC state; each layer retains independent evidence."""
+    """Combined BTC market and macro snapshot; layers retain independent evidence."""
 
     decision_time: datetime
     spot: BTCSpotMarketState
     funding: BTCFundingState
     open_interest: BTCOpenInterestState
+    perpetual: BTCPerpetualState
     treasury_yield: TreasuryYieldState
     upcoming_macro_events: tuple[Observation, ...]
+    macro: MacroState
+    liquidation_snapshot_count_24h: int
+    latest_liquidation_snapshot_event_time: datetime | None
+    latest_liquidation_snapshot_available_at: datetime | None
+    latest_liquidation_snapshot_evidence_observation_id: str | None
 
 
 def _decimal_close(observation_id: str, value: object) -> Decimal:
@@ -301,6 +330,8 @@ def build_btc_market_state(
     metric_sources = {
         "derivatives.funding_rate.usdm": "derivatives.binance.usdm.funding",
         "derivatives.open_interest.usdm": "derivatives.binance.usdm.open_interest",
+        "derivatives.mark_price.usdm": "derivatives.binance.usdm.mark_price",
+        "derivatives.contract_status.usdm": "derivatives.binance.usdm.contract_status",
     }
     for observation in view.observations:
         expected_source = metric_sources.get(observation.metric)
@@ -359,13 +390,101 @@ def build_btc_market_state(
             oi_observation.observation_id,
         )
 
+    mark_observation = latest_by_metric.get("derivatives.mark_price.usdm")
+    if mark_observation is None:
+        mark_price = index_price = basis_pct = divergence_pct = None
+        mark_event_time = mark_available_at = mark_age = None
+        mark_freshness = "unknown"
+        mark_evidence_id = None
+    else:
+        mark_price = _decimal_close(
+            mark_observation.observation_id, mark_observation.payload.get("mark_price")
+        )
+        index_price = _decimal_close(
+            mark_observation.observation_id, mark_observation.payload.get("index_price")
+        )
+        with localcontext() as context:
+            context.prec = 28
+            basis_pct = (mark_price - index_price) * Decimal(100) / index_price
+        mark_event_time = mark_observation.event_time
+        mark_available_at = mark_observation.available_at
+        mark_age = decision_time - mark_event_time
+        mark_freshness = "fresh" if mark_age <= timedelta(minutes=5) else "stale"
+        mark_evidence_id = mark_observation.observation_id
+        divergence_pct = None
+        if spot.latest_close is not None and spot.latest_bar_age is not None:
+            spot_close_time = decision_time - spot.latest_bar_age
+            if abs(mark_event_time - spot_close_time) <= timedelta(seconds=90):
+                with localcontext() as context:
+                    context.prec = 28
+                    divergence_pct = (
+                        (mark_price - spot.latest_close) * Decimal(100) / spot.latest_close
+                    )
+
+    status_observation = latest_by_metric.get("derivatives.contract_status.usdm")
+    if status_observation is None:
+        contract_status = None
+        status_event_time = status_available_at = status_age = None
+        status_freshness = "unknown"
+        status_evidence_id = None
+    else:
+        raw_status = status_observation.payload.get("contract_status")
+        if not isinstance(raw_status, str) or not raw_status:
+            raise ValueError(
+                f"observation {status_observation.observation_id} has invalid contract status"
+            )
+        contract_status = raw_status
+        status_event_time = status_observation.event_time
+        status_available_at = status_observation.available_at
+        status_age = decision_time - status_event_time
+        status_freshness = "fresh" if status_age <= timedelta(minutes=5) else "stale"
+        status_evidence_id = status_observation.observation_id
+
+    perpetual = BTCPerpetualState(
+        mark_price,
+        index_price,
+        basis_pct,
+        divergence_pct,
+        mark_event_time,
+        mark_available_at,
+        mark_age,
+        mark_freshness,
+        mark_evidence_id,
+        contract_status,
+        status_event_time,
+        status_available_at,
+        status_age,
+        status_freshness,
+        status_evidence_id,
+    )
+
+    recent_liquidations = [
+        item
+        for item in view.observations
+        if item.source_id == BINANCE_USDM_LIQUIDATION_STREAM_SOURCE.source_id
+        and item.metric == "derivatives.liquidation_snapshot.usdm"
+        and item.subject == _BTC
+        and item.is_available_at(decision_time)
+        and decision_time - timedelta(hours=24) <= item.event_time <= decision_time
+    ]
+    recent_liquidations.sort(
+        key=lambda item: (item.event_time, item.available_at, item.observation_id)
+    )
+    latest_liquidation = recent_liquidations[-1] if recent_liquidations else None
+
     return BTCMarketState(
         decision_time,
         spot,
         funding,
         open_interest,
+        perpetual,
         build_treasury_yield_state(view),
         upcoming_macro_events(view),
+        build_macro_state(view),
+        len(recent_liquidations),
+        latest_liquidation.event_time if latest_liquidation else None,
+        latest_liquidation.available_at if latest_liquidation else None,
+        latest_liquidation.observation_id if latest_liquidation else None,
     )
 
 

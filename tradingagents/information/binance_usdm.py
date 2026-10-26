@@ -11,6 +11,7 @@ from decimal import Decimal, InvalidOperation
 import requests
 
 from tradingagents.information.binance_spot import MarketDataBatch, MarketDataCollectionError
+from tradingagents.information.binance_usdm_streams import BINANCE_USDM_LIQUIDATION_STREAM_SOURCE
 from tradingagents.information.observations import Observation, Transformation
 from tradingagents.information.sources import Source, SourceRegistry
 
@@ -66,9 +67,47 @@ BINANCE_USDM_OPEN_INTEREST_SOURCE = Source(
     ),
 )
 
+BINANCE_USDM_MARK_PRICE_SOURCE = Source(
+    source_id="derivatives.binance.usdm.mark_price",
+    source_type="exchange_rest",
+    provider="Binance USDⓈ-M Futures",
+    endpoint="https://fapi.binance.com/fapi/v1/premiumIndex",
+    collection_method="Unauthenticated public REST polling",
+    asset_scope=("BTCUSDT",),
+    metric_scope=("mark_price", "index_price"),
+    timezone="UTC",
+    historical_depth="Current snapshot; prospective history requires caller-driven collection",
+    publication_semantics="Exchange response time is event time; local retrieval bounds replay availability",
+    revision_behavior="Repeated snapshots are append-only observations",
+    authentication_required=False,
+    rate_limit="IP-based request weight",
+    reliability="UNKNOWN — not yet measured by this project",
+    limitations=("USDⓈ-M venue only", "Mark-index basis is a current snapshot"),
+)
+
+BINANCE_USDM_CONTRACT_STATUS_SOURCE = Source(
+    source_id="derivatives.binance.usdm.contract_status",
+    source_type="exchange_rest",
+    provider="Binance USDⓈ-M Futures",
+    endpoint="https://fapi.binance.com/fapi/v1/exchangeInfo",
+    collection_method="Unauthenticated public REST polling",
+    asset_scope=("BTCUSDT",),
+    metric_scope=("contract_status",),
+    timezone="UTC",
+    historical_depth="Current symbol metadata; prospective history requires caller-driven collection",
+    publication_semantics="Server time is event time; local retrieval bounds replay availability",
+    revision_behavior="Status changes are retained as later observations",
+    authentication_required=False,
+    rate_limit="IP request weight 1",
+    reliability="UNKNOWN — not yet measured by this project",
+    limitations=("Symbol trading status is not a complete exchange-wide health signal",),
+)
+
 _SYMBOL = "BTCUSDT"
 _FUNDING_URL = BINANCE_USDM_FUNDING_SOURCE.endpoint
 _OPEN_INTEREST_URL = BINANCE_USDM_OPEN_INTEREST_SOURCE.endpoint
+_MARK_PRICE_URL = BINANCE_USDM_MARK_PRICE_SOURCE.endpoint
+_EXCHANGE_INFO_URL = BINANCE_USDM_CONTRACT_STATUS_SOURCE.endpoint
 
 
 def _aware_utc(value: datetime, name: str) -> datetime:
@@ -122,9 +161,21 @@ class BinanceUsdmDerivativesCollector:
         self._session = session or requests.Session()
         self._clock = clock or (lambda: datetime.now(UTC))
         self.registry = registry or SourceRegistry(
-            (BINANCE_USDM_FUNDING_SOURCE, BINANCE_USDM_OPEN_INTEREST_SOURCE)
+            (
+                BINANCE_USDM_FUNDING_SOURCE,
+                BINANCE_USDM_OPEN_INTEREST_SOURCE,
+                BINANCE_USDM_MARK_PRICE_SOURCE,
+                BINANCE_USDM_CONTRACT_STATUS_SOURCE,
+                BINANCE_USDM_LIQUIDATION_STREAM_SOURCE,
+            )
         )
-        for source in (BINANCE_USDM_FUNDING_SOURCE, BINANCE_USDM_OPEN_INTEREST_SOURCE):
+        for source in (
+            BINANCE_USDM_FUNDING_SOURCE,
+            BINANCE_USDM_OPEN_INTEREST_SOURCE,
+            BINANCE_USDM_MARK_PRICE_SOURCE,
+            BINANCE_USDM_CONTRACT_STATUS_SOURCE,
+            BINANCE_USDM_LIQUIDATION_STREAM_SOURCE,
+        ):
             if source.source_id not in self.registry:
                 self.registry.register(source)
             elif self.registry.get(source.source_id) != source:
@@ -206,6 +257,74 @@ class BinanceUsdmDerivativesCollector:
             payload=payload,
             raw_reference=f"{_OPEN_INTEREST_URL}?symbol={_SYMBOL}",
             transform="normalize_binance_usdm_open_interest",
+        )
+        return MarketDataBatch((observation,), (), retrieved_at)
+
+    def collect_mark_price(self) -> MarketDataBatch:
+        """Fetch current mark/index prices used for futures basis state."""
+        row = self._get(_MARK_PRICE_URL, {"symbol": _SYMBOL})
+        if not isinstance(row, dict) or row.get("symbol") != _SYMBOL:
+            raise MarketDataCollectionError("Binance mark-price response has an unexpected shape")
+        event_time = _from_ms(row.get("time"), "mark-price")
+        retrieved_at = _aware_utc(self._clock(), "clock")
+        payload = {
+            "mark_price": _decimal_string(row.get("markPrice"), "mark price", allow_zero=False),
+            "index_price": _decimal_string(row.get("indexPrice"), "index price", allow_zero=False),
+        }
+        if row.get("lastFundingRate") not in (None, ""):
+            payload["last_funding_rate"] = _decimal_string(
+                row["lastFundingRate"], "last funding rate", allow_negative=True
+            )
+        if row.get("nextFundingTime") not in (None, ""):
+            payload["next_funding_time"] = _from_ms(
+                row["nextFundingTime"], "next funding"
+            ).isoformat()
+        observation = self._observation(
+            source=BINANCE_USDM_MARK_PRICE_SOURCE,
+            metric="derivatives.mark_price.usdm",
+            event_time=event_time,
+            retrieved_at=retrieved_at,
+            payload=payload,
+            raw_reference=f"{_MARK_PRICE_URL}?symbol={_SYMBOL}",
+            transform="normalize_binance_usdm_mark_price",
+        )
+        return MarketDataBatch((observation,), (), retrieved_at)
+
+    def collect_contract_status(self) -> MarketDataBatch:
+        """Fetch the current BTCUSDT perpetual symbol status, not venue health."""
+        response = self._get(_EXCHANGE_INFO_URL, {})
+        if not isinstance(response, dict) or not isinstance(response.get("symbols"), list):
+            raise MarketDataCollectionError(
+                "Binance exchange-info response has an unexpected shape"
+            )
+        row = next(
+            (
+                item
+                for item in response["symbols"]
+                if isinstance(item, dict)
+                and item.get("symbol") == _SYMBOL
+                and item.get("contractType") == "PERPETUAL"
+            ),
+            None,
+        )
+        if row is None or not isinstance(row.get("status"), str) or not row["status"].strip():
+            raise MarketDataCollectionError(
+                "Binance exchange-info omitted BTCUSDT perpetual status"
+            )
+        event_time = _from_ms(response.get("serverTime"), "exchange-info")
+        retrieved_at = _aware_utc(self._clock(), "clock")
+        observation = self._observation(
+            source=BINANCE_USDM_CONTRACT_STATUS_SOURCE,
+            metric="derivatives.contract_status.usdm",
+            event_time=event_time,
+            retrieved_at=retrieved_at,
+            payload={
+                "contract_status": row["status"],
+                "contract_type": row["contractType"],
+                "quote_asset": row.get("quoteAsset", ""),
+            },
+            raw_reference=_EXCHANGE_INFO_URL,
+            transform="normalize_binance_usdm_contract_status",
         )
         return MarketDataBatch((observation,), (), retrieved_at)
 

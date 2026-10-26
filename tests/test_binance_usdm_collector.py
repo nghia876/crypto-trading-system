@@ -88,3 +88,52 @@ def test_funding_response_outside_requested_bounds_is_rejected():
 
     with pytest.raises(MarketDataCollectionError, match="outside requested time bounds"):
         collector.collect_funding(start, start)
+
+
+def test_mark_price_and_index_are_recorded_as_one_point_in_time_snapshot():
+    retrieved_at = datetime(2026, 1, 2, tzinfo=UTC)
+    market_time = retrieved_at - timedelta(milliseconds=250)
+    session = FakeSession(
+        {
+            "symbol": "BTCUSDT",
+            "time": int(market_time.timestamp() * 1000),
+            "markPrice": "90100.00",
+            "indexPrice": "90000.00",
+            "lastFundingRate": "0.00010000",
+            "nextFundingTime": int((retrieved_at + timedelta(hours=8)).timestamp() * 1000),
+        }
+    )
+    collector = BinanceUsdmDerivativesCollector(session=session, clock=lambda: retrieved_at)
+
+    observation = collector.collect_mark_price().observations[0]
+
+    assert observation.metric == "derivatives.mark_price.usdm"
+    assert observation.event_time == market_time
+    assert observation.available_at == retrieved_at
+    assert observation.payload["mark_price"] == "90100.00"
+    assert observation.payload["index_price"] == "90000.00"
+    assert session.calls[0][0].endswith("/fapi/v1/premiumIndex")
+
+
+def test_contract_status_records_btc_perpetual_only():
+    retrieved_at = datetime(2026, 1, 2, tzinfo=UTC)
+    session = FakeSession(
+        {
+            "serverTime": int(retrieved_at.timestamp() * 1000),
+            "symbols": [
+                {"symbol": "BTCUSDT", "contractType": "PERPETUAL", "status": "TRADING"},
+                {
+                    "symbol": "BTCUSDT_260327",
+                    "contractType": "CURRENT_QUARTER",
+                    "status": "TRADING",
+                },
+            ],
+        }
+    )
+    collector = BinanceUsdmDerivativesCollector(session=session, clock=lambda: retrieved_at)
+
+    observation = collector.collect_contract_status().observations[0]
+
+    assert observation.metric == "derivatives.contract_status.usdm"
+    assert observation.payload["contract_status"] == "TRADING"
+    assert observation.payload["contract_type"] == "PERPETUAL"

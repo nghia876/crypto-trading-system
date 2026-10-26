@@ -89,12 +89,13 @@ state = build_btc_market_state(view)
 ```
 
 The combined `build_btc_market_state(view)` adds the latest eligible USDⓈ-M
-funding rate and open-interest snapshot, each with its own event age, freshness,
-and evidence ID, the Treasury 10-year yield state, plus upcoming macro events
-known by the same cutoff. Funding
-freshness defaults to 12 hours; open-interest freshness defaults to five
-minutes. If an eligible record is not in the view, its state is `unknown`.
-These are initial defaults, not empirically calibrated thresholds.
+funding rate, open-interest snapshot, mark/index basis, spot/perpetual
+divergence, symbol trading status, recent liquidation-stream snapshot count,
+Treasury 10-year yield, selected macro series, and upcoming scheduled events.
+Each value retains its evidence and availability time. Funding freshness
+defaults to 12 hours; open interest and perpetual price/status freshness default
+to five minutes. If an eligible record is not in the view, its state is
+`unknown`. These are initial defaults, not empirically calibrated thresholds.
 
 Focused coverage is in `tests/test_btc_spot_market_state.py`.
 
@@ -111,6 +112,12 @@ BTCUSDT:
 - Current open interest (`/fapi/v1/openInterest`), whose response `time` is an
   exchange transaction time. The endpoint is a current snapshot, so durable
   history depends on prospective caller polling and local persistence.
+- Mark and index prices (`/fapi/v1/premiumIndex`), whose response time bounds
+  a current snapshot. `build_btc_market_state` derives mark/index basis and,
+  when the spot candle and mark snapshot are within 90 seconds, mark-versus-spot
+  divergence.
+- Contract status (`/fapi/v1/exchangeInfo`) for the BTCUSDT perpetual symbol.
+  This is symbol trading status, not an exchange-wide health signal.
 
 The separate sampled open-interest history endpoint
 (`/futures/data/openInterestHist`) documents only the latest month; its periods
@@ -125,6 +132,8 @@ basic endpoint and replay behavior only; reliability remains `UNKNOWN` because
 one smoke check does not measure ongoing availability or data quality.
 
 Official endpoint references: [funding rate history](https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History), [current open interest](https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Open-Interest), and [open-interest statistics](https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Open-Interest-Statistics).
+
+The [mark price endpoint](https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data) provides both mark and index prices; the same catalog documents exchange information and symbol status. The public `!forceOrder@arr` stream is normalized by `parse_binance_usdm_liquidation_event`. Binance describes it as a maximum one largest-order snapshot per symbol per second, so the stored records are censored samples, not complete liquidation history. The code parses supplied stream messages but does not manage a persistent WebSocket connection.
 
 ```python
 from tradingagents.information import BinanceUsdmDerivativesCollector
@@ -168,12 +177,25 @@ availability rule, not long-term feed reliability. Calendar pages do not
 provide a per-event publication time, so local retrieval/first-seen time
 remains the conservative availability bound.
 
-The BLS ICS and release-calendar HTML requests returned HTTP 403 in this
-environment. A Treasury XML feed request timed out during the earlier event
-source investigation. BLS ingestion is not implemented. Treasury yield
-collection is now covered by the DGS10 slice below. FRED is a possible later
-source, but its API requires a registered key; it remains set aside for this
-phase.
+The BLS ICS and earlier release-calendar HTML requests returned HTTP 403 in
+this environment. The official [annual schedule page](https://www.bls.gov/schedule/2026/)
+is now supported by a caller-driven parser and collector; mocked contract tests
+pass. A live request from the repository runtime returned HTTP 403. The parser
+uses dates and Eastern Times shown on the schedule, while local retrieval time
+remains the availability bound. A Treasury XML feed request timed out
+during the earlier event source investigation. Treasury yield collection is
+now covered by the DGS10 slice below. The FRED API requires a registered key,
+but FRED graph CSV downloads are public; the new collector uses those downloads
+and conservatively records local retrieval as availability.
+
+`BEAReleaseCalendarCollector` uses BEA's public [release schedule](https://www.bea.gov/news/schedule/full)
+for the current year and its [next-year schedule](https://www.bea.gov/news/schedule/next-year)
+for the following year. It normalizes explicitly scheduled GDP, personal
+income/outlays, trade, and other BEA releases. “To Be Announced” entries are
+skipped because no time is supplied. Fixture tests pass. A one-time live
+repository-runtime read fetched the upcoming entries; SQLite replay exposed
+zero before local retrieval and all at retrieval. This does not establish
+ongoing reliability.
 
 ```python
 from tradingagents.information import FOMCCalendarCollector, upcoming_macro_events
@@ -202,51 +224,62 @@ Focused coverage is in `tests/test_scheduled_events.py`.
 - No scheduler, full project test suite, or production retention policy has
   been verified in this phase.
 
+## Public FRED macro series
+
+`FredPublicSeriesCollector` downloads selected [FRED graph CSV](https://fred.stlouisfed.org/help/data/downloading/using-the-download-data-link/) series without an API key. It currently collects the 2-year Treasury constant-maturity rate (`DGS2`), WTI spot crude oil (`DCOILWTICO`), nominal broad U.S. dollar index (`DTWEXBGS`), Chicago Fed National Financial Conditions Index (`NFCI`), S&P 500 (`SP500`), and CBOE Volatility Index (`VIXCLS`). The broad dollar index is a contextual proxy, not the ICE DXY. S&P 500 and VIX are subject to their originating providers' data terms; this project does not redistribute downloaded values.
+
+The observation date is reference time only. FRED graph CSV does not provide historical release timestamps or vintage availability, so records use local first-seen/retrieval time and cannot be replayed before ingestion. Corrections are retained as later versions by the information store. `build_macro_state(view_at_T)` returns deterministic values, evidence IDs, age, freshness, and proxy metadata; the combined BTC state uses the same point-in-time view.
+
+The collector is caller-driven. A one-time repository-runtime check fetched three recent WTI rows and confirmed they were unavailable just before local retrieval and visible at retrieval. This does not measure source reliability. Selected series have different originating agencies and data terms; the source registry records those origins, and this project does not redistribute downloaded series values.
+
 ## Phase 2 acceptance and closure status
 
-The blueprint defines Phase 2 as BTC market state, derivatives state, macro state,
-and scheduled events. The exit criteria are reproducible state, freshness
-monitoring, and historical reconstruction. **Phase 2 is not closed.** This
-checklist distinguishes the implemented information-layer increment from the
-broader requirements that remain.
+The blueprint defines Phase 2 as BTC market state, derivatives state, macro
+state, and scheduled events. Its exit criteria are reproducible state,
+freshness monitoring, and historical reconstruction. **Phase 2 remains open.**
 
-- **Reproducible state — PARTIAL.** The BTC spot state is deterministic for an
-  `InformationView`; combined BTC state now includes spot, USDⓈ-M funding,
-  current open interest, Treasury DGS10, and upcoming FOMC events with source
-  evidence. Wider derivatives coverage (basis, liquidations, spot/perpetual
-  divergence, and exchange status) and the broader macro universe (DXY, major
-  releases beyond FOMC, oil, and risk proxies) are not implemented.
-- **Freshness monitoring — PARTIAL.** State reports configurable freshness
-  labels for spot, funding, open interest, and Treasury yield. There is no
-  scheduled collector, ongoing health monitor, alerting, or measured source
-  reliability; stale data is represented in the returned state only.
-- **Historical reconstruction — PARTIAL.** SQLite replay filters all layers by
-  recorded local availability, and revisions/reschedules retain their known-at-
-  time behavior. REST backfills cannot be replayed before local first-seen time.
-  Treasury publication time and historical vintages are unavailable, and the
-  live Treasury fetch timed out, so live Treasury persistence/reopen replay is
-  NOT VERIFIED. FOMC calendar timing is date precision rather than an exact
-  publication or meeting instant.
-- **Scheduled events — PARTIAL.** FOMC calendar ingestion and replay are
-  implemented and had a one-time live smoke check. BLS and other major release
-  calendars are not ingested; the earlier BLS requests returned HTTP 403.
-- **Live evidence — PARTIAL.** One earlier unauthenticated smoke run fetched
-  two Spot candles, three funding rows, one open-interest snapshot, and eleven
-  FOMC windows, then replayed the records from temporary SQLite at their local
-  availability times. This demonstrates a single run, not ongoing reliability.
-  Treasury live fetch/replay remains NOT VERIFIED after the documented timeout.
-- **Focused automated verification — PASS.** The current seven-file focused
-  run passed 55 tests with pytest's shared `conftest.py` disabled. Ruff lint and
-  formatting checks passed for the changed Phase 2 source and test files, and
-  `git diff --check` passed.
-- **Full project test suite — NOT VERIFIED.** The shared test setup imports
-  `yfinance` and `curl_cffi`, neither of which is installed in this environment.
-  Dependency files were not changed to work around that environment gap.
+- **Reproducible state — PARTIAL.** BTC spot state is deterministic for an
+  `InformationView`. Combined state now includes funding, open interest,
+  mark/index basis, spot/perpetual divergence when the observations are close
+  enough in time, Binance BTCUSDT perpetual symbol status, Treasury DGS10,
+  selected public macro series, and upcoming FOMC/BLS/BEA releases, each with
+  source evidence. Liquidation stream events are represented as snapshots;
+  Binance emits at most the largest order per symbol per second, so this is
+  not a complete liquidation tape. The broad U.S. dollar index is a proxy, not
+  the ICE DXY. Broader release and risk-proxy coverage remains incomplete.
+- **Freshness monitoring — PASS for state snapshots.** State reports
+  fresh/stale/unknown for spot, funding, open interest, mark price, symbol
+  status, Treasury yield, and the selected daily/weekly macro series. These
+  checks run when a caller builds the state. Collectors remain caller-driven,
+  and ongoing source-health monitoring is not implemented; the blueprint does
+  not make a scheduler or alerts an exit criterion.
+- **Historical reconstruction — PASS for locally ingested information.** The
+  SQLite point-in-time view and state builders filter observations by their
+  recorded availability; FRED, BLS, and Binance backfills cannot appear before
+  local first-seen/retrieval time. Revision and schedule reschedule behavior
+  is covered by replay tests. Source publication times or historical vintages
+  not supplied by a source cannot be reconstructed. Treasury live
+  persistence/reopen replay remains NOT VERIFIED after the prior timeout.
+- **Scheduled events — PARTIAL.** FOMC, BLS, and BEA release calendars now have
+  caller-driven parsers and collectors. FOMC and BEA had one-time live checks.
+  **BLS runtime access — BLOCKED:** the annual page returned HTTP 403. Census
+  and other release schedules are not included.
+- **Live evidence — PARTIAL.** Earlier unauthenticated checks fetched two Spot
+  candles, three funding rows, one open-interest snapshot, and eleven FOMC
+  windows. The latest runtime check fetched 13 BEA events and three WTI rows;
+  SQLite replay exposed zero before local retrieval and all at retrieval. These
+  one-time checks do not establish ongoing reliability. Treasury live
+  fetch/replay remains NOT VERIFIED; no retry was made.
+- **Focused automated verification — PASS.** The expanded nine-file focused
+  run passed 70 tests with pytest's shared `conftest.py` disabled. Ruff lint
+  and formatting checks and `git diff --check` passed for the Phase 2 files.
+- **Full project test suite — NOT VERIFIED.** Shared test setup requires
+  `yfinance` and `curl_cffi`, which are unavailable in this environment.
 
-The full Phase 2 exit requires the partial coverage and monitoring gaps above
-to be addressed or explicitly deferred in a revised blueprint. The current
-checkout delivers a reproducible information-state increment, not a complete
-Phase 2 implementation.
+Phase 2 stays open because exact DXY, broader risk/release coverage, and a
+repository-runtime BLS read are not established. The implementation preserves point-in-time integrity for the
+observations it does ingest; it does not claim complete macro or liquidation
+coverage.
 ## Treasury macro observation contract (DGS10)
 
 `TreasuryYieldCollector` fetches the Treasury's public current-year daily par-yield CSV and normalizes only its `10 Yr` column. The stable source ID, metric (`macro.treasury_10y_par_yield_pct`), U.S. subject, observation/reference date (`event_time` and `effective_time`), units, endpoint, and transformation are stored in the existing `Observation` envelope. The CSV does not expose an exact publication timestamp or vintage history, so `publication_time` stays unset and `first_seen_time`/`retrieved_at` conservatively determine replay availability. Backfilled rows are never available before local ingestion.
