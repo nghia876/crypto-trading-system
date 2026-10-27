@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import copy
 import time
+from datetime import UTC, datetime, timedelta, timezone
 
 import pandas as pd
 import pytest
@@ -24,6 +25,20 @@ from tradingagents.dataflows import router
 from tradingagents.dataflows.vendors.yahoo import market as yahoo_market, snapshot
 from tradingagents.default_config import DEFAULT_CONFIG
 from tradingagents.graph import trading_graph
+from tradingagents.graph.trading_graph import _information_decision_time
+from tradingagents.information import (
+    BLS_RELEASE_CALENDAR_SOURCE,
+    FRED_SERIES,
+    CoverageRecord,
+    CoverageStatus,
+    MarketDataBatch,
+    Observation,
+    ScheduledMacroEvent,
+    Source,
+    SourceStatus,
+    SQLiteInformationStore,
+    parse_fred_graph_csv,
+)
 
 TRADE_DATE = "2026-01-09"
 
@@ -91,6 +106,14 @@ class ScriptedModel(BaseChatModel):
         return ChatResult(generations=[ChatGeneration(message=message)])
 
 
+class PromptCapturingModel(ScriptedModel):
+    prompts: list = Field(default_factory=list)
+
+    def _generate(self, messages, stop=None, run_manager=None, **kwargs) -> ChatResult:
+        self.prompts.append("\n".join(str(message.content) for message in messages))
+        return super()._generate(messages, stop, run_manager, **kwargs)
+
+
 class _Client:
     def __init__(self, model):
         self.model = model
@@ -126,6 +149,105 @@ def _graph(tmp_path, monkeypatch, model, debug=False, **config):
                memory_log_path=str(tmp_path / "log.md"), **config)
     monkeypatch.setattr(trading_graph, "create_tier_client", lambda config, tier, **k: _Client(model))
     return trading_graph.TradingAgentsGraph(config=cfg, debug=debug)
+
+
+@pytest.mark.unit
+def test_information_cutoff_uses_now_today_and_end_of_day_for_history():
+    now = datetime(2026, 1, 9, 12, tzinfo=UTC)
+
+    assert _information_decision_time("2026-01-09", now) == now
+    assert _information_decision_time("2026-01-09", now.astimezone(
+        timezone(timedelta(hours=7))
+    )) == now
+    with pytest.raises(ValueError, match="timezone-aware"):
+        _information_decision_time("2026-01-09", now.replace(tzinfo=None))
+    assert _information_decision_time("2026-01-08", now) == datetime(
+        2026, 1, 8, 23, 59, 59, 999999, tzinfo=UTC
+    )
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("historical", [False, True])
+def test_crypto_run_context_reaches_the_real_market_analyst_prompt(
+    tmp_path, monkeypatch, offline, historical
+):
+    store_path = tmp_path / "analysis.sqlite3"
+    store = SQLiteInformationStore(store_path)
+    now = datetime(2026, 1, 10, 12, tzinfo=UTC) if historical else datetime(2026, 1, 9, 12, tzinfo=UTC)
+    class FrozenDatetime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return now.astimezone(tz)
+    monkeypatch.setattr(trading_graph, "datetime", FrozenDatetime)
+    cutoff = _information_decision_time(TRADE_DATE, now)
+    funding = Observation(
+        observation_id="stale-funding-evidence",
+        source_id="derivatives.binance.usdm.funding",
+        subject="BTCUSDT",
+        metric="derivatives.funding_rate.usdm",
+        payload={"funding_rate": "0.001"},
+        event_time=datetime(2026, 1, 8, tzinfo=UTC),
+        first_seen_time=cutoff,
+        retrieved_at=cutoff,
+        schema_version="usdm-funding-v1",
+        unit="fraction",
+    )
+    source = Source(
+        "derivatives.binance.usdm.funding", "exchange_rest", "Binance USD-M",
+        "https://example.test/funding", "caller-driven", version="3",
+        limitations=("historical vintages unavailable",), status=SourceStatus.DEGRADED,
+    )
+    coverage = CoverageRecord(
+        "funding-stale", source.source_id, "BTCUSDT", funding.metric, cutoff,
+        CoverageStatus.STALE, "collector has not refreshed the metric", (funding.observation_id,),
+    )
+    store.append(MarketDataBatch((funding,), (), cutoff, (coverage,), (source,)))
+
+    spec = FRED_SERIES[0]
+    macro = parse_fred_graph_csv(
+        f"observation_date,{spec.series_id}\n2026-01-08,100.0\n",
+        spec=spec, retrieved_at=cutoff,
+    )
+    event = ScheduledMacroEvent(
+        event_id="test-cpi", title="CPI release", event_type="cpi_release",
+        scheduled_at=cutoff + timedelta(days=1), source=BLS_RELEASE_CALENDAR_SOURCE,
+        raw_reference="https://example.test/calendar",
+    ).to_observation(retrieved_at=cutoff)
+    future = Observation(
+        observation_id="future-funding-must-not-leak", source_id=funding.source_id,
+        subject=funding.subject, metric=funding.metric, payload={"funding_rate": "0.999"},
+        event_time=cutoff, first_seen_time=cutoff + timedelta(microseconds=1),
+        retrieved_at=cutoff + timedelta(microseconds=1),
+    )
+    store.append(macro)
+    store.append(MarketDataBatch((event, future), (), cutoff + timedelta(seconds=1)))
+
+    model = PromptCapturingModel()
+    graph = _graph(
+        tmp_path, monkeypatch, model, information_store_path=str(store_path)
+    )
+    state, signal = graph.propagate("BTCUSDT", TRADE_DATE, asset_type="crypto")
+
+    assert signal == state["final_rating"] == "Overweight"
+    assert any(
+        state["analysis_information"] in getattr(message, "content", "")
+        for message in state["messages"]
+    )
+    market_prompts = [prompt for prompt in model.prompts if "get_verified_market_snapshot" in prompt]
+    assert market_prompts
+    market_prompt = "\n".join(market_prompts)
+    assert macro.observations[0].observation_id in market_prompt
+    assert event.observation_id in market_prompt
+    assert "future-funding-must-not-leak" not in market_prompt
+    assert "0.999" not in market_prompt
+    assert f"Decision cutoff: {cutoff.isoformat()}" in market_prompt
+    assert "Replayable point-in-time market context" in market_prompt
+    assert "Funding rate: 0.001; freshness: stale" in market_prompt
+    assert "derivatives.binance.usdm.funding / BTCUSDT / derivatives.funding_rate.usdm: stale" in market_prompt
+    assert "stale; observed at" in market_prompt
+    assert "derivatives.binance.usdm.funding v3" in market_prompt
+    assert "stale-funding-evidence" in market_prompt
+    assert "schema: usdm-funding-v1; unit: fraction" in market_prompt
 
 
 @pytest.mark.unit
@@ -387,3 +509,17 @@ def test_the_memory_step_reads_lessons_as_of_the_trade_date_and_settles_once(tmp
 
     assert asked == ["2026-01-20", "2026-01-20"]
     assert (tmp_path / "log.md").read_text() == log_after_first
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("setting", [None, ""])
+def test_crypto_information_store_is_optional(tmp_path, monkeypatch, offline, setting):
+    def unexpected(*args, **kwargs):
+        raise AssertionError("optional store must not be opened")
+    monkeypatch.setattr(trading_graph, "SQLiteInformationStore", unexpected)
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=setting)
+    state, signal = graph.propagate("BTCUSDT", TRADE_DATE, asset_type="crypto")
+    assert signal == "Overweight"
+    assert not state.get("analysis_information")
+    assert all("Replayable point-in-time market context" not in p for p in model.prompts)

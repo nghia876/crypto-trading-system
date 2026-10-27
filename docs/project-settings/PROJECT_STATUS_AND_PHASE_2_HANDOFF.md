@@ -1,5 +1,30 @@
 # Crypto AI Trading System — Project Status and Phase 2 Handoff
 
+## Final Phase 2 release gate - 2026-10-27
+
+This section supersedes the older pending/unverified status entries below. Verified starting branch: `phase-1.2-btc-ohlcv-collector`; starting HEAD: `db500bf88effc798a038c64057479f552c07d2cb`. The pre-existing three tracked edits were preserved and completed. This release is committed locally on that feature branch; use `git log -1` for its final SHA. No push or remote-state verification was performed.
+
+**Technical release decision: GO for Phase 3 entry on the verified local baseline.** Phase 2's final code/test gate is complete. Existing remote-storage confirmation remains a separate prerequisite before treating the release as durably stored on GitHub. No Phase 3 implementation was added.
+
+The analyst context has a deterministic 28,000-character overall budget, reserved per-section capacity, whole-record omission counts, stable ordering, and explicit warnings that omitted records do not prove absence, freshness, source availability, or complete coverage. Signal evidence, selected macro values, nearest scheduled events, and their metadata receive reserved space; coverage/source details favor sources used by the state, adverse/unknown conditions, and recent records. Uncapped historical condition counts and core freshness remain visible. Spot evidence sampling is disclosed. This is a character bound for the information context, not a token bound for the entire conversation.
+
+Real graph tests capture the actual Market Analyst prompt and verify funding freshness/coverage/source/schema lineage, macro and scheduled-event evidence IDs, current-day UTC availability filtering, historical UTC end-of-day behavior, and backward compatibility when the optional store is unset. Stress tests cover 1,000 coverage records, 1,001 source definitions, 1,001 scheduled events, oversized-record omission, strict size limits, stable ordering, core lineage retention, and spot evidence sampling.
+
+Verification with normal shared `tests/conftest.py` enabled:
+
+- Focused information-layer plus graph suites: **98 passed**.
+- Full default offline suite: **1,342 passed; 99 subtests passed; 4 skipped; 1 deselected; 20 warnings**. Skips: three POSIX file-mode cases on Windows and optional `langchain_aws`; integration tests remain excluded by project configuration. No live provider validation was run.
+- Ruff on all five changed Python files, AST syntax parsing, and `git diff --check`: **passed**.
+- Windows environment repair: dependencies installed into an isolated venv without global installation or dependency/lockfile edits. Editable packaging hit Windows path-length limits, so declared dependencies were installed directly and tests ran from the checkout. Workspace-local TEMP/TMP and pytest basetemp avoid Windows temp permission failures. The existing yfinance isolation test was corrected to require the suite's private temporary cache; Windows temp can legitimately be under the user's home.
+
+Reproduction: use the isolated Python at `../.phase2-release-env/Scripts/python.exe` from the checkout, set TEMP and TMP to `../.phase2-release-temp`, and run `python -m pytest -q --basetemp=../.phase2-release-temp/pytest-recheck`. Use that same Python for `-m ruff check` on the changed files. The environment is retained outside the Git checkout.
+
+Remaining limits: collection and freshness evaluation are caller-driven; no scheduler/alerts or live-source validation; no upstream historical provider vintages; source/event coverage remains incomplete; dollar-index data is a proxy; liquidation snapshots are not a complete liquidation tape. Replay reconstructs only locally ingested information with recorded availability. `sources/` and `.phase12-tools/` were untouched; `.phase12-tools/` remains untracked and unstaged. No change to `main`.
+
+Canonical product vision remains multi-source BTC macro narrative plus micro market state, critical competing explanations, a world/regime model, scenarios, risk and execution, and point-in-time evaluation and learning. This release closes only Phase 2's information/state gate and does not claim delivery of the later narrative, reasoning, execution, or learning layers.
+
+## Prior status history (superseded where inconsistent)
+
 **Status date:** 2026-10-27 (Asia/Saigon)
 **Repository:** `nghia876/crypto-trading-system`
 **Feature branch:** `phase-1.2-btc-ohlcv-collector`

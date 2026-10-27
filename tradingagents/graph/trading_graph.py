@@ -43,6 +43,19 @@ def _validate_trade_date(trade_date) -> str:
     return value
 
 
+def _information_decision_time(trade_date: str, now: datetime | None = None) -> datetime:
+    """Use end of day for historical replay and the actual time for today's run."""
+    from datetime import UTC, time as dt_time
+
+    trade_day = datetime.strptime(str(trade_date), "%Y-%m-%d").date()
+    cutoff = datetime.combine(trade_day, dt_time.max, tzinfo=UTC)
+    current_time = now or datetime.now(UTC)
+    if current_time.tzinfo is None or current_time.utcoffset() is None:
+        raise ValueError("now must be timezone-aware")
+    current_time = current_time.astimezone(UTC)
+    return min(cutoff, current_time)
+
+
 # Config keys that do not change what a run writes: where it keeps its files,
 # whether it checkpoints, and how often it retries a provider.
 _NOT_IN_SIGNATURE = frozenset({
@@ -308,8 +321,7 @@ class TradingAgentsGraph:
         )
         store_path = self.config.get("information_store_path")
         if store_path and asset_type == "crypto":
-            from datetime import UTC, time as dt_time
-            cutoff = datetime.combine(datetime.strptime(str(trade_date), "%Y-%m-%d").date(), dt_time.max, tzinfo=UTC)
+            cutoff = _information_decision_time(trade_date)
             result = build_analysis_information(SQLiteInformationStore(store_path), cutoff)
             initial_state["analysis_information"] = render_analysis_information(result)
             initial_state["messages"].append(("human", initial_state["analysis_information"]))
