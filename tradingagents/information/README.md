@@ -329,3 +329,15 @@ behavior is preserved. Intraday checkpoint resume is unsupported; legacy tools a
 date-based memory remain outside the evidence store PIT guarantee, disclosed in
 actual prompts. See `docs/project-handoff/PHASE_3_2A_HANDOFF.md` for full contracts,
 verification, controlled live failures, usage and next milestones.
+
+### Phase 3.2B claim relationships
+
+See `claim_lifecycle.py` and `docs/project-handoff/PHASE_3_2B_HANDOFF.md`.
+Callers curate source-evidenced support/opposition and provenance relationships;
+headline matches are only correlation candidates. Immutable assertions live in the
+same SQLite store. `claim_lifecycle(view, claim_id)` replays eligible relationships,
+including corrections and explicit target retirement, without claiming factual truth.
+The existing narrative renderer/analyst context includes supporting/opposing source
+claims and uncertainty under the same budget. Acquisition performs no automatic
+semantic verification. Run opt-in read-only network diagnostics separately from
+mocked tests with `python -m tradingagents.information.network_diagnostics`.

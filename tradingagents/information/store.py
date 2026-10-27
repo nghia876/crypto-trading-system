@@ -39,6 +39,9 @@ class InformationView:
     gaps: tuple[MarketDataGap, ...]
     coverage: tuple[CoverageRecord, ...] = ()
     source_definitions: tuple[tuple[Source, datetime], ...] = ()
+    # Eligible immutable versions, including superseded records, for claim evidence resolution.
+    # Consumers of current market values continue to use observations.
+    evidence_history: tuple[Observation, ...] = ()
 
 
 def _aware(name: str, value: datetime) -> None:
@@ -457,7 +460,7 @@ class SQLiteInformationStore:
                 ),
             )
         )
-        return InformationView(decision_time, visible, gaps, coverage, source_definitions)
+        return InformationView(decision_time, visible, gaps, coverage, source_definitions, tuple(eligible))
 
     @staticmethod
     def _decode_observation(row: tuple[Any, ...]) -> Observation:

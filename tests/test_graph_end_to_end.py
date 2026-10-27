@@ -583,3 +583,56 @@ def test_intraday_validation_and_checkpoint_guard(tmp_path, monkeypatch, offline
     graph.config["checkpoint_enabled"] = True
     with pytest.raises(ValueError, match="checkpoint"):
         graph.propagate("BTCUSDT", TRADE_DATE, asset_type="crypto", decision_time=datetime(2026, 1, 9, 12, tzinfo=UTC))
+
+@pytest.mark.unit
+def test_claim_lifecycle_through_actual_graph(tmp_path, monkeypatch, offline):
+    from tests.test_claim_lifecycle import article, persist
+    from tradingagents.information.claim_lifecycle import record_claim_assertion
+
+    cutoff = datetime(2026, 1, 9, 12, tzinfo=UTC)
+    store = SQLiteInformationStore(tmp_path / "lifecycle.db")
+    persist(store, article("a", "Semiconductor export controls announced"),
+            article("b", "Export controls disputed"))
+    support = record_claim_assertion(store, claim_id="a", kind="support", evidence_ids=("a",),
+                                    recorded_at=cutoff, rationale="Primary announcement")
+    opposition = record_claim_assertion(store, claim_id="a", kind="contradiction", evidence_ids=("b",),
+                                       recorded_at=cutoff, rationale="Conflicting report")
+    future = record_claim_assertion(store, claim_id="a", kind="correction", evidence_ids=("a",),
+                                   target_ids=(opposition.observation_id,),
+                                   recorded_at=cutoff+timedelta(microseconds=1), rationale="LATER CORRECTION")
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
+    state, _ = graph.propagate("BTCUSDT", TRADE_DATE, asset_type="crypto", decision_time=cutoff)
+    prompt = "\n".join(model.prompts)
+    assert '"supporting": ["a"]' in prompt and '"opposing": ["b"]' in prompt
+    assert '"factual_truth": "unknown"' in prompt
+    assert support.observation_id in prompt and opposition.observation_id in prompt
+    assert future.observation_id not in prompt and "LATER CORRECTION" not in prompt
+    assert len(state["analysis_information"]) <= 28000
+
+@pytest.mark.unit
+def test_acquired_claim_relationships_reach_graph(tmp_path, monkeypatch, offline):
+    from tradingagents.information.claim_lifecycle import record_claim_assertion
+    from tradingagents.information.news import parse_news_snapshot
+    from tradingagents.information.sources import BROAD_NEWS_CONFIG
+
+    cutoff = datetime(2026, 1, 9, 12, tzinfo=UTC)
+    store = SQLiteInformationStore(tmp_path / "acquired-lifecycle.db")
+    rows = []
+    for index, title in enumerate(("Ceasefire agreed", "Ceasefire denied")):
+        xml = f'<rss><channel><item><title>{title}</title><link>https://example.org/{index}</link></item></channel></rss>'
+        batch = parse_news_snapshot(xml, BROAD_NEWS_CONFIG[index], retrieved_at=cutoff)
+        store.append(batch)
+        rows.append(batch.observations[0])
+    for kind, row in zip(("support", "opposition"), rows, strict=True):
+        record_claim_assertion(store, claim_id=rows[0].subject, kind=kind,
+                               evidence_ids=(row.observation_id,), recorded_at=cutoff,
+                               rationale="Curated source relationship")
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
+    state, _ = graph.propagate("BTCUSDT", TRADE_DATE, asset_type="crypto", decision_time=cutoff)
+    prompt = "\n".join(model.prompts)
+    assert '"claim_lifecycle"' in prompt and '"status": "contested"' in prompt
+    assert all(row.observation_id in prompt for row in rows)
+    assert "Ceasefire agreed" in prompt and "Ceasefire denied" in prompt
+    assert len(state["analysis_information"]) <= 28000

@@ -1,3 +1,13 @@
+# Current checkpoint: Phase 3.2B (2026-10-27)
+
+Locally implemented explicit evidence-backed claim correlation/provenance and
+append-only lifecycle in the existing SQLite/TradingAgents narrative context path.
+See `docs/project-handoff/PHASE_3_2B_HANDOFF.md` for contracts, release checks,
+curation boundaries and operational gate. DNS fails with errno 11001 before TLS
+or HTTP; live integration remains unverified. Phase 3 remains IN_PROGRESS.
+Next: permitted operational live collection/lifecycle/replay trial, then BTC
+market-reaction alignment. No push/merge or main/source-reference modification.
+
 # Current checkpoint: Phase 3.2A (2026-10-27)
 
 Branch `phase-3-event-narrative-slice`; locally implemented broad public RSS/Atom
