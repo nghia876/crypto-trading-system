@@ -10,7 +10,12 @@ from decimal import Decimal, InvalidOperation
 
 import requests
 
-from tradingagents.information.binance_spot import MarketDataBatch, MarketDataCollectionError
+from tradingagents.information.binance_spot import (
+    CoverageRecord,
+    CoverageStatus,
+    MarketDataBatch,
+    MarketDataCollectionError,
+)
 from tradingagents.information.binance_usdm_streams import BINANCE_USDM_LIQUIDATION_STREAM_SOURCE
 from tradingagents.information.observations import Observation, Transformation
 from tradingagents.information.sources import Source, SourceRegistry
@@ -148,6 +153,28 @@ def _decimal_string(
     return str(number)
 
 
+
+def observation_source(metric: str) -> Source:
+    if "funding" in metric:
+        return BINANCE_USDM_FUNDING_SOURCE
+    if "open_interest" in metric:
+        return BINANCE_USDM_OPEN_INTEREST_SOURCE
+    if "mark_price" in metric:
+        return BINANCE_USDM_MARK_PRICE_SOURCE
+    return BINANCE_USDM_CONTRACT_STATUS_SOURCE
+
+def _make_batch(observations, retrieved_at, source):
+    subject = observations[0].subject if observations else _SYMBOL
+    metric = observations[0].metric if observations else source.metric_scope[0]
+    ids = tuple(item.observation_id for item in observations)
+    record = CoverageRecord(
+        f"{source.source_id}:{subject}:{metric}:{retrieved_at.isoformat()}",
+        source.source_id, subject, metric, retrieved_at,
+        CoverageStatus.PRESENT if observations else CoverageStatus.UNKNOWN,
+        f"{len(observations)} observation(s) returned", ids,
+    )
+    return MarketDataBatch(tuple(observations), (), retrieved_at, (record,), (source,))
+
 class BinanceUsdmDerivativesCollector:
     """Caller-driven collector for BTCUSDT funding history and current OI."""
 
@@ -237,7 +264,7 @@ class BinanceUsdmDerivativesCollector:
                     transform="normalize_binance_usdm_funding",
                 )
             )
-        return MarketDataBatch(tuple(observations), (), retrieved_at)
+        return _make_batch(tuple(observations), retrieved_at, BINANCE_USDM_FUNDING_SOURCE)
 
     def collect_open_interest(self) -> MarketDataBatch:
         """Fetch the current open-interest snapshot for BTCUSDT."""
@@ -258,7 +285,7 @@ class BinanceUsdmDerivativesCollector:
             raw_reference=f"{_OPEN_INTEREST_URL}?symbol={_SYMBOL}",
             transform="normalize_binance_usdm_open_interest",
         )
-        return MarketDataBatch((observation,), (), retrieved_at)
+        return _make_batch((observation,), retrieved_at, observation_source(observation.metric))
 
     def collect_mark_price(self) -> MarketDataBatch:
         """Fetch current mark/index prices used for futures basis state."""
@@ -288,7 +315,7 @@ class BinanceUsdmDerivativesCollector:
             raw_reference=f"{_MARK_PRICE_URL}?symbol={_SYMBOL}",
             transform="normalize_binance_usdm_mark_price",
         )
-        return MarketDataBatch((observation,), (), retrieved_at)
+        return _make_batch((observation,), retrieved_at, observation_source(observation.metric))
 
     def collect_contract_status(self) -> MarketDataBatch:
         """Fetch the current BTCUSDT perpetual symbol status, not venue health."""
@@ -326,7 +353,7 @@ class BinanceUsdmDerivativesCollector:
             raw_reference=_EXCHANGE_INFO_URL,
             transform="normalize_binance_usdm_contract_status",
         )
-        return MarketDataBatch((observation,), (), retrieved_at)
+        return _make_batch((observation,), retrieved_at, observation_source(observation.metric))
 
     def _get(self, url: str, params: dict[str, object]) -> object:
         try:
@@ -357,6 +384,8 @@ class BinanceUsdmDerivativesCollector:
             subject=_SYMBOL,
             metric=metric,
             payload=payload,
+            schema_version="binance-usdm-v1",
+            unit=("fraction" if "funding_rate" in metric else "contracts" if "open_interest" in metric else "USDT/BTC" if "mark_price" in metric else "categorical"),
             event_time=event_time,
             effective_time=event_time,
             first_seen_time=retrieved_at,

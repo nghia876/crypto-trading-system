@@ -5,13 +5,13 @@
 **Feature branch:** `phase-1.2-btc-ohlcv-collector`
 **Verified baseline HEAD:** `7cb739d0af0fd7d0dd1b398b4c7bf66099bcbdea`
 **Local alignment correction commit:** `55689e6e186a13a56eab0248ba9a698ba8adfda7`
-**Phase 2:** core state exits were previously accepted; end-to-end alignment is not complete. The audit correction described below remains local-only and has unresolved integration/metadata coverage gaps.
+**Phase 2:** alignment completion is implemented and focused information-layer verification passes locally; no push was made.
 
 ## Current verified state
 
 The supplied end-to-end alignment audit reports independent verification that the remote feature branch matched local `7cb739d0af0fd7d0dd1b398b4c7bf66099bcbdea`, including the Phase 2 handoff. This supersedes the earlier stale remote SHA claim in this document. The current alignment correction is local-only and was not pushed.
 
-The local checkout is on `phase-1.2-btc-ohlcv-collector` at alignment correction commit `55689e6e186a13a56eab0248ba9a698ba8adfda7`. `main` was not changed. `.phase12-tools/` remains untracked and must never be staged. Keep all `sources/` files read-only.
+The completion pass began on `phase-1.2-btc-ohlcv-collector` at `1e1a4d69a6cee291c673c5ffdd2e3d9957841583`. `main` was not changed. `.phase12-tools/` remains untracked and must never be staged. Keep all `sources/` files read-only.
 
 ## Phase 2 exit criteria and evidence
 
@@ -29,9 +29,9 @@ The follow-up audit identified a contract gap in generic source coverage and met
 
 Focused verification after the correction: 72 information-layer tests pass; Ruff lint and `git diff --check` pass. Tests were run from a private copy under `.phase12-tools/` to avoid the shared `tests/conftest.py`, whose import-time `yfinance` dependency is unavailable. The full suite remains unverified.
 
-**Current implementation commit:** `55689e6e186a13a56eab0248ba9a698ba8adfda7` (local only; not pushed).
+**Current implementation base:** `1e1a4d69a6cee291c673c5ffdd2e3d9957841583`; completion changes are uncommitted pending verification.
 
-**Remaining alignment work:** current collectors do not yet emit coverage records systematically; source registry metadata itself is not persisted/versioned alongside observations; most producers still use the default unit `unknown` unless callers supply metric metadata. Therefore the new vocabulary and storage seam are available, but coverage completeness and uniform unit/schema declarations across all source feeds are not yet demonstrated. Do not treat this correction as closing those gaps or as a Phase 3 authorization gate. `.phase12-tools/` remains untracked and excluded from Git.
+**Completion pass (2026-10-27):** source definitions have explicit versions and are durably appended/replayed with their observation-time metadata. Binance Spot and USDⓈ-M collectors attach successful-response coverage records, source snapshots, and explicit schema/unit declarations. Optional `information_store_path` integration builds one replay view at the trade-date UTC cutoff and includes its derived market context and evidence IDs in the analyst input. Missing data is rendered as unknown, not negative evidence. The nine focused information-layer suites pass (75 tests); Ruff and `git diff --check` pass. Full-suite pytest remains unverified because shared setup imports unavailable `yfinance`. Other collector families may still emit default units or omit coverage, no collection scheduler or live-source validation was added, and upstream historical publication vintages remain unavailable. Do not treat this as Phase 3 authorization. `.phase12-tools/` remains untracked and excluded from Git.
 
 ## Phase 3 gate
 

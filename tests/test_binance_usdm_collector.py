@@ -54,6 +54,10 @@ def test_funding_backfill_keeps_settlement_time_separate_from_availability():
     assert observation.event_time == funding_time
     assert observation.available_at == retrieved_at
     assert observation.payload["funding_rate"] == "-0.00012500"
+    assert observation.unit == "fraction"
+    assert observation.schema_version == "binance-usdm-v1"
+    assert batch.coverage[0].evidence_ids == (observation.observation_id,)
+    assert batch.source_definitions[0].source_id == observation.source_id
     assert session.calls[0][1]["symbol"] == "BTCUSDT"
     assert session.calls[0][1]["limit"] == 1000
 

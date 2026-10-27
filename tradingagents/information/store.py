@@ -6,7 +6,7 @@ import json
 import sqlite3
 from collections.abc import Iterator
 from contextlib import contextmanager
-from dataclasses import dataclass, replace
+from dataclasses import asdict, dataclass, replace
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -23,6 +23,7 @@ from tradingagents.information.observations import (
     ObservationQuality,
     Transformation,
 )
+from tradingagents.information.sources import Source, SourceStatus
 
 
 class ObservationStoreConflict(RuntimeError):
@@ -37,6 +38,7 @@ class InformationView:
     observations: tuple[Observation, ...]
     gaps: tuple[MarketDataGap, ...]
     coverage: tuple[CoverageRecord, ...] = ()
+    source_definitions: tuple[tuple[Source, datetime], ...] = ()
 
 
 def _aware(name: str, value: datetime) -> None:
@@ -136,6 +138,10 @@ class SQLiteInformationStore:
                 );
                 CREATE INDEX IF NOT EXISTS observations_event_idx
                     ON observations(subject, metric, event_time);
+                CREATE TABLE IF NOT EXISTS source_definitions (
+                    source_id TEXT NOT NULL, version TEXT NOT NULL, observed_at TEXT NOT NULL,
+                    definition_json TEXT NOT NULL, PRIMARY KEY(source_id, version, observed_at)
+                );
                 CREATE TABLE IF NOT EXISTS coverage (
                     coverage_id TEXT PRIMARY KEY,
                     source_id TEXT NOT NULL,
@@ -188,6 +194,10 @@ class SQLiteInformationStore:
             _aware("retrieved_at", observation.retrieved_at)
         for record in batch.coverage:
             _aware("coverage.observed_at", record.observed_at)
+        for source in batch.source_definitions:
+            if not isinstance(source, Source):
+                raise TypeError("source_definitions must contain Source records")
+            _aware("source definition observed_at", batch.retrieved_at)
         for gap in batch.gaps:
             _aware("gap.event_time", gap.event_time)
             _aware("gap.observed_at", gap.observed_at)
@@ -272,6 +282,13 @@ class SQLiteInformationStore:
                             f"observation_id reused with different content: {observation.observation_id}"
                         )
             connection.executemany(
+                """INSERT OR IGNORE INTO source_definitions
+                   (source_id, version, observed_at, definition_json) VALUES (?, ?, ?, ?)""",
+                [(source.source_id, source.version, batch.retrieved_at.isoformat(),
+                  json.dumps({**asdict(source), "status": source.status.value}, sort_keys=True, default=list))
+                 for source in batch.source_definitions],
+            )
+            connection.executemany(
                 """INSERT OR IGNORE INTO coverage
                    (coverage_id, source_id, subject, metric, observed_at, status, detail, evidence_ids_json)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
@@ -312,6 +329,9 @@ class SQLiteInformationStore:
         with self._connection() as connection:
             rows = connection.execute(
                 f"SELECT {self._OBSERVATION_COLUMNS} FROM observations"
+            ).fetchall()
+            source_rows = connection.execute(
+                "SELECT source_id, version, observed_at, definition_json FROM source_definitions"
             ).fetchall()
             coverage_rows = connection.execute(
                 "SELECT coverage_id, source_id, subject, metric, observed_at, status, detail, evidence_ids_json FROM coverage"
@@ -369,6 +389,18 @@ class SQLiteInformationStore:
                 key=lambda item: (item.event_time, item.metric, item.observed_at),
             )
         )
+        latest_sources = {}
+        for source_id, version, observed_at, payload in source_rows:
+            observed = datetime.fromisoformat(observed_at)
+            if observed <= decision_time:
+                key = (source_id, version)
+                if key not in latest_sources or latest_sources[key][1] < observed:
+                    definition = json.loads(payload)
+                    for name in ("asset_scope", "metric_scope", "limitations", "legal_constraints", "metadata"):
+                        definition[name] = tuple(tuple(v) if isinstance(v, list) else v for v in definition.get(name, ()))
+                    definition["status"] = SourceStatus(definition["status"])
+                    latest_sources[key] = (Source(**definition), observed)
+        source_definitions = tuple(sorted(latest_sources.values(), key=lambda item: (item[0].source_id, item[1])))
         coverage = tuple(
             sorted(
                 (
@@ -394,7 +426,7 @@ class SQLiteInformationStore:
                 ),
             )
         )
-        return InformationView(decision_time, visible, gaps, coverage)
+        return InformationView(decision_time, visible, gaps, coverage, source_definitions)
 
     @staticmethod
     def _decode_observation(row: tuple[Any, ...]) -> Observation:

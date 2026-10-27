@@ -14,6 +14,8 @@ from tradingagents.dataflows.config import run_config, run_config_context, set_c
 from tradingagents.dataflows.date_window import get_current_date, is_historical
 from tradingagents.dataflows.symbols import safe_ticker_component
 from tradingagents.default_config import DEFAULT_CONFIG
+from tradingagents.information import SQLiteInformationStore, build_analysis_information
+from tradingagents.information.consumer import render_analysis_information
 from tradingagents.llm_clients import create_tier_client, tier_provider
 from tradingagents.memory import TradingMemoryLog, settlement
 from tradingagents.memory.reflection import Reflector
@@ -297,13 +299,23 @@ class TradingAgentsGraph:
         memory log's lessons are not here: the graph's Memory Log step settles
         and loads them alongside the analysts (see ``_memory_step``).
         """
-        return self.propagator.create_initial_state(
+        initial_state = self.propagator.create_initial_state(
             company_name,
             trade_date,
             asset_type=asset_type,
             instrument_context=self.resolve_instrument_context(company_name, asset_type, trade_date),
             portfolio_context=portfolio.render(company_name) if portfolio is not None else "",
         )
+        store_path = self.config.get("information_store_path")
+        if store_path and asset_type == "crypto":
+            from datetime import UTC, time as dt_time
+            cutoff = datetime.combine(datetime.strptime(str(trade_date), "%Y-%m-%d").date(), dt_time.max, tzinfo=UTC)
+            result = build_analysis_information(SQLiteInformationStore(store_path), cutoff)
+            initial_state["analysis_information"] = render_analysis_information(result)
+            initial_state["messages"].append(("human", initial_state["analysis_information"]))
+        else:
+            initial_state["analysis_information"] = ""
+        return initial_state
 
     def _memory_step(self, state):
         """The graph's Memory Log step, alongside the analysts (#1428): settle every

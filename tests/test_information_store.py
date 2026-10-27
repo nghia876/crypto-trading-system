@@ -297,3 +297,38 @@ def test_analysis_consumer_derives_market_and_macro_from_one_replay_cutoff(tmp_p
         if series.evidence_observation_id
         for evidence_id in (series.evidence_observation_id,)
     }
+
+
+def test_source_definition_versions_replay_only_when_known(tmp_path):
+    from dataclasses import replace
+
+    from tradingagents.information.sources import Source
+    store = SQLiteInformationStore(tmp_path / "source-defs.sqlite3")
+    t1 = datetime(2026, 1, 1, tzinfo=UTC)
+    t2 = datetime(2026, 1, 2, tzinfo=UTC)
+    source = Source("test.versioned", "rest", "Test", "https://example.test", "poll", version="1", metric_scope=("metric",))
+    revised = replace(source, version="2", limitations=("changed",))
+    store.append(MarketDataBatch((), (), t1, source_definitions=(source,)))
+    store.append(MarketDataBatch((), (), t2, source_definitions=(revised,)))
+    replay = SQLiteInformationStore(store.path)
+    assert [(x.version, at) for x, at in replay.view_at(t1).source_definitions] == [("1", t1)]
+    assert [x.version for x, _ in replay.view_at(t2).source_definitions] == ["1", "2"]
+
+
+def test_absent_source_is_unknown_without_explicit_coverage(tmp_path):
+    store = SQLiteInformationStore(tmp_path / "unknown-source.sqlite3")
+    t = datetime(2026, 1, 1, tzinfo=UTC)
+    view = build_analysis_information(store, t).view
+    assert view.observations == () and view.coverage == ()
+
+
+def test_coverage_and_source_metadata_after_cutoff_do_not_leak(tmp_path):
+    store = SQLiteInformationStore(tmp_path / "pit-metadata.sqlite3")
+    t = datetime(2026, 1, 1, tzinfo=UTC)
+    after = datetime(2026, 1, 2, tzinfo=UTC)
+    from tradingagents.information.sources import Source
+    source = Source("test.future", "rest", "Test", "https://example.test", "poll", version="future")
+    record = CoverageRecord("future-cov", "test.future", "BTCUSDT", "metric", after, "absent")
+    store.append(MarketDataBatch((), (), after, (record,), (source,)))
+    result = build_analysis_information(store, t)
+    assert result.view.coverage == () and result.view.source_definitions == ()

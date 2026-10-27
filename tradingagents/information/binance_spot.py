@@ -104,6 +104,7 @@ class MarketDataBatch:
     gaps: tuple[MarketDataGap, ...]
     retrieved_at: datetime
     coverage: tuple[CoverageRecord, ...] = ()
+    source_definitions: tuple[Source, ...] = ()
 
 
 def _decimal(value: object, field: str) -> Decimal:
@@ -255,7 +256,13 @@ class BinanceSpotOHLCVCollector:
             if opened not in by_open
         )
         observations = tuple(by_open[key] for key in sorted(by_open))
-        return MarketDataBatch(observations, gaps, retrieved_at)
+        coverage = (CoverageRecord(
+            f"{BINANCE_SPOT_SOURCE.source_id}:{symbol}:{retrieved_at.isoformat()}",
+            BINANCE_SPOT_SOURCE.source_id, symbol, "spot_ohlcv.1m", retrieved_at,
+            CoverageStatus.PRESENT if observations else CoverageStatus.ABSENT,
+            f"{len(observations)} closed candle(s) returned", tuple(x.observation_id for x in observations),
+        ),)
+        return MarketDataBatch(observations, gaps, retrieved_at, coverage, (BINANCE_SPOT_SOURCE,))
 
     @staticmethod
     def _validate_bounds(start: datetime, end: datetime) -> None:
@@ -366,6 +373,8 @@ class BinanceSpotOHLCVCollector:
             subject=symbol,
             metric=f"spot_ohlcv.{_INTERVAL_NAME}",
             payload=payload,
+            schema_version="binance-spot-kline-v1",
+            unit="price:USDT/BTC;volume:BTC,USDT;count:trades",
             event_time=event_time,
             effective_time=event_time,
             first_seen_time=retrieved_at,

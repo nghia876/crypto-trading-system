@@ -26,6 +26,7 @@ class Source:
     provider: str
     endpoint: str
     collection_method: str
+    version: str = "1"
     asset_scope: tuple[str, ...] = ()
     metric_scope: tuple[str, ...] = ()
     timezone: str = "UTC"
@@ -43,7 +44,7 @@ class Source:
     metadata: tuple[tuple[str, str], ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
-        for name in ("source_id", "source_type", "provider", "endpoint", "collection_method"):
+        for name in ("source_id", "version", "source_type", "provider", "endpoint", "collection_method"):
             if not getattr(self, name).strip():
                 raise ValueError(f"{name} must not be empty")
         if not isinstance(self.status, SourceStatus):

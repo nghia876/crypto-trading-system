@@ -63,6 +63,11 @@ def test_collect_normalizes_closed_bars_with_ingestion_time_availability():
     assert not batch.observations[0].is_available_at(datetime(2026, 1, 1, 0, 3, 29, tzinfo=UTC))
     assert batch.observations[0].is_available_at(batch.retrieved_at)
     assert batch.observations[0].payload["base_volume"] == "2.5"
+    assert batch.observations[0].unit == "price:USDT/BTC;volume:BTC,USDT;count:trades"
+    assert batch.observations[0].schema_version == "binance-spot-kline-v1"
+    assert batch.coverage[0].status.value == "present"
+    assert batch.coverage[0].evidence_ids == tuple(item.observation_id for item in batch.observations)
+    assert batch.source_definitions[0].source_id == batch.observations[0].source_id
     assert batch.gaps == ()
 
 
