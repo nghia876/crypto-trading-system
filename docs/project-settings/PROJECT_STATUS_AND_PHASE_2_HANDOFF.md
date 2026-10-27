@@ -1,3 +1,19 @@
+# Current checkpoint: Phase 3 first slice (2026-10-27)
+
+Current branch: `phase-3-event-narrative-slice`, based on verified local Phase 2
+`22b804066284dd80557af16c1aa8193271feb43f`. Phase 2 branch preserved. Remote
+Phase 2 branch independently verified via GitHub connector at
+`7cb739d0af0fd7d0dd1b398b4c7bf66099bcbdea` (six commits behind local baseline).
+No push. Current user authorized local implementation despite older storage gate.
+
+See `docs/project-handoff/PHASE_3_ARCHITECTURE.md` for contracts and
+`docs/project-handoff/PHASE_3_HANDOFF.md` for implementation, verified tests and
+limitations. First slice: official Fed monetary headlines -> existing PIT store ->
+URL/version grouping -> bounded real analyst context. Phase 3 remains in progress;
+independence, contradiction lifecycle, continuous scheduling, live validation and
+market-reaction controls remain future milestones. No world model/execution/alpha.
+Older Phase 2 history follows and is superseded where inconsistent.
+
 # Crypto AI Trading System — Project Status and Phase 2 Handoff
 
 ## Final Phase 2 release gate - 2026-10-27

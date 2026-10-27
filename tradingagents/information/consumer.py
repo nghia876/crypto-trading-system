@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from tradingagents.information.market_state import BTCMarketState, build_btc_market_state
+from tradingagents.information.narrative_events import narrative_events, render_narrative_events
 from tradingagents.information.store import InformationView, SQLiteInformationStore
 
 
@@ -90,7 +91,10 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
             )
     else:
         lines.append("- unknown; no eligible scheduled-event observations")
+    lines.append("Narrative events:")
+    lines.extend(render_narrative_events(result.view))
     core_ids = {
+        *(item.observation_id for item in narrative_events(result.view)[:3]),
         *spot_evidence,
         state.funding.evidence_observation_id,
         state.open_interest.evidence_observation_id,
@@ -188,12 +192,13 @@ def _ids(values) -> str:
 # capacity, so a long history cannot crowd out signals or macro/event lineage.
 MAX_ANALYSIS_INFORMATION_CHARS = 28000
 _SECTION_BUDGETS = {
-    "Signals:": 6500,
-    "Macro series:": 4000,
-    "Upcoming scheduled macro events:": 4000,
-    "Recorded coverage:": 4000,
-    "Point-in-time source definitions:": 3000,
-    "Evidence metadata (schema and unit):": 5000,
+    "Signals:": 6000,
+    "Macro series:": 3500,
+    "Upcoming scheduled macro events:": 3500,
+    "Narrative events:": 4000,
+    "Recorded coverage:": 3000,
+    "Point-in-time source definitions:": 2500,
+    "Evidence metadata (schema and unit):": 4000,
 }
 
 

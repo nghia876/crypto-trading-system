@@ -283,3 +283,26 @@ not change the acceptance result or imply that uncollected values are known.
 `TreasuryYieldCollector` fetches the Treasury's public current-year daily par-yield CSV and normalizes only its `10 Yr` column. The stable source ID, metric (`macro.treasury_10y_par_yield_pct`), U.S. subject, observation/reference date (`event_time` and `effective_time`), units, endpoint, and transformation are stored in the existing `Observation` envelope. The CSV does not expose an exact publication timestamp or vintage history, so `publication_time` stays unset and `first_seen_time`/`retrieved_at` conservatively determine replay availability. Backfilled rows are never available before local ingestion.
 
 A changed value for the same source, subject, metric, and event date is appended as a new observation; the store links it to the prior version, preserving what was known before the later retrieval. `build_treasury_yield_state` uses only the supplied point-in-time view and reports the latest rate, evidence ID, observation age, and a configurable freshness label (default stale after three calendar days). This is one daily 10-year par-yield proxy, not a broad macro state or a real-time yield. The collector is caller-driven; freshness thresholds are initial defaults and source reliability is unmeasured. The Treasury documents CSV downloads and separate static historical archives, but does not provide old data vintages in the current feed.
+
+
+## Phase 3 first slice: official monetary announcements
+
+See `docs/project-handoff/PHASE_3_ARCHITECTURE.md` for timing, identity,
+credibility, independence, lifecycle, coverage and replay contracts. A caller can
+poll and append without enabling any trading capability:
+
+```python
+from tradingagents.information.narrative_events import FedMonetaryCollector
+from tradingagents.information.store import SQLiteInformationStore
+
+batch = FedMonetaryCollector().collect()
+SQLiteInformationStore("information.sqlite3").append(batch)
+```
+
+The existing optional graph information-store setting exposes eligible events
+alongside macro/calendar and micro market-state evidence, within the same total
+28,000-character context budget. Headlines are source claims; independent
+confirmation, contradictions and market reaction remain unknown or unsearched.
+No scheduler, causal inference, full-release extraction, or complete news coverage
+is claimed. Failures raise `MarketDataCollectionError`; the caller owns operational
+failure recording and retries. This does not complete Phase 3.

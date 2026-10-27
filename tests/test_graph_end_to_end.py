@@ -222,6 +222,18 @@ def test_crypto_run_context_reaches_the_real_market_analyst_prompt(
     store.append(macro)
     store.append(MarketDataBatch((event, future), (), cutoff + timedelta(seconds=1)))
 
+    from tradingagents.information.narrative_events import parse_fed_monetary_feed
+    rss = ("<rss><channel><item><title>Official policy headline</title>"
+           "<link>https://www.federalreserve.gov/newsevents/pressreleases/monetary20260109a.htm</link>"
+           "<pubDate>Fri, 09 Jan 2026 10:00:00 GMT</pubDate></item></channel></rss>")
+    announcement = parse_fed_monetary_feed(rss, retrieved_at=cutoff)
+    correction = parse_fed_monetary_feed(
+        rss.replace("Official policy headline", "FUTURE POLICY CORRECTION"),
+        retrieved_at=cutoff + timedelta(microseconds=1),
+    )
+    store.append(announcement)
+    store.append(correction)
+
     model = PromptCapturingModel()
     graph = _graph(
         tmp_path, monkeypatch, model, information_store_path=str(store_path)
@@ -236,6 +248,12 @@ def test_crypto_run_context_reaches_the_real_market_analyst_prompt(
     market_prompts = [prompt for prompt in model.prompts if "get_verified_market_snapshot" in prompt]
     assert market_prompts
     market_prompt = "\n".join(market_prompts)
+    assert announcement.observations[0].observation_id in market_prompt
+    assert "Official policy headline" in market_prompt
+    assert "FUTURE POLICY CORRECTION" not in market_prompt
+    assert correction.observations[0].observation_id not in market_prompt
+    assert "No causal price inference" in market_prompt
+    assert len(state["analysis_information"]) <= 28000
     assert macro.observations[0].observation_id in market_prompt
     assert event.observation_id in market_prompt
     assert "future-funding-must-not-leak" not in market_prompt

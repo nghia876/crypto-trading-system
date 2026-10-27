@@ -214,6 +214,14 @@ class SQLiteInformationStore:
                     (observation.observation_id,),
                 ).fetchone()
                 if existing_id is not None:
+                    if (observation.metric == "narrative.event"
+                            and observation.supersedes_observation_id is None):
+                        # Match the append-time automatic revision link when a
+                        # caller retries the identical immutable narrative batch.
+                        stored = self._decode_observation(existing_id)
+                        values = _observation_values(replace(
+                            observation, supersedes_observation_id=stored.supersedes_observation_id
+                        ))
                     if existing_id != values:
                         raise ObservationStoreConflict(
                             f"observation_id reused with different content: {observation.observation_id}"
@@ -240,11 +248,14 @@ class SQLiteInformationStore:
                 ]
                 prior = max(prior_versions, key=lambda item: item.available_at, default=None)
                 if prior is not None and observation.supersedes_observation_id is None:
-                    if dict(prior.payload) == dict(observation.payload):
+                    if (dict(prior.payload) == dict(observation.payload)
+                            and observation.metric != "narrative.event"):
                         # A restarted collector may assign a new ID to an unchanged
                         # candle. Keep the first-seen version and do not move its
                         # point-in-time availability forward.
                         continue
+                    # Narrative polls retain every copy so coverage evidence IDs
+                    # always resolve, including unchanged feed repetitions.
                     observation = replace(
                         observation,
                         supersedes_observation_id=prior.observation_id,
