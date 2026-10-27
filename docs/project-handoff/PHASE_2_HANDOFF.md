@@ -31,7 +31,7 @@ The Blueprint (`sources/PRODUCT_BLUEPRINT.md`, read-only project attachment) sta
 
 The criteria do not promise exhaustive source coverage or continued live availability. Recorded limitations remain visible: the broad dollar index is a proxy for ICE DXY; BLS runtime access returned HTTP 403; Treasury live persistence/reopen replay was not verified after an earlier timeout; scheduled release coverage is not exhaustive; full-project pytest was not verified because the shared setup needs unavailable `yfinance` and `curl_cffi`.
 
-## Verification reproduced for this handoff
+## Original Phase 2 verification (before the alignment correction)
 
 - 70 focused tests passed across `test_information_contract.py`, `test_information_store.py`, `test_binance_spot_collector.py`, `test_btc_spot_market_state.py`, `test_binance_usdm_collector.py`, `test_binance_usdm_streams.py`, `test_macro_series.py`, `test_scheduled_events.py`, and `test_treasury_rates.py`.
 - The focused run used pytest with shared `tests/conftest.py` disabled because its import-time dependencies are missing. Tests use mocked source responses; this does not verify live feeds, the shared network guard, or the full suite.
