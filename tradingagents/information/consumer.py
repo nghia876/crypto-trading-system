@@ -7,7 +7,10 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from tradingagents.information.market_state import BTCMarketState, build_btc_market_state
-from tradingagents.information.narrative_events import narrative_events, render_narrative_events
+from tradingagents.information.narrative_events import (
+    render_narrative_events,
+    selected_narrative_events,
+)
 from tradingagents.information.store import InformationView, SQLiteInformationStore
 
 
@@ -93,8 +96,9 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
         lines.append("- unknown; no eligible scheduled-event observations")
     lines.append("Narrative events:")
     lines.extend(render_narrative_events(result.view))
+    selected_ids = {item.observation_id for item in selected_narrative_events(result.view)}
     core_ids = {
-        *(item.observation_id for item in narrative_events(result.view)[:3]),
+        *(item.observation_id for item in selected_narrative_events(result.view)),
         *spot_evidence,
         state.funding.evidence_observation_id,
         state.open_interest.evidence_observation_id,
@@ -153,6 +157,7 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
     evidence_observations = sorted(
         (item for item in result.view.observations if item.observation_id in priority_ids),
         key=lambda item: (
+            item.observation_id not in selected_ids,
             item.observation_id not in core_ids,
             item.source_id,
             item.metric,
@@ -171,7 +176,8 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
         lines.append("- none; no eligible observations provide evidence")
     lines.append(
         "Missing sources or observations mean unknown, not negative evidence. "
-        "Treat stale values as stale and use only the evidence IDs shown."
+        "Treat stale values as stale and use only the evidence IDs shown. "
+        "Legacy news/social tool outputs are outside this store's point-in-time guarantees."
     )
     return _bounded_context(lines, result)
 

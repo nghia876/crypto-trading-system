@@ -1,3 +1,15 @@
+# Current checkpoint: Phase 3.2A (2026-10-27)
+
+Branch `phase-3-event-narrative-slice`; locally implemented broad public RSS/Atom
+and GDELT acquisition in the same information layer/SQLite store, durable poll
+outcomes, general news selection beside Fed, and optional actual graph intraday
+cutoff. See `docs/project-handoff/PHASE_3_2A_HANDOFF.md` for verified checks and
+limits. Live endpoint attempts failed ConnectionError; operational readiness is
+unverified. Next: claim/event provenance and append-only confirmation/contradiction
+lifecycle. Phase 3 remains IN_PROGRESS. No push/merge or change to main.
+
+Older checkpoints below are historical and superseded where inconsistent.
+
 # Current checkpoint: Phase 3 first slice (2026-10-27)
 
 Current branch: `phase-3-event-narrative-slice`, based on verified local Phase 2

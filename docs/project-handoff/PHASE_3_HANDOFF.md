@@ -1,3 +1,11 @@
+# Latest checkpoint: Phase 3.2A (2026-10-27)
+
+Broad RSS/Atom + GDELT discovery, durable poll outcomes, general news replay and
+explicit intraday graph cutoff are now implemented locally on the same branch.
+See [PHASE_3_2A_HANDOFF.md](PHASE_3_2A_HANDOFF.md) for current contracts, exact
+checks, live-connection limitations and next milestone. The older first-slice
+handoff below remains history; Phase 3 as a whole is still IN_PROGRESS.
+
 # Phase 3 first-slice handoff
 
 Date: 2026-10-27 (Asia/Saigon). Status: first slice locally VERIFIED by the checks

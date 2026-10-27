@@ -3,7 +3,7 @@ import json
 import logging
 import os
 from contextlib import contextmanager
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +41,16 @@ def _validate_trade_date(trade_date) -> str:
     if value > get_current_date():
         raise ValueError(f"trade_date cannot be in the future: {value}")
     return value
+
+
+def _validate_decision_time(trade_date: str, decision_time: datetime) -> None:
+    if not isinstance(decision_time, datetime) or decision_time.tzinfo is None or decision_time.utcoffset() is None:
+        raise ValueError("decision_time must be an aware datetime")
+    cutoff = decision_time.astimezone(UTC)
+    if cutoff.date().isoformat() != str(trade_date):
+        raise ValueError("decision_time UTC date must match trade_date")
+    if cutoff > datetime.now(UTC):
+        raise ValueError("decision_time cannot be in the future")
 
 
 def _information_decision_time(trade_date: str, now: datetime | None = None) -> datetime:
@@ -179,7 +189,7 @@ class TradingAgentsGraph:
             f"settings={digest}",
         ])
 
-    def propagate(self, company_name, trade_date, asset_type: str = "stock", portfolio=None):
+    def propagate(self, company_name, trade_date, asset_type: str = "stock", portfolio=None, *, decision_time: datetime | None = None):
         """Run the trading agents graph for a company on a specific date.
 
         ``asset_type`` selects between the stock pipeline (default) and the
@@ -189,6 +199,10 @@ class TradingAgentsGraph:
         a per-ticker SqliteSaver so a crashed run can resume from the last
         successful node on a subsequent invocation with the same ticker+date.
 
+        ``decision_time`` optionally supplies an aware intraday cutoff whose UTC
+        date must match ``trade_date``. It gates the evidence store, not legacy
+        tools or date-based memory. Intraday checkpoint resume is not supported.
+
         Returns ``(final_state, signal)`` where ``signal`` is one of the 5-tier
         ratings (Buy / Overweight / Hold / Underweight / Sell) or ``"REVIEW"``
         when the decision had no parseable rating (#1170); guard with
@@ -196,12 +210,17 @@ class TradingAgentsGraph:
         PortfolioRating enum.
         """
         trade_date = _validate_trade_date(trade_date)
+        if decision_time is not None:
+            _validate_decision_time(trade_date, decision_time)
+            if self.config.get("checkpoint_enabled"):
+                raise ValueError("intraday decision_time requires checkpoint_enabled=False to avoid resuming a different cutoff")
 
         with run_config(self.config), \
                 self.checkpoint_scope(company_name, trade_date, asset_type, portfolio) as thread_id_value:
             return self._run_graph(
                 company_name, trade_date, asset_type=asset_type,
                 checkpoint_thread_id=thread_id_value, portfolio=portfolio,
+                **({"decision_time": decision_time} if decision_time is not None else {}),
             )
 
     def begin_checkpoint(self, company_name, trade_date, asset_type: str = "stock", portfolio=None) -> str | None:
@@ -305,13 +324,15 @@ class TradingAgentsGraph:
         stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         return Path(self.config["results_dir"]) / "reports" / f"{safe_ticker_component(ticker)}_{stamp}"
 
-    def create_run_state(self, company_name, trade_date, asset_type: str = "stock", portfolio=None):
+    def create_run_state(self, company_name, trade_date, asset_type: str = "stock", portfolio=None, *, decision_time: datetime | None = None):
         """Build a run's initial state; propagate() and the CLI both start here.
 
         Injects the resolved instrument identity for every agent (#814). The
         memory log's lessons are not here: the graph's Memory Log step settles
         and loads them alongside the analysts (see ``_memory_step``).
         """
+        if decision_time is not None:
+            _validate_decision_time(trade_date, decision_time)
         initial_state = self.propagator.create_initial_state(
             company_name,
             trade_date,
@@ -321,12 +342,18 @@ class TradingAgentsGraph:
         )
         store_path = self.config.get("information_store_path")
         if store_path and asset_type == "crypto":
-            cutoff = _information_decision_time(trade_date)
+            cutoff = decision_time or _information_decision_time(trade_date)
             result = build_analysis_information(SQLiteInformationStore(store_path), cutoff)
             initial_state["analysis_information"] = render_analysis_information(result)
             initial_state["messages"].append(("human", initial_state["analysis_information"]))
         else:
             initial_state["analysis_information"] = ""
+        if decision_time is not None:
+            initial_state["messages"].append(("human",
+                f"Decision cutoff: {decision_time.astimezone(UTC).isoformat()}. "
+                "Only the replayable evidence store enforces this intraday cutoff. "
+                "Legacy news/social/market tools and date-based memory do not establish intraday "
+                "point-in-time availability; their output is not verified PIT evidence."))
         return initial_state
 
     def _memory_step(self, state):
@@ -394,9 +421,10 @@ class TradingAgentsGraph:
         )
 
     def _run_graph(self, company_name, trade_date, asset_type: str = "stock",
-                   checkpoint_thread_id: str | None = None, portfolio=None):
+                   checkpoint_thread_id: str | None = None, portfolio=None, *, decision_time: datetime | None = None):
         """Execute the graph and write the resulting state to disk and memory log."""
-        init_agent_state = self.create_run_state(company_name, trade_date, asset_type, portfolio)
+        init_agent_state = self.create_run_state(company_name, trade_date, asset_type, portfolio,
+            **({"decision_time": decision_time} if decision_time is not None else {}))
         args = self.propagator.get_graph_args()
 
         # Inject the checkpoint thread_id (from checkpoint_scope) so the same

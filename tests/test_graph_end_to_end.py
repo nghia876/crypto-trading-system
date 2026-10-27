@@ -541,3 +541,45 @@ def test_crypto_information_store_is_optional(tmp_path, monkeypatch, offline, se
     assert signal == "Overweight"
     assert not state.get("analysis_information")
     assert all("Replayable point-in-time market context" not in p for p in model.prompts)
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("asset_type", ["crypto", "stock"])
+def test_explicit_intraday_cutoff_through_actual_graph(tmp_path, monkeypatch, offline, asset_type):
+    from tradingagents.information.news import parse_news_snapshot
+    from tradingagents.information.sources import BROAD_NEWS_CONFIG
+
+    cutoff = datetime(2026, 1, 9, 12, 30, 5, 123456, tzinfo=UTC)
+    store = SQLiteInformationStore(tmp_path / "intraday.db")
+    rss = '<rss><channel><item><title>Diplomatic negotiations underway</title><link>https://example.org/war</link><pubDate>Fri, 09 Jan 2026 10:00:00 GMT</pubDate></item></channel></rss>'
+    first = parse_news_snapshot(rss, BROAD_NEWS_CONFIG[0], retrieved_at=cutoff)
+    future = parse_news_snapshot(rss.replace("Diplomatic negotiations underway", "FUTURE WAR CORRECTION"), BROAD_NEWS_CONFIG[0], retrieved_at=cutoff + timedelta(microseconds=1))
+    store.append(first)
+    store.append(future)
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
+    state, signal = graph.propagate("BTCUSDT" if asset_type == "crypto" else "NVDA", TRADE_DATE,
+                                    asset_type=asset_type, decision_time=cutoff)
+    prompts = "\n".join(model.prompts)
+    assert signal == "Overweight"
+    assert f"Decision cutoff: {cutoff.isoformat()}" in prompts
+    assert "Legacy news/social/market tools" in prompts
+    assert "FUTURE WAR CORRECTION" not in prompts
+    if asset_type == "crypto":
+        assert "Diplomatic negotiations underway" in prompts
+        assert first.observations[0].observation_id in prompts
+        assert future.observations[0].observation_id not in prompts
+        assert len(state["analysis_information"]) <= 28000
+    else:
+        assert not state["analysis_information"]
+
+
+@pytest.mark.unit
+def test_intraday_validation_and_checkpoint_guard(tmp_path, monkeypatch, offline):
+    graph = _graph(tmp_path, monkeypatch, ScriptedModel())
+    for cutoff in (datetime(2026, 1, 9, 12), datetime(2026, 1, 8, 12, tzinfo=UTC)):
+        with pytest.raises(ValueError, match="aware|match"):
+            graph.propagate("BTCUSDT", TRADE_DATE, asset_type="crypto", decision_time=cutoff)
+    graph.config["checkpoint_enabled"] = True
+    with pytest.raises(ValueError, match="checkpoint"):
+        graph.propagate("BTCUSDT", TRADE_DATE, asset_type="crypto", decision_time=datetime(2026, 1, 9, 12, tzinfo=UTC))

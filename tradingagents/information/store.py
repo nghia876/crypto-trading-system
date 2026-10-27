@@ -334,6 +334,26 @@ class SQLiteInformationStore:
                 ],
             )
 
+    def first_seen_for_subject(self, subject: str) -> datetime | None:
+        """Earliest local observation across discovery sources, never publication time."""
+        with self._connection() as connection:
+            rows = connection.execute(
+                "SELECT first_seen_time FROM observations WHERE subject = ? AND metric = 'narrative.event'",
+                (subject,),
+            ).fetchall()
+        return min((datetime.fromisoformat(row[0]) for row in rows), default=None)
+
+    def coverage_by_id(self, coverage_id: str) -> CoverageRecord | None:
+        """Read a durable poll outcome for restart-safe idempotency."""
+        with self._connection() as connection:
+            row = connection.execute(
+                "SELECT coverage_id, source_id, subject, metric, observed_at, status, detail, evidence_ids_json FROM coverage WHERE coverage_id = ?",
+                (coverage_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return CoverageRecord(*row[:4], datetime.fromisoformat(row[4]), CoverageStatus(row[5]), row[6], tuple(json.loads(row[7])))
+
     def view_at(self, decision_time: datetime) -> InformationView:
         """Reconstruct the observations and gaps known at an aware cutoff."""
         _aware("decision_time", decision_time)

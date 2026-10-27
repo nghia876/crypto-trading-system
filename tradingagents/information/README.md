@@ -306,3 +306,26 @@ confirmation, contradictions and market reaction remain unknown or unsearched.
 No scheduler, causal inference, full-release extraction, or complete news coverage
 is claimed. Failures raise `MarketDataCollectionError`; the caller owns operational
 failure recording and retries. This does not complete Phase 3.
+
+## Phase 3.2A broad news acquisition/replay (2026-10-27)
+
+Implemented in the existing information layer: `news.poll_once` discovers public
+RSS/Atom and GDELT war/geopolitics and technology news without instrument or price
+triggers. Pass the existing `information_store_path` and a unique logical poll ID;
+reusing that ID resumes recorded per-source outcomes without refetching. New polls
+need new IDs. Success, failure and empty coverage persist in the same SQLite store.
+No scheduler is installed. Public access is not a blanket reuse licence; review
+publisher terms before redistribution/business use.
+
+Immutable canonical article/version/acquisition identities, conservative local
+availability, unknown origin/syndication and exact-URL overlap grouping support
+replay without claiming independent corroboration. General news and Fed v1 share
+the existing 4,000-character narrative / 28,000-character total context budgets.
+Selected narrative metadata corresponds to the records actually rendered.
+
+Graph `propagate(..., decision_time=aware_datetime)` supports explicit historical
+intraday cutoffs (UTC date matching trade_date). Existing date-only and stock
+behavior is preserved. Intraday checkpoint resume is unsupported; legacy tools and
+date-based memory remain outside the evidence store PIT guarantee, disclosed in
+actual prompts. See `docs/project-handoff/PHASE_3_2A_HANDOFF.md` for full contracts,
+verification, controlled live failures, usage and next milestones.

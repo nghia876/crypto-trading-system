@@ -120,12 +120,15 @@ class Observation:
         """Latest known release/acquisition bound for point-in-time eligibility.
 
         This conservative bound is max(first_seen_time, retrieved_at,
-        publication_time when known). Event and effective times describe the
+        publication_time when known). Broad news also gates on its reported update
+        time (stored in effective_time). For other schemas event/effective times describe the
         world and do not establish when this system knew the value.
         """
         candidates = [self.first_seen_time, self.retrieved_at]
         if self.publication_time is not None:
             candidates.append(self.publication_time)
+        if self.schema_version == "narrative-news-v1" and self.effective_time is not None:
+            candidates.append(self.effective_time)
         return max(candidates)
 
     def is_available_at(self, decision_time: datetime) -> bool:

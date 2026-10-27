@@ -4,6 +4,7 @@ This registry is separate from TradingAgents' vendor router: it describes
 what a source can tell us and its timing/quality limitations, while the router
 selects implementations for existing analyst tools.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -44,7 +45,14 @@ class Source:
     metadata: tuple[tuple[str, str], ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
-        for name in ("source_id", "version", "source_type", "provider", "endpoint", "collection_method"):
+        for name in (
+            "source_id",
+            "version",
+            "source_type",
+            "provider",
+            "endpoint",
+            "collection_method",
+        ):
             if not getattr(self, name).strip():
                 raise ValueError(f"{name} must not be empty")
         if not isinstance(self.status, SourceStatus):
@@ -78,3 +86,123 @@ class SourceRegistry:
 
     def __len__(self) -> int:
         return len(self._sources)
+
+
+@dataclass(frozen=True, slots=True)
+class NewsDiscoveryConfig:
+    """Versioned public discovery request; domains never depend on market moves."""
+
+    source: Source
+    domain: str
+    format: str = "rss"
+    query: str = ""
+    version: str = "1"
+    max_items: int = 100
+    max_bytes: int = 2_000_000
+
+    def __post_init__(self):
+        from urllib.parse import urlsplit
+
+        if self.domain not in {"WAR_GEOPOLITICS", "TECHNOLOGY"}:
+            raise ValueError("unsupported discovery domain")
+        if self.format not in {"rss", "atom", "gdelt"}:
+            raise ValueError("unsupported discovery format")
+        url = urlsplit(self.source.endpoint)
+        if url.scheme != "https" or not url.hostname or url.username or url.password:
+            raise ValueError("public HTTPS endpoint required")
+        if self.source.authentication_required:
+            raise ValueError("news discovery requires FREE public access")
+        if (
+            not self.version.strip()
+            or not 1 <= self.max_items <= 250
+            or not 1 <= self.max_bytes <= 2_000_000
+        ):
+            raise ValueError("invalid version or discovery bounds")
+        if self.format == "gdelt" and (
+            url.hostname != "api.gdeltproject.org" or not self.query.strip()
+        ):
+            raise ValueError("GDELT requires its public endpoint and an explicit query")
+
+    @property
+    def source_definition(self) -> Source:
+        from dataclasses import replace
+
+        return replace(
+            self.source,
+            version=f"{self.source.version}:news-{self.version}:{self.fingerprint[:16]}",
+            metadata=self.source.metadata
+            + (
+                ("config_fingerprint", self.fingerprint),
+                ("domain", self.domain),
+                ("format", self.format),
+                ("query", self.query),
+                ("max_items", str(self.max_items)),
+                ("max_bytes", str(self.max_bytes)),
+            ),
+        )
+
+    @property
+    def fingerprint(self) -> str:
+        import hashlib
+        import json
+        from dataclasses import asdict
+
+        return hashlib.sha256(json.dumps(asdict(self), sort_keys=True).encode()).hexdigest()
+
+
+def _news_source(source_id, provider, endpoint):
+    return Source(
+        source_id=source_id,
+        source_type="public_news_discovery",
+        provider=provider,
+        endpoint=endpoint,
+        collection_method="Bounded caller-independent public polling",
+        metric_scope=("narrative.event",),
+        publication_semantics="Source reported; may be unknown",
+        revision_behavior="Immutable local article versions; never backdated",
+        historical_depth="Rolling discovery, not historical vintages",
+        polling_frequency="Caller controlled",
+        rate_limit="One bounded request per poll; no automatic retry; honor provider access policy",
+        limitations=(
+            "Incomplete coverage",
+            "Origin and syndication unverified",
+            "No independent corroboration",
+        ),
+        legal_constraints=(
+            "Public feed/API only; no article body crawling or access bypass",
+        ),
+    )
+
+
+BROAD_NEWS_CONFIG = (
+    NewsDiscoveryConfig(
+        _news_source("news.bbc.world", "BBC", "https://feeds.bbci.co.uk/news/world/rss.xml"),
+        "WAR_GEOPOLITICS",
+    ),
+    NewsDiscoveryConfig(
+        _news_source(
+            "news.bbc.technology", "BBC", "https://feeds.bbci.co.uk/news/technology/rss.xml"
+        ),
+        "TECHNOLOGY",
+    ),
+    NewsDiscoveryConfig(
+        _news_source(
+            "news.gdelt.geopolitics",
+            "GDELT discovery",
+            "https://api.gdeltproject.org/api/v2/doc/doc",
+        ),
+        "WAR_GEOPOLITICS",
+        "gdelt",
+        "(war OR conflict OR diplomacy OR sanctions)",
+    ),
+    NewsDiscoveryConfig(
+        _news_source(
+            "news.gdelt.technology",
+            "GDELT discovery",
+            "https://api.gdeltproject.org/api/v2/doc/doc",
+        ),
+        "TECHNOLOGY",
+        "gdelt",
+        '(technology OR semiconductor OR "artificial intelligence" OR cybersecurity)',
+    ),
+)
