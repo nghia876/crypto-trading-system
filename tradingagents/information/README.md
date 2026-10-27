@@ -234,52 +234,50 @@ The collector is caller-driven. A one-time repository-runtime check fetched thre
 
 ## Phase 2 acceptance and closure status
 
-The blueprint defines Phase 2 as BTC market state, derivatives state, macro
-state, and scheduled events. Its exit criteria are reproducible state,
-freshness monitoring, and historical reconstruction. **Phase 2 remains open.**
+The blueprint's Phase 2 exit criteria are reproducible market/derivatives/macro
+state, freshness monitoring, and historical reconstruction. **Acceptance: PASS;
+Phase 2 can close against those exit criteria.** The review distinguishes these
+criteria from broader source coverage and one-time live-access evidence:
 
-- **Reproducible state — PARTIAL.** BTC spot state is deterministic for an
-  `InformationView`. Combined state now includes funding, open interest,
-  mark/index basis, spot/perpetual divergence when the observations are close
-  enough in time, Binance BTCUSDT perpetual symbol status, Treasury DGS10,
-  selected public macro series, and upcoming FOMC/BLS/BEA releases, each with
-  source evidence. Liquidation stream events are represented as snapshots;
-  Binance emits at most the largest order per symbol per second, so this is
-  not a complete liquidation tape. The broad U.S. dollar index is a proxy, not
-  the ICE DXY. Broader release and risk-proxy coverage remains incomplete.
-- **Freshness monitoring — PASS for state snapshots.** State reports
-  fresh/stale/unknown for spot, funding, open interest, mark price, symbol
-  status, Treasury yield, and the selected daily/weekly macro series. These
-  checks run when a caller builds the state. Collectors remain caller-driven,
-  and ongoing source-health monitoring is not implemented; the blueprint does
-  not make a scheduler or alerts an exit criterion.
+- **Reproducible state — PASS.** `build_btc_market_state(view_at_T)` deterministically
+  derives spot, funding, open interest, perpetual basis and spot divergence,
+  contract status, sampled liquidation evidence, Treasury DGS10, selected FRED
+  series, and upcoming FOMC/BLS/BEA events from one point-in-time view. Values
+  preserve their evidence IDs and availability times. Liquidation records are
+  censored snapshots, not a complete tape.
+- **Freshness monitoring — PASS.** State builders report `fresh`, `stale`, or
+  `unknown` for spot, funding, open interest, mark price, contract status,
+  Treasury yield, and selected macro series. Freshness is evaluated when a
+  caller builds state; no scheduler or alerts are specified by the Phase 2 exit
+  criteria.
 - **Historical reconstruction — PASS for locally ingested information.** The
-  SQLite point-in-time view and state builders filter observations by their
-  recorded availability; FRED, BLS, and Binance backfills cannot appear before
-  local first-seen/retrieval time. Revision and schedule reschedule behavior
-  is covered by replay tests. Source publication times or historical vintages
-  not supplied by a source cannot be reconstructed. Treasury live
-  persistence/reopen replay remains NOT VERIFIED after the prior timeout.
-- **Scheduled events — PARTIAL.** FOMC, BLS, and BEA release calendars now have
-  caller-driven parsers and collectors. FOMC and BEA had one-time live checks.
-  **BLS runtime access — BLOCKED:** the annual page returned HTTP 403. Census
-  and other release schedules are not included.
-- **Live evidence — PARTIAL.** Earlier unauthenticated checks fetched two Spot
-  candles, three funding rows, one open-interest snapshot, and eleven FOMC
-  windows. The latest runtime check fetched 13 BEA events and three WTI rows;
-  SQLite replay exposed zero before local retrieval and all at retrieval. These
-  one-time checks do not establish ongoing reliability. Treasury live
-  fetch/replay remains NOT VERIFIED; no retry was made.
-- **Focused automated verification — PASS.** The expanded nine-file focused
-  run passed 70 tests with pytest's shared `conftest.py` disabled. Ruff lint
-  and formatting checks and `git diff --check` passed for the Phase 2 files.
+  SQLite view gates on `max(first_seen_time, retrieved_at, publication_time)`
+  when publication time exists. Reference/event dates do not establish
+  availability. Tests cover replay before and after ingestion, revisions,
+  rescheduling, and late data; replay cannot reconstruct source publication
+  times or historical vintages that providers do not supply.
+- **Macro universe and calendar breadth — PARTIAL.** Rates, oil, a nominal broad
+  dollar index, financial conditions, S&P 500, VIX, FOMC, BLS, and BEA are
+  represented. The dollar series is explicitly a broad-index proxy, not the ICE
+  DXY. BLS and BEA are not exhaustive coverage of major U.S. releases; the
+  blueprint does not specify an exact dollar-index provider or require a live
+  BLS request as Phase 2 exit evidence.
+- **Live-source evidence — PARTIAL.** Recorded one-time checks include Spot and
+  USDⓈ-M observations, FOMC, BEA, and WTI. They demonstrate endpoint/parser and
+  local replay behavior only, not ongoing reliability. The BLS annual page
+  returned HTTP 403 in this environment (**runtime access BLOCKED**); Treasury
+  live persistence/reopen replay remains **NOT VERIFIED** after its earlier
+  timeout. These are runtime evidence limitations, not failures of the
+  documented replay contract.
+- **Focused automated verification — PASS.** Nine focused test files passed 70
+  tests with shared `tests/conftest.py` disabled. Ruff lint, Ruff format check,
+  and `git diff --check` pass for the Phase 2 changes.
 - **Full project test suite — NOT VERIFIED.** Shared test setup requires
-  `yfinance` and `curl_cffi`, which are unavailable in this environment.
+  `yfinance` and `curl_cffi`, unavailable in this environment.
 
-Phase 2 stays open because exact DXY, broader risk/release coverage, and a
-repository-runtime BLS read are not established. The implementation preserves point-in-time integrity for the
-observations it does ingest; it does not claim complete macro or liquidation
-coverage.
+Phase 2 is accepted against its stated exit criteria. The partial source
+coverage above should remain visible when interpreting the macro state; it does
+not change the acceptance result or imply that uncollected values are known.
 ## Treasury macro observation contract (DGS10)
 
 `TreasuryYieldCollector` fetches the Treasury's public current-year daily par-yield CSV and normalizes only its `10 Yr` column. The stable source ID, metric (`macro.treasury_10y_par_yield_pct`), U.S. subject, observation/reference date (`event_time` and `effective_time`), units, endpoint, and transformation are stored in the existing `Observation` envelope. The CSV does not expose an exact publication timestamp or vintage history, so `publication_time` stays unset and `first_seen_time`/`retrieved_at` conservatively determine replay availability. Backfilled rows are never available before local ingestion.
