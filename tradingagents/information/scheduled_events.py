@@ -12,7 +12,12 @@ from zoneinfo import ZoneInfo
 
 import requests
 
-from tradingagents.information.binance_spot import MarketDataBatch, MarketDataCollectionError
+from tradingagents.information.binance_spot import (
+    CoverageRecord,
+    CoverageStatus,
+    MarketDataBatch,
+    MarketDataCollectionError,
+)
 from tradingagents.information.observations import Observation, Transformation
 from tradingagents.information.sources import Source
 from tradingagents.information.store import InformationView
@@ -206,6 +211,8 @@ class ScheduledMacroEvent:
             subject=self.event_id,
             metric="macro.scheduled_event",
             payload=payload,
+            schema_version="scheduled-macro-event-v1",
+            unit="event_record",
             event_time=self.scheduled_at,
             first_seen_time=first_seen,
             retrieved_at=retrieved_at,
@@ -480,7 +487,16 @@ def parse_fomc_calendar(html: str, *, retrieved_at: datetime) -> MarketDataBatch
         )
         observations.append(event.to_observation(retrieved_at=retrieved_at))
     observations.sort(key=lambda item: (item.event_time, item.observation_id))
-    return MarketDataBatch(tuple(observations), (), retrieved_at)
+    source_definition = FOMC_CALENDAR_SOURCE
+    source = source_definition.source_id
+    metric = "macro.scheduled_event"
+    coverage = CoverageRecord(
+        f"{source}:{retrieved_at.isoformat()}", source, "US", metric, retrieved_at,
+        CoverageStatus.PRESENT if observations else CoverageStatus.UNKNOWN,
+        f"{len(observations)} scheduled event(s) parsed",
+        tuple(item.observation_id for item in observations),
+    )
+    return MarketDataBatch(tuple(observations), (), retrieved_at, (coverage,), (source_definition,))
 
 
 class FOMCCalendarCollector:
@@ -584,7 +600,16 @@ def parse_bls_release_calendar(html: str, *, retrieved_at: datetime, year: int) 
             "BLS release calendar contained no recognizable upcoming releases"
         )
     observations.sort(key=lambda item: (item.event_time, item.observation_id))
-    return MarketDataBatch(tuple(observations), (), retrieved_at)
+    source_definition = source
+    source = source_definition.source_id
+    metric = "macro.scheduled_event"
+    coverage = CoverageRecord(
+        f"{source}:{retrieved_at.isoformat()}", source, "US", metric, retrieved_at,
+        CoverageStatus.PRESENT if observations else CoverageStatus.UNKNOWN,
+        f"{len(observations)} scheduled event(s) parsed",
+        tuple(item.observation_id for item in observations),
+    )
+    return MarketDataBatch(tuple(observations), (), retrieved_at, (coverage,), (source_definition,))
 
 
 class BLSReleaseCalendarCollector:
@@ -730,7 +755,16 @@ def parse_bea_release_calendar(
             "BEA release calendar contained no recognizable upcoming releases"
         )
     observations.sort(key=lambda item: (item.event_time, item.observation_id))
-    return MarketDataBatch(tuple(observations), (), retrieved_at)
+    source_definition = source
+    source = source_definition.source_id
+    metric = "macro.scheduled_event"
+    coverage = CoverageRecord(
+        f"{source}:{retrieved_at.isoformat()}", source, "US", metric, retrieved_at,
+        CoverageStatus.PRESENT if observations else CoverageStatus.UNKNOWN,
+        f"{len(observations)} scheduled event(s) parsed",
+        tuple(item.observation_id for item in observations),
+    )
+    return MarketDataBatch(tuple(observations), (), retrieved_at, (coverage,), (source_definition,))
 
 
 class BEAReleaseCalendarCollector:

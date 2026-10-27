@@ -21,6 +21,9 @@ def test_treasury_rows_use_local_availability_and_state_freshness(tmp_path):
     batch = parse_treasury_yield_csv(CSV, retrieved_at=T0, year=2026)
     assert len(batch.observations) == 2
     assert all(item.publication_time is None for item in batch.observations)
+    assert {item.unit for item in batch.observations} == {"percent"}
+    assert batch.coverage[0].evidence_ids == tuple(item.observation_id for item in batch.observations)
+    assert batch.source_definitions[0].source_id == batch.observations[0].source_id
     store = SQLiteInformationStore(tmp_path / "info.sqlite")
     store.append(batch)
     before = store.view_at(T0 - timedelta(microseconds=1))

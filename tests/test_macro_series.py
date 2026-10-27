@@ -31,6 +31,10 @@ def test_fred_graph_csv_is_available_only_from_local_retrieval():
     assert observation.available_at == RETRIEVED
     assert observation.publication_time is None
     assert observation.payload["proxy_for"] == SPEC.proxy_for
+    assert observation.unit == SPEC.units
+    assert observation.schema_version == "fred-series-v1"
+    assert batch.coverage[0].evidence_ids == tuple(item.observation_id for item in batch.observations)
+    assert batch.source_definitions == (SPEC.source,)
 
 
 def test_macro_state_replays_only_known_latest_values_and_reports_freshness(tmp_path):

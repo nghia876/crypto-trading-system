@@ -106,6 +106,10 @@ def test_bls_schedule_parser_normalizes_release_times_and_keeps_local_availabili
     assert cpi.event_time == datetime(2026, 11, 10, 13, 30, tzinfo=UTC)
     assert cpi.available_at == retrieved_at
     assert cpi.publication_time is None
+    assert cpi.unit == "event_record"
+    assert cpi.schema_version == "scheduled-macro-event-v1"
+    assert batch.coverage[0].evidence_ids == tuple(item.observation_id for item in batch.observations)
+    assert batch.source_definitions[0].source_id == cpi.source_id
 
 
 def test_bls_schedule_reschedule_preserves_release_identity_in_replay(tmp_path):

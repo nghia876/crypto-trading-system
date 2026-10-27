@@ -8,7 +8,12 @@ from datetime import UTC, datetime
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
-from tradingagents.information.binance_spot import MarketDataBatch, MarketDataCollectionError
+from tradingagents.information.binance_spot import (
+    CoverageRecord,
+    CoverageStatus,
+    MarketDataBatch,
+    MarketDataCollectionError,
+)
 from tradingagents.information.observations import Observation, Transformation
 from tradingagents.information.sources import Source
 
@@ -93,6 +98,8 @@ def parse_binance_usdm_liquidation_event(
         subject="BTCUSDT",
         metric="derivatives.liquidation_snapshot.usdm",
         payload=payload,
+        schema_version="binance-usdm-force-order-v1",
+        unit="largest_order_per_symbol_per_second",
         event_time=event_time,
         effective_time=event_time,
         first_seen_time=retrieved_at,
@@ -104,4 +111,14 @@ def parse_binance_usdm_liquidation_event(
             "Public stream snapshots only the largest liquidation order per symbol per second; not a complete liquidation tape",
         ),
     )
-    return MarketDataBatch((observation,), (), retrieved_at)
+    coverage = CoverageRecord(
+        f"{BINANCE_USDM_LIQUIDATION_STREAM_SOURCE.source_id}:{retrieved_at.isoformat()}",
+        BINANCE_USDM_LIQUIDATION_STREAM_SOURCE.source_id, "BTCUSDT",
+        observation.metric, retrieved_at, CoverageStatus.PRESENT,
+        "One largest-order snapshot parsed; stream is not a complete liquidation tape",
+        (observation.observation_id,),
+    )
+    return MarketDataBatch(
+        (observation,), (), retrieved_at, (coverage,),
+        (BINANCE_USDM_LIQUIDATION_STREAM_SOURCE,),
+    )

@@ -5,7 +5,7 @@
 **Feature branch:** `phase-1.2-btc-ohlcv-collector`
 **Verified baseline HEAD:** `7cb739d0af0fd7d0dd1b398b4c7bf66099bcbdea`
 **Local alignment correction commit:** `55689e6e186a13a56eab0248ba9a698ba8adfda7`
-**Phase 2:** alignment completion is implemented and focused information-layer verification passes locally; no push was made.
+**Phase 2:** information-layer alignment is implemented locally; all 75 focused tests pass, while the full suite remains unverified.
 
 ## Current verified state
 
@@ -31,7 +31,7 @@ Focused verification after the correction: 72 information-layer tests pass; Ruff
 
 **Current implementation base:** `1e1a4d69a6cee291c673c5ffdd2e3d9957841583`; completion changes are uncommitted pending verification.
 
-**Completion pass (2026-10-27):** source definitions have explicit versions and are durably appended/replayed with their observation-time metadata. Binance Spot and USDⓈ-M collectors attach successful-response coverage records, source snapshots, and explicit schema/unit declarations. Optional `information_store_path` integration builds one replay view at the trade-date UTC cutoff and includes its derived market context and evidence IDs in the analyst input. Missing data is rendered as unknown, not negative evidence. The nine focused information-layer suites pass (75 tests); Ruff and `git diff --check` pass. Full-suite pytest remains unverified because shared setup imports unavailable `yfinance`. Other collector families may still emit default units or omit coverage, no collection scheduler or live-source validation was added, and upstream historical publication vintages remain unavailable. Do not treat this as Phase 3 authorization. `.phase12-tools/` remains untracked and excluded from Git.
+**Completion pass (2026-10-27):** source definitions have explicit versions and are durably appended/replayed with their observation-time metadata. All information-layer batch-producing collectors now attach a source snapshot and explicit coverage record on successful collection/parse; observations declare schema and metric units for spot, derivatives, macro series, Treasury yields, scheduled events, and liquidation snapshots. Empty source responses remain unknown unless the collector has affirmative coverage evidence. Optional `information_store_path` integration builds one replay view at the trade-date UTC cutoff and includes its derived market context and evidence IDs in the analyst input. The nine focused information-layer suites pass (75 tests); Ruff and `git diff --check` pass. Full-suite pytest remains unverified because shared setup imports unavailable `yfinance`. Collection remains caller-driven; no scheduler, live-source validation, or upstream historical publication-vintage reconstruction was added. Do not treat this as Phase 3 authorization. `.phase12-tools/` remains untracked and excluded from Git.
 
 ## Phase 3 gate
 

@@ -13,7 +13,12 @@ from decimal import Decimal, InvalidOperation
 
 import requests
 
-from tradingagents.information.binance_spot import MarketDataBatch, MarketDataCollectionError
+from tradingagents.information.binance_spot import (
+    CoverageRecord,
+    CoverageStatus,
+    MarketDataBatch,
+    MarketDataCollectionError,
+)
 from tradingagents.information.observations import Observation, Transformation
 from tradingagents.information.sources import Source, SourceRegistry
 from tradingagents.information.store import InformationView
@@ -191,6 +196,8 @@ def parse_fred_graph_csv(
                     subject="US",
                     metric=spec.metric,
                     payload=payload,
+                    schema_version="fred-series-v1",
+                    unit=spec.units,
                     event_time=event_time,
                     effective_time=event_time,
                     first_seen_time=retrieved_at,
@@ -207,7 +214,14 @@ def parse_fred_graph_csv(
         raise MarketDataCollectionError("FRED CSV is empty") from exc
     except csv.Error as exc:
         raise MarketDataCollectionError("FRED CSV could not be parsed") from exc
-    return MarketDataBatch(tuple(observations), (), retrieved_at)
+    coverage = CoverageRecord(
+        f"{spec.source.source_id}:{retrieved_at.isoformat()}", spec.source.source_id,
+        "US", spec.metric, retrieved_at,
+        CoverageStatus.PRESENT if observations else CoverageStatus.UNKNOWN,
+        f"{len(observations)} usable observation(s) in response",
+        tuple(item.observation_id for item in observations),
+    )
+    return MarketDataBatch(tuple(observations), (), retrieved_at, (coverage,), (spec.source,))
 
 
 class FredPublicSeriesCollector:

@@ -12,7 +12,12 @@ from decimal import Decimal, InvalidOperation
 
 import requests
 
-from tradingagents.information.binance_spot import MarketDataBatch, MarketDataCollectionError
+from tradingagents.information.binance_spot import (
+    CoverageRecord,
+    CoverageStatus,
+    MarketDataBatch,
+    MarketDataCollectionError,
+)
 from tradingagents.information.observations import Observation, ObservationQuality, Transformation
 from tradingagents.information.sources import Source, SourceRegistry
 
@@ -94,6 +99,8 @@ def parse_treasury_yield_csv(
                     subject="US",
                     metric="macro.treasury_10y_par_yield_pct",
                     payload=payload,
+                    schema_version="treasury-daily-rates-v1",
+                    unit="percent",
                     event_time=event_time,
                     effective_time=event_time,
                     first_seen_time=first_seen,
@@ -110,7 +117,14 @@ def parse_treasury_yield_csv(
         raise MarketDataCollectionError("Treasury CSV could not be parsed") from exc
     if not observations:
         raise MarketDataCollectionError("Treasury CSV contained no usable 10 Yr observations")
-    return MarketDataBatch(tuple(observations), (), retrieved_at)
+    coverage = CoverageRecord(
+        f"{TREASURY_DGS10_SOURCE.source_id}:{retrieved_at.isoformat()}",
+        TREASURY_DGS10_SOURCE.source_id, "US", "macro.treasury_10y_par_yield_pct",
+        retrieved_at, CoverageStatus.PRESENT,
+        f"{len(observations)} usable yield observation(s)",
+        tuple(item.observation_id for item in observations),
+    )
+    return MarketDataBatch(tuple(observations), (), retrieved_at, (coverage,), (TREASURY_DGS10_SOURCE,))
 
 
 class TreasuryYieldCollector:

@@ -30,14 +30,18 @@ def test_force_order_stream_snapshot_uses_exchange_event_and_local_availability(
         },
     }
 
-    observation = parse_binance_usdm_liquidation_event(
+    observation_batch = parse_binance_usdm_liquidation_event(
         {"stream": "!forceOrder@arr", "data": message},
         retrieved_at=retrieved_at,
-    ).observations[0]
+    )
 
+    observation = observation_batch.observations[0]
     assert observation.event_time == datetime.fromtimestamp(1793015998, UTC)
     assert observation.available_at == retrieved_at
     assert observation.metric == "derivatives.liquidation_snapshot.usdm"
+    assert observation.unit == "largest_order_per_symbol_per_second"
+    assert observation.schema_version == "binance-usdm-force-order-v1"
+    assert observation_batch.coverage[0].status.value == "present"
     assert observation.payload["cumulative_filled_quantity"] == "0.25"
     assert "largest liquidation order" in observation.payload["snapshot_semantics"]
 
