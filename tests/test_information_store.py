@@ -6,11 +6,13 @@ import pytest
 
 from tradingagents.information import (
     BinanceSpotOHLCVCollector,
+    CoverageRecord,
     MarketDataBatch,
     MarketDataGap,
     Observation,
     ObservationStoreConflict,
     SQLiteInformationStore,
+    build_analysis_information,
 )
 
 
@@ -34,6 +36,8 @@ def make_observation(
         raw_reference="https://example.test/kline",
         quality="unknown",
         supersedes_observation_id=supersedes,
+        schema_version="ohlcv-v2",
+        unit="USDT_per_BTC",
     )
 
 
@@ -65,6 +69,8 @@ def test_reopen_store_reconstructs_only_known_revision_at_each_cutoff(tmp_path):
     assert len(before_revision.gaps) == 1
     assert [item.observation_id for item in after_revision.observations] == ["version-2"]
     assert after_revision.observations[0].payload["close"] == "100.6"
+    assert after_revision.observations[0].schema_version == "ohlcv-v2"
+    assert after_revision.observations[0].unit == "USDT_per_BTC"
     assert after_revision.observations[0].supersedes_observation_id == "version-1"
 
 
@@ -72,9 +78,7 @@ def test_reappending_same_batch_is_idempotent(tmp_path):
     store = SQLiteInformationStore(tmp_path / "information.sqlite3")
     at = datetime(2026, 1, 1, 0, 3, 30, tzinfo=UTC)
     observation = make_observation("version-1", close="100.5", available_at=at)
-    gap = MarketDataGap(
-        "BTCUSDT", "spot_ohlcv.1m", observation.event_time.replace(minute=1), at
-    )
+    gap = MarketDataGap("BTCUSDT", "spot_ohlcv.1m", observation.event_time.replace(minute=1), at)
     batch = MarketDataBatch((observation,), (gap,), at)
 
     store.append(batch)
@@ -194,8 +198,22 @@ class KlineSession:
     def get(self, url, *, params, timeout):
         opened = 1_767_225_600_000
         return KlineResponse(
-            [[opened, "100", "101", "99", self.close_value, "2.5", opened + 59_999,
-              "250.0", 10, "1.1", "110.0", "0"]]
+            [
+                [
+                    opened,
+                    "100",
+                    "101",
+                    "99",
+                    self.close_value,
+                    "2.5",
+                    opened + 59_999,
+                    "250.0",
+                    10,
+                    "1.1",
+                    "110.0",
+                    "0",
+                ]
+            ]
         )
 
 
@@ -217,7 +235,65 @@ def test_collector_to_durable_replay_preserves_ingestion_and_revision_times(tmp_
     replay = SQLiteInformationStore(database)
 
     assert replay.view_at(datetime(2026, 1, 1, 0, 3, 29, tzinfo=UTC)).observations == ()
-    assert replay.view_at(datetime(2026, 1, 1, 0, 4, 0, tzinfo=UTC)).observations[0].payload["close"] == "100.5"
+    assert (
+        replay.view_at(datetime(2026, 1, 1, 0, 4, 0, tzinfo=UTC)).observations[0].payload["close"]
+        == "100.5"
+    )
     latest = replay.view_at(now).observations
     assert latest[0].payload["close"] == "100.6"
     assert latest[0].supersedes_observation_id == first.observations[0].observation_id
+
+
+def test_coverage_evidence_is_replayed_only_after_observation_time(tmp_path):
+    store = SQLiteInformationStore(tmp_path / "coverage.sqlite3")
+    known_at = datetime(2026, 1, 1, 0, 5, tzinfo=UTC)
+    record = CoverageRecord(
+        "cov-1",
+        "market.binance.spot",
+        "BTCUSDT",
+        "spot_ohlcv.1m",
+        known_at,
+        "negative_evidence",
+        "No row returned for expected interval",
+        ("response-1",),
+    )
+    store.append(MarketDataBatch((), (), known_at, (record,)))
+    reopened = SQLiteInformationStore(store.path)
+
+    assert reopened.view_at(known_at.replace(minute=4)).coverage == ()
+    replayed = reopened.view_at(known_at).coverage
+    assert replayed == (record,)
+
+
+def test_analysis_consumer_derives_market_and_macro_from_one_replay_cutoff(tmp_path):
+    from datetime import timedelta
+
+    store = SQLiteInformationStore(tmp_path / "analysis-view.sqlite3")
+    decision_time = datetime(2026, 1, 1, 0, 5, tzinfo=UTC)
+    from dataclasses import replace
+
+    before = replace(
+        make_observation("known-at-T", close="100.5", available_at=decision_time),
+        source_id="test.source",
+        metric="test.metric",
+    )
+    after_time = decision_time + timedelta(seconds=1)
+    after = replace(
+        make_observation("arrives-after-T", close="100.6", available_at=after_time),
+        source_id="test.source",
+        metric="test.metric",
+    )
+    store.append(MarketDataBatch((before, after), (), after_time))
+
+    result = build_analysis_information(store, decision_time)
+
+    assert result.view.decision_time == decision_time
+    assert tuple(item.observation_id for item in result.view.observations) == ("known-at-T",)
+    assert result.market_state.decision_time == decision_time
+    assert result.market_state.macro.decision_time == decision_time
+    assert "arrives-after-T" not in {
+        evidence_id
+        for series in result.market_state.macro.series
+        if series.evidence_observation_id
+        for evidence_id in (series.evidence_observation_id,)
+    }

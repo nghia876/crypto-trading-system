@@ -3,6 +3,8 @@
 from tradingagents.information.binance_spot import (
     BINANCE_SPOT_SOURCE,
     BinanceSpotOHLCVCollector,
+    CoverageRecord,
+    CoverageStatus,
     MarketDataBatch,
     MarketDataCollectionError,
     MarketDataGap,
@@ -18,6 +20,7 @@ from tradingagents.information.binance_usdm_streams import (
     BINANCE_USDM_LIQUIDATION_STREAM_SOURCE,
     parse_binance_usdm_liquidation_event,
 )
+from tradingagents.information.consumer import AnalysisInformationInput, build_analysis_information
 from tradingagents.information.macro_series import (
     FRED_SERIES,
     FredPublicSeriesCollector,
@@ -70,7 +73,11 @@ from tradingagents.information.treasury_rates import (
 )
 
 __all__ = [
+    "AnalysisInformationInput",
+    "build_analysis_information",
     "BINANCE_SPOT_SOURCE",
+    "CoverageRecord",
+    "CoverageStatus",
     "BinanceSpotOHLCVCollector",
     "MarketDataBatch",
     "MarketDataCollectionError",

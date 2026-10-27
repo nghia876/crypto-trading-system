@@ -1,4 +1,5 @@
 """Public Binance Spot OHLCV collection with explicit point-in-time semantics."""
+
 from __future__ import annotations
 
 import hashlib
@@ -9,6 +10,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from decimal import Decimal, InvalidOperation
 from email.utils import parsedate_to_datetime
+from enum import StrEnum
 
 import requests
 
@@ -60,11 +62,48 @@ class MarketDataGap:
     freshness: str = "unknown"
 
 
+class CoverageStatus(StrEnum):
+    PRESENT = "present"
+    ABSENT = "absent"
+    UNAVAILABLE = "unavailable"
+    STALE = "stale"
+    UNKNOWN = "unknown"
+    NOT_APPLICABLE = "not_applicable"
+    LOW_QUALITY = "low_quality"
+    NEGATIVE_EVIDENCE = "negative_evidence"
+    COMPLETE = "complete"
+
+
+@dataclass(frozen=True, slots=True)
+class CoverageRecord:
+    """Point-in-time statement about whether a source covers a metric."""
+
+    coverage_id: str
+    source_id: str
+    subject: str
+    metric: str
+    observed_at: datetime
+    status: CoverageStatus
+    detail: str = ""
+    evidence_ids: tuple[str, ...] = ()
+
+    def __post_init__(self):
+        for name in ("coverage_id", "source_id", "subject", "metric"):
+            if not getattr(self, name).strip():
+                raise ValueError(f"{name} must not be empty")
+        if self.observed_at.tzinfo is None or self.observed_at.utcoffset() is None:
+            raise ValueError("observed_at must be timezone-aware")
+        if not isinstance(self.status, CoverageStatus):
+            object.__setattr__(self, "status", CoverageStatus(self.status))
+        object.__setattr__(self, "evidence_ids", tuple(self.evidence_ids))
+
+
 @dataclass(frozen=True, slots=True)
 class MarketDataBatch:
     observations: tuple[Observation, ...]
     gaps: tuple[MarketDataGap, ...]
     retrieved_at: datetime
+    coverage: tuple[CoverageRecord, ...] = ()
 
 
 def _decimal(value: object, field: str) -> Decimal:
@@ -171,13 +210,19 @@ class BinanceSpotOHLCVCollector:
             parsed_opens = []
             for row in rows:
                 if not isinstance(row, list) or len(row) < 11:
-                    raise MarketDataCollectionError("Binance kline row must contain at least 11 fields")
+                    raise MarketDataCollectionError(
+                        "Binance kline row must contain at least 11 fields"
+                    )
                 try:
                     parsed_opens.append(int(row[0]))
                 except (TypeError, ValueError) as exc:
-                    raise MarketDataCollectionError("Binance kline has an invalid open timestamp") from exc
+                    raise MarketDataCollectionError(
+                        "Binance kline has an invalid open timestamp"
+                    ) from exc
             if parsed_opens != sorted(set(parsed_opens)):
-                raise MarketDataCollectionError("Binance response contains duplicate or unordered candles")
+                raise MarketDataCollectionError(
+                    "Binance response contains duplicate or unordered candles"
+                )
             raw_rows.extend(rows)
             next_cursor = parsed_opens[-1] + 60_000
             if next_cursor <= cursor_ms:
@@ -249,14 +294,18 @@ class BinanceSpotOHLCVCollector:
                 continue
             if response.status_code >= 500:
                 if attempt == self._max_retries:
-                    raise MarketDataCollectionError(f"Binance server error: HTTP {response.status_code}")
+                    raise MarketDataCollectionError(
+                        f"Binance server error: HTTP {response.status_code}"
+                    )
                 self._sleep(self._backoff_seconds * (2**attempt))
                 continue
             try:
                 response.raise_for_status()
                 return response.json()
             except (requests.RequestException, ValueError) as exc:
-                raise MarketDataCollectionError(f"Binance returned an invalid response: {exc}") from exc
+                raise MarketDataCollectionError(
+                    f"Binance returned an invalid response: {exc}"
+                ) from exc
         raise MarketDataCollectionError("Binance request exhausted retries")
 
     def _normalize_row(self, row: list[object], symbol: str, retrieved_at: datetime) -> Observation:
@@ -268,7 +317,9 @@ class BinanceSpotOHLCVCollector:
         event_time = _utc_from_ms(open_ms, "open")
         close_time = _utc_from_ms(row[6], "close")
         if close_time < event_time or close_time >= event_time + _INTERVAL:
-            raise MarketDataCollectionError("candle close timestamp is outside its one-minute interval")
+            raise MarketDataCollectionError(
+                "candle close timestamp is outside its one-minute interval"
+            )
         values = {
             "open": _decimal(row[1], "open"),
             "high": _decimal(row[2], "high"),
@@ -286,11 +337,22 @@ class BinanceSpotOHLCVCollector:
             raise MarketDataCollectionError("candle high is inconsistent with OHLC values")
         if values["low"] > min(values["open"], values["close"], values["high"]):
             raise MarketDataCollectionError("candle low is inconsistent with OHLC values")
-        if any(values[name] < 0 for name in ("base_volume", "quote_volume", "taker_buy_base_volume", "taker_buy_quote_volume")):
+        if any(
+            values[name] < 0
+            for name in (
+                "base_volume",
+                "quote_volume",
+                "taker_buy_base_volume",
+                "taker_buy_quote_volume",
+            )
+        ):
             raise MarketDataCollectionError("volume fields must be non-negative")
         if values["trade_count"] < 0:
             raise MarketDataCollectionError("trade count must be non-negative")
-        payload = {name: (int(value) if name == "trade_count" else str(value)) for name, value in values.items()}
+        payload = {
+            name: (int(value) if name == "trade_count" else str(value))
+            for name, value in values.items()
+        }
         payload["close_time"] = close_time.isoformat()
         payload["interval"] = _INTERVAL_NAME
         content = json.dumps(payload, sort_keys=True).encode()

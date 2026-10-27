@@ -1,4 +1,5 @@
 """Append-only SQLite storage and point-in-time reconstruction for observations."""
+
 from __future__ import annotations
 
 import json
@@ -10,7 +11,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from tradingagents.information.binance_spot import MarketDataBatch, MarketDataGap
+from tradingagents.information.binance_spot import (
+    CoverageRecord,
+    CoverageStatus,
+    MarketDataBatch,
+    MarketDataGap,
+)
 from tradingagents.information.observations import (
     Observation,
     ObservationAvailability,
@@ -30,6 +36,7 @@ class InformationView:
     decision_time: datetime
     observations: tuple[Observation, ...]
     gaps: tuple[MarketDataGap, ...]
+    coverage: tuple[CoverageRecord, ...] = ()
 
 
 def _aware(name: str, value: datetime) -> None:
@@ -78,6 +85,8 @@ def _observation_values(observation: Observation) -> tuple[object, ...]:
         observation.availability.value,
         json.dumps(list(observation.quality_notes), separators=(",", ":")),
         observation.supersedes_observation_id,
+        observation.schema_version,
+        observation.unit,
     )
 
 
@@ -95,7 +104,7 @@ class SQLiteInformationStore:
         "observation_id, source_id, subject, metric, event_time, first_seen_time, "
         "retrieved_at, publication_time, effective_time, raw_reference, payload_json, "
         "transformations_json, quality, availability, quality_notes_json, "
-        "supersedes_observation_id"
+        "supersedes_observation_id, schema_version, unit"
     )
 
     def __init__(self, path: str | Path) -> None:
@@ -121,10 +130,22 @@ class SQLiteInformationStore:
                     quality TEXT NOT NULL,
                     availability TEXT NOT NULL,
                     quality_notes_json TEXT NOT NULL,
-                    supersedes_observation_id TEXT
+                    supersedes_observation_id TEXT,
+                    schema_version TEXT NOT NULL DEFAULT '1',
+                    unit TEXT NOT NULL DEFAULT 'unknown'
                 );
                 CREATE INDEX IF NOT EXISTS observations_event_idx
                     ON observations(subject, metric, event_time);
+                CREATE TABLE IF NOT EXISTS coverage (
+                    coverage_id TEXT PRIMARY KEY,
+                    source_id TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    metric TEXT NOT NULL,
+                    observed_at TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    detail TEXT NOT NULL,
+                    evidence_ids_json TEXT NOT NULL
+                );
                 CREATE TABLE IF NOT EXISTS data_gaps (
                     subject TEXT NOT NULL,
                     metric TEXT NOT NULL,
@@ -136,6 +157,15 @@ class SQLiteInformationStore:
                 );
                 """
             )
+            columns = {row[1] for row in connection.execute("PRAGMA table_info(observations)")}
+            if "schema_version" not in columns:
+                connection.execute(
+                    "ALTER TABLE observations ADD COLUMN schema_version TEXT NOT NULL DEFAULT '1'"
+                )
+            if "unit" not in columns:
+                connection.execute(
+                    "ALTER TABLE observations ADD COLUMN unit TEXT NOT NULL DEFAULT 'unknown'"
+                )
 
     @contextmanager
     def _connection(self) -> Iterator[sqlite3.Connection]:
@@ -156,13 +186,15 @@ class SQLiteInformationStore:
             _aware("event_time", observation.event_time)
             _aware("first_seen_time", observation.first_seen_time)
             _aware("retrieved_at", observation.retrieved_at)
+        for record in batch.coverage:
+            _aware("coverage.observed_at", record.observed_at)
         for gap in batch.gaps:
             _aware("gap.event_time", gap.event_time)
             _aware("gap.observed_at", gap.observed_at)
 
         insert_observation = (
             f"INSERT OR IGNORE INTO observations ({self._OBSERVATION_COLUMNS}) "
-            f"VALUES ({','.join('?' for _ in range(16))})"
+            f"VALUES ({','.join('?' for _ in range(18))})"
         )
         with self._connection() as connection:
             for observation in batch.observations:
@@ -240,6 +272,24 @@ class SQLiteInformationStore:
                             f"observation_id reused with different content: {observation.observation_id}"
                         )
             connection.executemany(
+                """INSERT OR IGNORE INTO coverage
+                   (coverage_id, source_id, subject, metric, observed_at, status, detail, evidence_ids_json)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                [
+                    (
+                        r.coverage_id,
+                        r.source_id,
+                        r.subject,
+                        r.metric,
+                        r.observed_at.isoformat(),
+                        r.status.value,
+                        r.detail,
+                        json.dumps(r.evidence_ids),
+                    )
+                    for r in batch.coverage
+                ],
+            )
+            connection.executemany(
                 """INSERT OR IGNORE INTO data_gaps
                    (subject, metric, event_time, observed_at, reason, freshness)
                    VALUES (?, ?, ?, ?, ?, ?)""",
@@ -263,12 +313,19 @@ class SQLiteInformationStore:
             rows = connection.execute(
                 f"SELECT {self._OBSERVATION_COLUMNS} FROM observations"
             ).fetchall()
+            coverage_rows = connection.execute(
+                "SELECT coverage_id, source_id, subject, metric, observed_at, status, detail, evidence_ids_json FROM coverage"
+            ).fetchall()
             gap_rows = connection.execute(
                 """SELECT subject, metric, event_time, observed_at, reason, freshness
                    FROM data_gaps"""
             ).fetchall()
 
-        eligible = [observation for row in rows if (observation := self._decode_observation(row)).is_available_at(decision_time)]
+        eligible = [
+            observation
+            for row in rows
+            if (observation := self._decode_observation(row)).is_available_at(decision_time)
+        ]
         eligible_by_id = {observation.observation_id: observation for observation in eligible}
         superseded = set()
         for observation in eligible:
@@ -293,10 +350,7 @@ class SQLiteInformationStore:
                 key=lambda item: (item.event_time, item.metric, item.observation_id),
             )
         )
-        resolved_gap_keys = {
-            (item.subject, item.metric, item.event_time)
-            for item in visible
-        }
+        resolved_gap_keys = {(item.subject, item.metric, item.event_time) for item in visible}
         gaps = tuple(
             sorted(
                 (
@@ -315,7 +369,32 @@ class SQLiteInformationStore:
                 key=lambda item: (item.event_time, item.metric, item.observed_at),
             )
         )
-        return InformationView(decision_time, visible, gaps)
+        coverage = tuple(
+            sorted(
+                (
+                    CoverageRecord(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        datetime.fromisoformat(row[4]),
+                        CoverageStatus(row[5]),
+                        row[6],
+                        tuple(json.loads(row[7])),
+                    )
+                    for row in coverage_rows
+                    if datetime.fromisoformat(row[4]) <= decision_time
+                ),
+                key=lambda item: (
+                    item.source_id,
+                    item.subject,
+                    item.metric,
+                    item.observed_at,
+                    item.coverage_id,
+                ),
+            )
+        )
+        return InformationView(decision_time, visible, gaps, coverage)
 
     @staticmethod
     def _decode_observation(row: tuple[Any, ...]) -> Observation:
@@ -336,6 +415,8 @@ class SQLiteInformationStore:
             availability,
             quality_notes_json,
             supersedes_observation_id,
+            schema_version,
+            unit,
         ) = row
         transformations = tuple(
             Transformation(
@@ -354,7 +435,9 @@ class SQLiteInformationStore:
             event_time=datetime.fromisoformat(event_time),
             first_seen_time=datetime.fromisoformat(first_seen_time),
             retrieved_at=datetime.fromisoformat(retrieved_at),
-            publication_time=(datetime.fromisoformat(publication_time) if publication_time else None),
+            publication_time=(
+                datetime.fromisoformat(publication_time) if publication_time else None
+            ),
             effective_time=(datetime.fromisoformat(effective_time) if effective_time else None),
             raw_reference=raw_reference,
             transformations=transformations,
@@ -362,4 +445,6 @@ class SQLiteInformationStore:
             availability=ObservationAvailability(availability),
             quality_notes=tuple(json.loads(quality_notes_json)),
             supersedes_observation_id=supersedes_observation_id,
+            schema_version=schema_version,
+            unit=unit,
         )

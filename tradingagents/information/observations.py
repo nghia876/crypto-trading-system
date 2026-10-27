@@ -87,11 +87,15 @@ class Observation:
     availability: ObservationAvailability = ObservationAvailability.AVAILABLE
     quality_notes: tuple[str, ...] = ()
     supersedes_observation_id: str | None = None
+    schema_version: str = "1"
+    unit: str = "unknown"
 
     def __post_init__(self) -> None:
         for name in ("observation_id", "source_id", "subject", "metric"):
             if not getattr(self, name).strip():
                 raise ValueError(f"{name} must not be empty")
+        if not self.schema_version.strip() or not self.unit.strip():
+            raise ValueError("schema_version and unit must not be empty")
         if not isinstance(self.payload, Mapping):
             raise TypeError("payload must be a mapping")
         if not self.payload:
