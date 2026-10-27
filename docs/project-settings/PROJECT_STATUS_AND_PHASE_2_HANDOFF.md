@@ -3,14 +3,15 @@
 **Status date:** 2026-10-27 (Asia/Saigon)
 **Repository:** `nghia876/crypto-trading-system`
 **Feature branch:** `phase-1.2-btc-ohlcv-collector`
-**Reviewed Phase 2 implementation HEAD:** `6056b8d2b755b05adb82112bffc1c15ee327f24e`
-**Phase 2:** accepted against the Product Blueprint's stated exit criteria; final GitHub storage is pending user approval to push.
+**Verified baseline HEAD:** `7cb739d0af0fd7d0dd1b398b4c7bf66099bcbdea`
+**Local alignment correction commit:** `55689e6e186a13a56eab0248ba9a698ba8adfda7`
+**Phase 2:** core state exits were previously accepted; end-to-end alignment is not complete. The audit correction described below remains local-only and has unresolved integration/metadata coverage gaps.
 
 ## Current verified state
 
-The Phase 2 implementation exists in the local Git checkout. Its branch contains `1efc78a` (public Binance Spot BTC/USDT OHLCV collector), `d3a718a` (durable point-in-time replay), `92ea9f1` (BTC market state), and `6056b8d2` (expanded derivatives, macro and scheduled-event coverage and tests). GitHub reports the same feature branch at `d3a718aba81b7b53e718eda1aa1c2dd051aa8f5e`; therefore `92ea9f1` and `6056b8d2` are local-only. Nothing was pushed during this review. Do not claim the complete work is safe on GitHub until the feature branch and this handoff are pushed and the remote SHA is verified.
+The supplied end-to-end alignment audit reports independent verification that the remote feature branch matched local `7cb739d0af0fd7d0dd1b398b4c7bf66099bcbdea`, including the Phase 2 handoff. This supersedes the earlier stale remote SHA claim in this document. The current alignment correction is local-only and was not pushed.
 
-The local checkout is on the feature branch and includes a subsequent documentation commit containing this handoff and the README acceptance update. `main` was not changed. `.phase12-tools/` remains untracked and must never be staged. Keep all `sources/` files read-only.
+The local checkout is on `phase-1.2-btc-ohlcv-collector` at alignment correction commit `55689e6e186a13a56eab0248ba9a698ba8adfda7`. `main` was not changed. `.phase12-tools/` remains untracked and must never be staged. Keep all `sources/` files read-only.
 
 ## Phase 2 exit criteria and evidence
 
@@ -22,9 +23,19 @@ The Blueprint defines Phase 2 as market state, derivatives state, macro state, a
 
 Reproduced verification: 70 focused tests pass across nine information-layer test files using pytest without shared `tests/conftest.py`; Ruff lint, Phase 2 changed-file format check, and `git diff --check` pass. Full-suite pytest remains unverified because shared setup imports unavailable `yfinance` and `curl_cffi`. Tests use mocked source replies. BLS runtime access returned HTTP 403, Treasury live persistence/reopen replay is not verified, event coverage is not exhaustive, and the broad dollar index is a proxy rather than ICE DXY. See repository `docs/project-handoff/PHASE_2_HANDOFF.md` for detail.
 
+## Alignment correction applied locally (2026-10-27)
+
+The follow-up audit identified a contract gap in generic source coverage and metric interpretation. On the verified feature branch, the local correction adds per-observation `schema_version` and `unit` fields, persists and replays them in SQLite (including additive migration for existing databases), and adds timestamped coverage records with statuses for present, absent, unavailable, stale, unknown, not applicable, low quality, negative evidence, and complete. Coverage records carry source/metric identity, detail, evidence IDs, and are filtered by their observation time in `InformationView`. Existing point-in-time state builders continue to consume one `InformationView` at decision time T; existing event identity, supersession, schedule status, and availability semantics remain in place.
+
+Focused verification after the correction: 72 information-layer tests pass; Ruff lint and `git diff --check` pass. Tests were run from a private copy under `.phase12-tools/` to avoid the shared `tests/conftest.py`, whose import-time `yfinance` dependency is unavailable. The full suite remains unverified.
+
+**Current implementation commit:** `55689e6e186a13a56eab0248ba9a698ba8adfda7` (local only; not pushed).
+
+**Remaining alignment work:** current collectors do not yet emit coverage records systematically; source registry metadata itself is not persisted/versioned alongside observations; most producers still use the default unit `unknown` unless callers supply metric metadata. Therefore the new vocabulary and storage seam are available, but coverage completeness and uniform unit/schema declarations across all source feeds are not yet demonstrated. Do not treat this correction as closing those gaps or as a Phase 3 authorization gate. `.phase12-tools/` remains untracked and excluded from Git.
+
 ## Phase 3 gate
 
-**Do not start Phase 3 implementation until the user approves pushing the feature branch and the remote head is verified to include the Phase 2 commits and handoff.** After storage is confirmed, create/use a normal chat as the Phase 3 master/checkpoint. Keep implementation in a separate Work session. Phase 3's next subject is event/narrative intelligence; first propose and agree on a scoped plan and exit checks.
+**Do not start Phase 3 implementation until the alignment gaps below are resolved and the correction commit is stored on the feature branch.** The earlier remote storage gate is reported complete by the supplied audit for the pre-correction commit; the new local correction has not been pushed. After storage is confirmed, create/use a normal chat as the Phase 3 master/checkpoint. Keep implementation in a separate Work session. Phase 3's next subject is event/narrative intelligence; first propose and agree on a scoped plan and exit checks.
 
 ## Prompt for the Phase 3 master/checkpoint chat
 

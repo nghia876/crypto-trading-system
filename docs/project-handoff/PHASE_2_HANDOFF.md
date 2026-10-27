@@ -4,16 +4,16 @@
 **Repository:** `nghia876/crypto-trading-system`
 **Working branch:** `phase-1.2-btc-ohlcv-collector`
 **Phase 2 implementation HEAD before the handoff commit:** `6056b8d2b755b05adb82112bffc1c15ee327f24e`
-**Phase status:** implementation accepted against the Blueprint's explicit Phase 2 exit criteria; durable GitHub storage is still pending approval to push.
+**Phase status:** core state exits were previously accepted; end-to-end alignment is not complete. The audit correction described below remains local-only and has unresolved integration/metadata coverage gaps.
 
 ## Verified repository and storage state
 
 - The actual Phase 2 implementation is present in this local Git checkout, not merely in chat history.
 - The local feature branch contains the implementation commits `1efc78a` (public Binance Spot BTC OHLCV collector), `d3a718a` (durable point-in-time replay), `92ea9f1` (BTC market state), and `6056b8d2` (expanded macro, derivatives, scheduled-event coverage and tests). The final two commits are descendants of the first two.
-- GitHub's branch endpoint reports remote `phase-1.2-btc-ohlcv-collector` at `d3a718aba81b7b53e718eda1aa1c2dd051aa8f5e`. Thus `1efc78a` and `d3a718a` are already on GitHub; `92ea9f1` and `6056b8d2` are local-only and have not been pushed. An attempt to fetch `6056b8d2` from GitHub returned “No commit found.”
+The supplied end-to-end alignment audit reports independent verification that the remote feature branch matched local `7cb739d0af0fd7d0dd1b398b4c7bf66099bcbdea`, including the Phase 2 handoff. This supersedes the earlier stale remote SHA claim in this document. The alignment correction was committed locally as `55689e6e186a13a56eab0248ba9a698ba8adfda7`; it was not pushed.
 - Local HEAD is on the feature branch. `main` was not checked out or changed. There are no stashes or additional worktrees recorded by the local Git repository.
 - At the start of this review, the only tracked working-tree edit was `tradingagents/information/README.md`, documenting the accepted exit review. `.phase12-tools/` was untracked. The README acceptance update and handoff documents were committed afterward in a local-only documentation commit on this same feature branch. `.phase12-tools/` remains untracked and must stay unstaged and excluded.
-- Nothing was pushed during this review. The Phase 2 commits and this handoff are therefore preserved locally but are not yet fully durable on GitHub.
+- Nothing was pushed during the current alignment follow-up. The prior audit reports the baseline Phase 2 commits and handoff durable on GitHub; the alignment correction commit `55689e6e186a13a56eab0248ba9a698ba8adfda7` has not been pushed.
 
 ## What Phase 2 contains
 
@@ -39,10 +39,16 @@ The criteria do not promise exhaustive source coverage or continued live availab
 - Ruff format check passed for the 13 Python files introduced/changed by `92ea9f1` and `6056b8d`. A broader format check also found four older Phase 1.1/1.2 files outside those two commits that are not formatted by the current Ruff version; they were left unchanged.
 - `git diff --check` passed for the current tracked diff.
 
+## Alignment follow-up in the current local checkout
+
+A subsequent audit correction on the same feature branch added persisted metric schema/unit fields and a replayable `CoverageRecord` contract with explicit completeness/absence/quality states. `InformationView` now includes only coverage evidence known by its decision cutoff. `build_analysis_information(store, T)` captures one replay view, then derives the combined BTC market and macro snapshot from that same view; the consumer seam is available to downstream callers but is not yet wired into the existing analyst graph. The focused information-layer suite passes 72 tests, and Ruff lint plus `git diff --check` pass.
+
+This is not a claim that all feeds are fully aligned: collectors have not yet been updated to consistently populate coverage records; source registry definitions are not yet persisted/versioned as store data; most observations still default to unit `unknown`. The initial audit attachment's full contents were not present in the referenced chat preview, so this local follow-up is limited to the concrete correction list in the implementation request and code evidence inspected here.
+
 ## GitHub storage action needed
 
-The two local-only commits are already on an appropriate feature branch and `main` is untouched. To make the full Phase 2 implementation and handoff durable on GitHub, the branch must be pushed. No push has occurred. Ask for explicit approval before pushing `phase-1.2-btc-ohlcv-collector`; do not push to `main`.
+The supplied audit reports that the baseline Phase 2 implementation and handoff are on the remote feature branch; that remote state was not independently queried during this turn. The alignment correction commit `55689e6e186a13a56eab0248ba9a698ba8adfda7` and the status-document refresh remain local. Nothing was pushed. Do not push without separate explicit authorization.
 
 ## Phase 3 checkpoint
 
-**Readiness verdict: WAITING FOR DURABLE STORAGE.** Phase 2 meets its documented exit checks, but the final implementation commits and handoff are not on GitHub. Phase 3 implementation should not start until the user approves the feature-branch push and the remote branch is verified at the resulting commit. After that, open a normal master/checkpoint chat using the prompt in `docs/project-handoff/PHASE_3_MASTER_CHAT_PROMPT.md`; keep that chat as a review/orchestration checkpoint and use a separate work session for implementation.
+**Readiness verdict: NOT READY.** The baseline Phase 2 implementation and handoff are reported durable on GitHub by the supplied audit, but alignment commit `55689e6e186a13a56eab0248ba9a698ba8adfda7` is local-only and source metadata/coverage population and analyst integration gaps remain. Phase 3 implementation should wait until these are addressed and the correction is verified on the feature branch. Keep the master/checkpoint chat for scope review and use a separate Work session for implementation.
