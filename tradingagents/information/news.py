@@ -7,6 +7,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
+import time
 from dataclasses import replace
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
@@ -225,6 +227,7 @@ def fetch_news_snapshot(config, session):
             "timespan": "1d",
             "sort": "datedesc",
         }
+    started = time.monotonic()
     with session.get(
         config.source.endpoint,
         params=params,
@@ -239,6 +242,8 @@ def fetch_news_snapshot(config, session):
             )
         chunks, size = [], 0
         for chunk in response.iter_content(65536):
+            if time.monotonic() - started > 20:
+                raise MarketDataCollectionError("news request elapsed budget exceeded")
             size += len(chunk)
             if size > config.max_bytes:
                 raise MarketDataCollectionError("news byte limit exceeded")
@@ -264,12 +269,23 @@ def poll_once(store, configs=BROAD_NEWS_CONFIG, *, poll_id: str, session=None, c
         if existing is not None:
             outcomes.append(existing)
             continue
-        text, failure, http_status = None, None, None
+        text, failure, http_status, retry_after = None, None, None, None
         try:
             text = fetch_news_snapshot(config, session)
         except (requests.RequestException, MarketDataCollectionError, UnicodeError) as exc:
             failure = type(exc).__name__  # avoid credentials or unbounded remote error text
-            http_status = getattr(getattr(exc, "response", None), "status_code", None)
+            response = getattr(exc, "response", None)
+            http_status = getattr(response, "status_code", None)
+            if response is not None:
+                raw_retry = response.headers.get("Retry-After", "")
+                try:
+                    retry_after = float(raw_retry)
+                    retry_after = None if not math.isfinite(retry_after) else max(0, retry_after)
+                except (ValueError, TypeError):
+                    retry_date = _date(raw_retry)
+                    retry_after = (
+                        max(0, (retry_date - clock()).total_seconds()) if retry_date else None
+                    )
         completed = clock()
         _require_aware("poll completion", completed)
         completed = completed.astimezone(UTC)
@@ -303,6 +319,7 @@ def poll_once(store, configs=BROAD_NEWS_CONFIG, *, poll_id: str, session=None, c
                 "outcome": "failure" if failure else ("success" if batch.observations else "empty"),
                 "error": failure,
                 "http_status": http_status,
+                "retry_after_seconds": retry_after,
                 "config": config.fingerprint,
                 "version": config.version,
                 "query": config.query,

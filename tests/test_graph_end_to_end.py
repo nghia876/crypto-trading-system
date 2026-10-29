@@ -636,3 +636,26 @@ def test_acquired_claim_relationships_reach_graph(tmp_path, monkeypatch, offline
     assert all(row.observation_id in prompt for row in rows)
     assert "Ceasefire agreed" in prompt and "Ceasefire denied" in prompt
     assert len(state["analysis_information"]) <= 28000
+
+@pytest.mark.unit
+def test_recurring_poll_reaches_graph_at_cutoff(tmp_path, monkeypatch, offline):
+    from tests.test_broad_news import TECH, WAR, atom, rss, session_for
+    from tradingagents.information.polling import coordinate
+
+    cutoff = datetime(2026, 1, 9, 12, tzinfo=UTC)
+    store = SQLiteInformationStore(tmp_path / 'recurring-graph.db')
+    coordinate(store, (WAR,), now=cutoff, clock=lambda: cutoff,
+               session=session_for(rss('Ceasefire talks resume')))
+    later = cutoff + timedelta(seconds=60)
+    coordinate(store, (TECH,), now=later, clock=lambda: later,
+               session=session_for(atom('Quantum laboratory breakthrough')))
+    future = cutoff + timedelta(minutes=16)
+    coordinate(store, (WAR,), now=future, clock=lambda: future,
+               session=session_for(rss('FUTURE WAR CORRECTION')))
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
+    state, _ = graph.propagate('BTCUSDT', TRADE_DATE, asset_type='crypto', decision_time=later)
+    prompt = '\n'.join(model.prompts)
+    assert 'Ceasefire talks resume' in prompt and 'Quantum laboratory breakthrough' in prompt
+    assert 'FUTURE WAR CORRECTION' not in prompt
+    assert len(state['analysis_information']) <= 28000

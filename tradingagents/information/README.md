@@ -341,3 +341,15 @@ The existing narrative renderer/analyst context includes supporting/opposing sou
 claims and uncertainty under the same budget. Acquisition performs no automatic
 semantic verification. Run opt-in read-only network diagnostics separately from
 mocked tests with `python -m tradingagents.information.network_diagnostics`.
+
+### Recurring broad news jobs (Phase 3.2C)
+
+`python -m tradingagents.information.polling poll-once --store <EXACT graph information_store_path>`
+executes a bounded due-source pass using existing poll outcomes as durable checkpoints.
+`health` with the same `--store` displays timestamped health snapshots. Use a one-minute
+Task Scheduler trigger with a 900-second source cadence and no overlapping instances.
+No scheduler is installed automatically. See
+[3.2C handoff](../../docs/project-handoff/PHASE_3_2C_HANDOFF.md) for commands, host/domain
+budgets, crash/retry semantics, strict cutoff checks, live/environment blockers and
+[nine-family coverage audit](../../docs/project-handoff/SOURCE_COVERAGE_MATRIX.md).
+Full operational readiness is not established by offline or loopback tests.

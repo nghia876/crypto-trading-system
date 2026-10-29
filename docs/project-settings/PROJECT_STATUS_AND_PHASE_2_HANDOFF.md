@@ -107,3 +107,21 @@ Continue the Crypto AI Trading System from the verified Phase 2 handoff. This is
 First verify GitHub repository `nghia876/crypto-trading-system`, branch `phase-1.2-btc-ohlcv-collector`, and `docs/project-handoff/PHASE_2_HANDOFF.md`. Confirm the remote branch contains the Phase 2 commits and handoff before treating Phase 2 as durably closed. If they are missing, report the exact local and remote SHAs and stop at the storage blocker. Never switch to or modify `main`; never overwrite/reset user changes; never stage `.phase12-tools/`; treat `sources/` as read-only; and do not push without explicit approval.
 
 Use code and tests as authority over project documents and conversation history. Do not overstate live-source or full-suite verification. Once remote storage is confirmed, review the Blueprint's Phase 3 event/narrative-intelligence scope and propose an evidence-based work plan with acceptance criteria. Keep this chat for checkpoint decisions and use a separate Work session for implementation after the user chooses the next step.
+
+## M0 + M1 / Phase 3.2C checkpoint — 2026-10-29
+
+The new authoritative scoped checkpoint is
+[PHASE_3_2C_HANDOFF.md](../project-handoff/PHASE_3_2C_HANDOFF.md), with
+[SOURCE_COVERAGE_MATRIX.md](../project-handoff/SOURCE_COVERAGE_MATRIX.md).
+Implemented in existing repository/store: bounded recurring free-news coordinator,
+CLI, persisted per-source recovery/checkpoints, retry/backoff and health/gap coverage,
+Windows scheduling procedure and local HTTP smoke. No paid dependency, daemon,
+second graph/store or Phase 4 logic. Canonical sources and .phase12-tools preserved.
+
+LIMITED offline suite passes; full default suite/actual graph execution currently
+blocked by Windows Application Control native-library imports. BBC sample live
+fetch/parse verified (27 world / 20 tech articles), GDELT timed out after network
+permission resolved the initial DNS 11001. No scheduler installed or production
+corpus stored, operational live gate NOT PASSED. Current FRED AI-use restrictions
+and BBC reuse clearance require resolution (see matrix). Phase 3 IN_PROGRESS;
+M2/M3 are next, not implemented here. See handoff for exact tests and release state.

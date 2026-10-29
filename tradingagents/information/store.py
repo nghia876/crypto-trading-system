@@ -7,7 +7,7 @@ import sqlite3
 from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import asdict, dataclass, replace
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -155,6 +155,9 @@ class SQLiteInformationStore:
                     detail TEXT NOT NULL,
                     evidence_ids_json TEXT NOT NULL
                 );
+                CREATE INDEX IF NOT EXISTS news_poll_checkpoint_idx
+                    ON coverage(json_extract(detail, '$.config'), observed_at)
+                    WHERE metric = 'narrative.event' AND coverage_id LIKE 'news-poll:%';
                 CREATE TABLE IF NOT EXISTS data_gaps (
                     subject TEXT NOT NULL,
                     metric TEXT NOT NULL,
@@ -336,6 +339,49 @@ class SQLiteInformationStore:
                     for gap in batch.gaps
                 ],
             )
+
+    def polling_history(self, config_fingerprint: str, decision_time: datetime) -> tuple[CoverageRecord, ...]:
+        """Bounded checkpoint read: recent 12 attempts plus latest nonempty outcome.
+
+        Reads the existing journal, not a second registry/database. News poll timestamps
+        are normalized UTC by poll_once; compare exact ISO values without losing microseconds.
+        """
+        _aware("decision_time", decision_time)
+        with self._connection() as connection:
+            columns = "coverage_id, source_id, subject, metric, observed_at, status, detail, evidence_ids_json"
+            where = ("metric = 'narrative.event' AND coverage_id LIKE 'news-poll:%' "
+                     "AND json_extract(detail, '$.config') = ? "
+                     "AND observed_at <= ?")
+            args = (config_fingerprint, decision_time.astimezone(UTC).isoformat())
+            rows = connection.execute(
+                f"SELECT {columns} FROM coverage WHERE {where} "
+                "ORDER BY observed_at DESC, coverage_id DESC LIMIT 12", args
+            ).fetchall()
+            success = connection.execute(
+                f"SELECT {columns} FROM coverage WHERE {where} "
+                "AND json_extract(detail, '$.outcome') = 'success' AND evidence_ids_json != '[]' "
+                "ORDER BY observed_at DESC, coverage_id DESC LIMIT 1", args
+            ).fetchone()
+        if success is not None and success not in rows:
+            rows.append(success)
+        return tuple(CoverageRecord(r[0], r[1], r[2], r[3], datetime.fromisoformat(r[4]),
+                                    CoverageStatus(r[5]), r[6], tuple(json.loads(r[7]))) for r in rows)
+
+    def evidence_by_ids(self, ids: tuple[str, ...], decision_time: datetime) -> tuple[Observation, ...]:
+        """Bounded evidence lookup for poll health, with the normal availability gate."""
+        _aware("decision_time", decision_time)
+        if len(ids) > 250:
+            raise ValueError("at most 250 evidence IDs required")
+        if not ids:
+            return ()
+        with self._connection() as connection:
+            rows = connection.execute(
+                f"SELECT {self._OBSERVATION_COLUMNS} FROM observations WHERE observation_id IN ("
+                + ",".join("?" for _ in ids) + ")", ids
+            ).fetchall()
+        return tuple(o for o in (self._decode_observation(r) for r in rows)
+                     if o.is_available_at(decision_time)
+                     and (o.effective_time is None or o.effective_time <= decision_time))
 
     def first_seen_for_subject(self, subject: str) -> datetime | None:
         """Earliest local observation across discovery sources, never publication time."""
