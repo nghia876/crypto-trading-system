@@ -76,3 +76,9 @@ microstructure; on-chain/flow/options contracts and official/regional/science so
 coverage. M3: evaluate evidence-backed correlation, source-origin accuracy, competing
 hypotheses and reaction alignment without using price moves to gate discovery.
 Neither M2 nor M3 implementation is included in M0/M1.
+# Release verification follow-up
+
+The 2026-10-29 [macro eligibility review](MACRO_SOURCE_ELIGIBILITY.md) records
+the default FRED disablement, exact original-publisher candidates, observed access,
+cadence/vintage requirements and unresolved gaps. This supersedes earlier FRED
+default guidance; it does not mark macro replacement coverage complete.

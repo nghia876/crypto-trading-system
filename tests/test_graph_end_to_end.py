@@ -271,7 +271,10 @@ def test_crypto_run_context_reaches_the_real_market_analyst_prompt(
 @pytest.mark.unit
 @pytest.mark.parametrize("structured", [False, True], ids=["free-text", "structured"])
 def test_a_full_run_reaches_a_logged_decision(tmp_path, monkeypatch, offline, structured):
-    graph = _graph(tmp_path, monkeypatch, ScriptedModel(structured=structured))
+    # Exercise every tool through mocked vendors, including the opt-in macro route.
+    vendors = {**DEFAULT_CONFIG["data_vendors"], "macro_data": "fred"}
+    graph = _graph(tmp_path, monkeypatch, ScriptedModel(structured=structured),
+                   data_vendors=vendors)
 
     state, signal = graph.propagate("NVDA", TRADE_DATE)
 

@@ -1,5 +1,10 @@
 # Phase 3.2C / M0 + M1 handoff — 2026-10-29
 
+**Follow-up:** [release verification](M0_M1_RELEASE_VERIFICATION.md) now records
+the full regression/graph pass and remaining live gate limits. See also the
+[macro eligibility decision and original-source mapping](MACRO_SOURCE_ELIGIBILITY.md).
+The original blocked test results below are retained as historical session results.
+
 Status: implementation and LIMITED offline gate VERIFIED; full graph regression
 and operational live gate BLOCKED/NOT PASSED. Phase 3 remains IN_PROGRESS.
 This supplements prior handoffs and the [nine-family matrix](SOURCE_COVERAGE_MATRIX.md).

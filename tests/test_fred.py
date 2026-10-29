@@ -16,7 +16,19 @@ from tradingagents.dataflows import router
 from tradingagents.dataflows.config import set_config
 from tradingagents.dataflows.vendors import fred
 
+
 # A small, stable set of observations to format against.
+def test_default_macro_route_is_disabled_without_calling_fred(monkeypatch):
+    monkeypatch.setattr(config_module, "_config", copy.deepcopy(default_config.DEFAULT_CONFIG))
+    assert default_config.DEFAULT_CONFIG["data_vendors"]["macro_data"] == "disabled"
+    with mock.patch.dict(router.VENDOR_METHODS, {"get_macro_indicators": {
+        "fred": mock.Mock(side_effect=AssertionError("must not fetch")),
+    }}):
+        result = router.route_to_vendor("get_macro_indicators", "cpi", "2026-01-01")
+    assert result.startswith("DATA_UNAVAILABLE:")
+    assert "neutral" in result
+
+
 _META = {
     "seriess": [
         {

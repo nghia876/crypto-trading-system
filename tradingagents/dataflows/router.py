@@ -201,6 +201,12 @@ def route_to_vendor(method: str, *args, **kwargs):
     """Route method calls to appropriate vendor implementation with fallback support."""
     category = get_category_for_method(method)
     vendor_config = get_vendor(category, method)
+    if category == "macro_data" and vendor_config.strip() == "disabled":
+        return (
+            "DATA_UNAVAILABLE: automated macro collection is disabled pending source "
+            "eligibility review. Macroeconomic coverage is incomplete; do not fabricate "
+            "values or infer that macroeconomic conditions are neutral."
+        )
     primary_vendors = [v.strip() for v in vendor_config.split(',')]
 
     if method not in VENDOR_METHODS:
