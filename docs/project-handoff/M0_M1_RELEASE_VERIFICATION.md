@@ -85,3 +85,22 @@ Commit only explicit release files, fetch origin again, verify feature ancestry,
 then normal non-force push `HEAD:refs/heads/phase-3-event-narrative-slice`.
 Compare resulting `ls-remote` SHA with local HEAD. The final work report records
 the observed commit and push result; this document alone is not proof of a push.
+
+### Observed backup outcome
+
+Release commit: `daea39c2254ec4fbcf081782255dfa756473ac4d`.
+Immediately before push, fetch and ancestry passed (0 behind / 3 ahead).
+The normal non-force push FAILED: bundled Git's `sh.exe` could not create its
+MSYS BaseNamedObjects directory, `NtCreateDirectoryObject` returned `0xC0000022`.
+Git reported `waitpid for git credential-manager get failed: No child processes`,
+then could not read the GitHub username. No credentials were printed or changed.
+Python/pandas native imports and full graph tests now pass; credential-helper
+execution remains separately blocked. Only bundled Git was found; the standard
+Program Files Git path was absent. No alternate authentication/control workaround
+was attempted.
+
+Post-failure ls-remote confirmed remote feature SHA remained
+`78ac4d58299dea94b3655ed98029762b6d226277`. Release work remains local and unpushed.
+This outcome is preserved in a documentation follow-up commit; use `git log -1`
+for final local HEAD. After approved host Git authentication/helper execution is
+repaired, repeat the documented normal push and compare remote and local SHAs.
