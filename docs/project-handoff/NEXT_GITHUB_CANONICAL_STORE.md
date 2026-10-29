@@ -118,4 +118,3 @@ longer prospective operation, production launcher configuration and backup are
 remaining gates. Manual live evidence/replay now passed; full live gate did not.
 
 Full default offline regression: 1420 passed, 4 skipped, 1 deselected; 99 subtests; 33.93 s. Twenty existing model-name warnings. No application code changed. Diff whitespace check passed. Documentation-only follow-up commit remains subject to the same GitHub backup blocker; final response records its SHA.
-
