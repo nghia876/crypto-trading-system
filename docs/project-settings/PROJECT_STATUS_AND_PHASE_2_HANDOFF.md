@@ -125,3 +125,8 @@ permission resolved the initial DNS 11001. No scheduler installed or production
 corpus stored, operational live gate NOT PASSED. Current FRED AI-use restrictions
 and BBC reuse clearance require resolution (see matrix). Phase 3 IN_PROGRESS;
 M2/M3 are next, not implemented here. See handoff for exact tests and release state.
+
+Backup outcome: implementation commit `0e76559` is LOCAL/UNPUSHED. Normal feature
+branch push failed when Windows denied the Git credential helper's MSYS shell;
+remote remains `78ac4d5`, verified after attempt. Read-only GitHub access works.
+See 3.2C handoff; repair host Git authentication before retrying normal push.

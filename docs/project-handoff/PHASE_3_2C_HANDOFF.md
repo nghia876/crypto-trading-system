@@ -183,3 +183,20 @@ Final exact verification and release results are appended below after review.
 - This is an implementation CHECKPOINT backup, not an operational release approval.
   Local feature-branch commit/push follows successful limited checks and review;
   use git log -1 for final SHA, and final response for verified remote equality.
+
+### Actual commit / GitHub backup outcome
+
+Implementation commit: `0e76559a2aa9588531d7ca297fa128fa248fe13f` on
+`phase-3-event-narrative-slice`. Final fetch showed 1 ahead / 0 behind; ancestry
+check passed. Normal non-force `git push origin HEAD:refs/heads/phase-3-event-narrative-slice`
+was attempted and FAILED: Git credential-manager's shell could not create its MSYS
+BaseNamedObjects directory (NtCreateDirectoryObject access denied, 0xC0000022), then
+Git could not read a username. No credentials were printed or changed.
+Post-attempt `git ls-remote` verified remote remained
+`78ac4d58299dea94b3655ed98029762b6d226277`.
+The implementation and this handoff follow-up remain LOCAL / UNPUSHED. GitHub backup
+is BLOCKED by credential-helper execution, independently of read-only GitHub access.
+Repair approved host Git authentication/helper execution, then normal push this
+feature branch and verify remote SHA; do not force-push or merge main.
+Tracked working tree is clean after the handoff follow-up commit; only original
+untracked .phase12-tools remains. Use git log -1 for the final documentation HEAD.
