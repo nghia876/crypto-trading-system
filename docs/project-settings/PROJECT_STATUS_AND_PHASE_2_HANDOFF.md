@@ -1,3 +1,21 @@
+# Current M2A.1 checkpoint — 2026-10-30
+
+M2A.1 is locally implemented and tested for the eligible subset: original Board
+H.4.1 assets, reserves and distinct weekly-average/Wednesday TGA; NY Fed overnight
+Treasury RRP results. All use existing contracts, canonical SQLite/view_at and
+actual Market Analyst context. Daily Treasury TGA parsing is implemented and
+sampled, but collection and analyst use remain gated pending detailed service
+terms review. FRED remains disabled by default. See [implementation and evidence](../project-handoff/M2A1_IMPLEMENTATION.md)
+for exact metrics, rights, times, tests, live measurements and limitations.
+
+User confirms documentation checkpoint `82c6ba6` was pushed; Gate 1 complete.
+New M2A.1 commits stay local. No push is a prerequisite for local implementation.
+Historical NOT STARTED statements below are superseded for this eligible subset.
+M2A.2 (BLS, yield expansion, BEA GDP/PCE) remains unimplemented. Comprehensive
+Phase 3 world-event radar remains required: war, drought, floods, agriculture,
+energy, infrastructure, cyber, technology and pandemics, with no BTC keyword or
+price-anomaly discovery gates. This macro slice does not complete world coverage.
+
 # Living checkpoint / nonnegotiable scope — 2026-10-30
 
 Work sessions and ordinary ChatGPT chats must start here. This section supersedes older checkpoint/next-step instructions below. This is the user's binding scope clarification of the existing Blueprint and Phase 3, not a new top-level phase. Canonical project `sources/PRODUCT_BLUEPRINT.md`, `sources/MASTER_PROMPT.md` and `sources/RESOURCE_MANIFEST.md` remain strictly read-only.

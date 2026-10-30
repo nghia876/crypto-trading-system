@@ -42,6 +42,32 @@ from tradingagents.information import (
 
 TRADE_DATE = "2026-01-09"
 
+
+def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline):
+    from tests.test_claim_lifecycle import article, persist
+    from tests.test_liquidity import NOW, PARSERS, h41, rrp
+
+    store = SQLiteInformationStore(tmp_path / "combined.db")
+    store.append(PARSERS[0](h41(), NOW))
+    store.append(PARSERS[1](rrp(), NOW))
+    persist(store, article("world-flood", "Flood disrupts agriculture and energy infrastructure"))
+    btc = Observation(
+        observation_id="btc-core", source_id="derivatives.binance.usdm.funding",
+        subject="BTCUSDT", metric="derivatives.funding_rate.usdm", payload={"funding_rate": "0.001"},
+        event_time=NOW, first_seen_time=NOW, retrieved_at=NOW,
+    )
+    store.append(MarketDataBatch((btc,), (), NOW))
+    future = PARSERS[0](h41("7999999"), NOW + timedelta(hours=1))
+    store.append(future)
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
+    state, _ = graph.propagate("BTCUSDT", TRADE_DATE, asset_type="crypto", decision_time=NOW)
+    prompt = "\n".join(model.prompts)
+    assert "6745635 million USD" in prompt and "353000000 USD" in prompt
+    assert "Flood disrupts agriculture" in prompt and "btc-core" in prompt
+    assert "7999999" not in prompt
+    assert len(state["analysis_information"]) <= 28000
+
 # Enough for every free-text reader: the PM's labelled rating and the trader's
 # closing proposal line.
 TEXT = "Report.\n\n**Rating**: Overweight\n\nFINAL TRANSACTION PROPOSAL: **BUY**"

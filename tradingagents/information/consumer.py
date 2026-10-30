@@ -6,6 +6,7 @@ from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime
 
+from tradingagents.information.liquidity import render_liquidity, selected_liquidity
 from tradingagents.information.market_state import BTCMarketState, build_btc_market_state
 from tradingagents.information.narrative_events import (
     render_narrative_events,
@@ -79,6 +80,8 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
             f"freshness: {item.freshness}; proxy for: {item.proxy_for or 'none'}; "
             f"evidence IDs: {_ids((item.evidence_observation_id,))}"
         )
+    lines.append("Original-publisher liquidity:")
+    lines.extend(render_liquidity(result.view))
     ordered_events = sorted(
         state.upcoming_macro_events,
         key=lambda item: (str(item.payload.get("scheduled_at", "")), item.observation_id),
@@ -107,6 +110,7 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
         state.treasury_yield.evidence_observation_id,
         state.latest_liquidation_snapshot_evidence_observation_id,
         *(item.evidence_observation_id for item in state.macro.series),
+        *(row.observation_id for _, row in selected_liquidity(result.view) if row is not None),
         *(item.observation_id for item in ordered_events[:5]),
     } - {None}
     priority_ids = core_ids | {item.observation_id for item in ordered_events}
@@ -199,12 +203,13 @@ def _ids(values) -> str:
 MAX_ANALYSIS_INFORMATION_CHARS = 28000
 _SECTION_BUDGETS = {
     "Signals:": 6000,
-    "Macro series:": 3500,
+    "Macro series:": 2000,
+    "Original-publisher liquidity:": 3500,
     "Upcoming scheduled macro events:": 3500,
     "Narrative events:": 4000,
-    "Recorded coverage:": 3000,
+    "Recorded coverage:": 2000,
     "Point-in-time source definitions:": 2500,
-    "Evidence metadata (schema and unit):": 4000,
+    "Evidence metadata (schema and unit):": 3000,
 }
 
 

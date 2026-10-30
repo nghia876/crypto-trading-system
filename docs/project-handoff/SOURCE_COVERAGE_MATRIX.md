@@ -1,3 +1,21 @@
+# Current M2A.1 checkpoint — 2026-10-30
+
+M2A.1 is locally implemented and tested for the eligible subset: original Board
+H.4.1 assets, reserves and distinct weekly-average/Wednesday TGA; NY Fed overnight
+Treasury RRP results. All use existing contracts, canonical SQLite/view_at and
+actual Market Analyst context. Daily Treasury TGA parsing is implemented and
+sampled, but collection and analyst use remain gated pending detailed service
+terms review. FRED remains disabled by default. See [implementation and evidence](M2A1_IMPLEMENTATION.md)
+for exact metrics, rights, times, tests, live measurements and limitations.
+
+User confirms documentation checkpoint `82c6ba6` was pushed; Gate 1 complete.
+New M2A.1 commits stay local. No push is a prerequisite for local implementation.
+Historical NOT STARTED statements below are superseded for this eligible subset.
+M2A.2 (BLS, yield expansion, BEA GDP/PCE) remains unimplemented. Comprehensive
+Phase 3 world-event radar remains required: war, drought, floods, agriculture,
+energy, infrastructure, cyber, technology and pandemics, with no BTC keyword or
+price-anomaly discovery gates. This macro slice does not complete world coverage.
+
 # World scope and explicit expansion gaps — 2026-10-30
 
 Read [binding Phase 3 roadmap](PHASE_3_ARCHITECTURE.md) and [living checkpoint](../project-settings/PROJECT_STATUS_AND_PHASE_2_HANDOFF.md). This extends the original nine-family audit below; nine families are not a product-scope limit. Documentation-only clarification: no new runtime registry or collectors.

@@ -220,10 +220,10 @@ class SQLiteInformationStore:
                     (observation.observation_id,),
                 ).fetchone()
                 if existing_id is not None:
-                    if (observation.metric == "narrative.event"
-                            and observation.supersedes_observation_id is None):
+                    if observation.supersedes_observation_id is None:
                         # Match the append-time automatic revision link when a
-                        # caller retries the identical immutable narrative batch.
+                        # caller retries an identical immutable batch. This also
+                        # applies to numeric corrections after a collector restart.
                         stored = self._decode_observation(existing_id)
                         values = _observation_values(replace(
                             observation, supersedes_observation_id=stored.supersedes_observation_id

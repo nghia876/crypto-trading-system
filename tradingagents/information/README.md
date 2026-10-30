@@ -353,3 +353,27 @@ No scheduler is installed automatically. See
 budgets, crash/retry semantics, strict cutoff checks, live/environment blockers and
 [nine-family coverage audit](../../docs/project-handoff/SOURCE_COVERAGE_MATRIX.md).
 Full operational readiness is not established by offline or loopback tests.
+# Original-publisher liquidity (M2A.1)
+
+`liquidity.LiquidityCollector` emits the same `MarketDataBatch` consumed by
+`SQLiteInformationStore.append`; `view_at` and the existing analyst renderer
+select its evidence. For an authorized manual acquisition, use the SAME configured
+`information_store_path` as the graph, not another operational database:
+
+```python
+from datetime import date
+from tradingagents.information.liquidity import LiquidityCollector
+from tradingagents.information.store import SQLiteInformationStore
+
+store = SQLiteInformationStore(config["information_store_path"])
+collector = LiquidityCollector()
+store.append(collector.collect("h41", release_date=date(2026, 10, 29)))
+store.append(collector.collect("on_rrp"))
+# "tga" currently emits eligibility-pending coverage without an HTTP request.
+```
+
+Caller controls schedule/cooldown; no retries or scheduler are installed. Inspect
+the returned coverage, including unavailable results, and append it. Parser tests
+do not authorize collection from a pending source. Exact definitions, terms,
+live samples and remaining gaps are in
+[`M2A1_IMPLEMENTATION.md`](../../docs/project-handoff/M2A1_IMPLEMENTATION.md).
