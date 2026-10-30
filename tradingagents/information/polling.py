@@ -100,6 +100,7 @@ def coordinate(
     max_sources=4,
     session=None,
     clock=None,
+    source_ids=None,
 ):
     """Run due configurations fairly, at most one request each, then persist health.
 
@@ -115,6 +116,8 @@ def coordinate(
         raise ValueError("interval must be 60..86400 seconds; source budget 2..16")
     if not 1 <= len(configs) <= 16 or len({c.fingerprint for c in configs}) != len(configs):
         raise ValueError("one to sixteen distinct configurations required")
+    if source_ids is not None and not set(source_ids) <= {c.source.source_id for c in configs}:
+        raise ValueError("research filter contains an unconfigured source")
     states = {c.fingerprint: _state(store, c, now, interval) for c in configs}
     # Round robin domains; oldest due within each domain rotates providers naturally.
     domains = sorted(
@@ -123,7 +126,8 @@ def coordinate(
     )
     queues = {
         d: sorted(
-            (c for c in configs if c.domain == d and states[c.fingerprint][3] <= now),
+            (c for c in configs if c.domain == d and states[c.fingerprint][3] <= now
+             and (source_ids is None or c.source.source_id in source_ids)),
             key=lambda c: (states[c.fingerprint][3], c.fingerprint),
         )
         for d in domains

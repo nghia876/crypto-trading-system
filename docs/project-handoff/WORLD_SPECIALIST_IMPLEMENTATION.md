@@ -1,3 +1,7 @@
+# Event intelligence checkpoint - 2026-10-30
+
+Bounded reviewed incident identity, immutable membership correction/replay, competing-claim lifecycle integration, known shared-publisher safeguards and adaptive evidence-gap feed research are implemented locally. Uses existing SQLite, health/quotas and analyst graph; no new sources/database or BTC/price gate. Semantic grouping/contradiction judgments remain reviewed, truth UNKNOWN; unsupported research domains explicit. See [event intelligence handoff](EVENT_INTELLIGENCE_IMPLEMENTATION.md) for verification, CLI, rights, synchronization and gaps. New implementation is not authorized for push. This checkpoint supersedes older synchronization authorization descriptions below; pre-session range through f87ddbe is now authorized, but has not been pushed here.
+
 # Specialist WORLD discovery slice - 2026-10-30
 
 Status: VERIFIED bounded implementation and sampled live acquisition. Phase 3

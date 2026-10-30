@@ -195,6 +195,8 @@ NARRATIVE_NOTICE = (
 
 
 def _narrative_line(row, view=None):
+    from tradingagents.information.event_intelligence import incident_prompt
+
     data = {
         "event_id": row.subject,
         "claim": row.payload.get("claim"),
@@ -236,6 +238,10 @@ def _narrative_line(row, view=None):
         data["claim_lifecycle"] = lifecycle
         if row.payload.get("source_type") == "original_specialist_news":
             data["attribution"] = row.payload.get("attribution")
+    if view is not None:
+        incidents = incident_prompt(view, row)
+        if incidents:
+            data["incidents"] = incidents
     return "- " + json.dumps(data, sort_keys=True)
 
 

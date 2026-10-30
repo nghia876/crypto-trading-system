@@ -59,6 +59,16 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     store.append(parse_bls_release_calendar(BLS_SCHEDULE_HTML, retrieved_at=NOW, year=2026))
     store.append(parse_bls_json(bls("987654"), retrieved_at=NOW + timedelta(hours=1)))
     persist(store, article("world-flood", "Flood disrupts agriculture and energy infrastructure"))
+    from tradingagents.information.event_intelligence import record_incident_membership
+
+    record_incident_membership(
+        store, incident_id="delta-flood-episode", evidence_ids=("world-flood",),
+        recorded_at=NOW, rationale="Reviewed flood episode fixture",
+    )
+    record_incident_membership(
+        store, incident_id="FUTURE-INCIDENT-LINK", evidence_ids=("world-flood",),
+        recorded_at=NOW + timedelta(hours=1), rationale="Later identity must not leak",
+    )
     persist(store, article("world-radar", "War and drought strain agriculture; energy grid disruption; technology and cyber incident"))
     from tests.test_broad_news import rss
     from tradingagents.information.news import parse_news_snapshot
@@ -83,6 +93,7 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     prompt = "\n".join(model.prompts)
     assert "6745635 million USD" in prompt and "353000000 USD" in prompt
     assert "Flood disrupts agriculture" in prompt and "btc-core" in prompt
+    assert "delta-flood-episode" in prompt and "FUTURE-INCIDENT-LINK" not in prompt
     assert "War and drought" in prompt and "technology and cyber" in prompt
     assert "DROUGHT_WATER" in prompt and "AGRICULTURE_FOOD" in prompt
     assert "ENERGY_GRID" in prompt and "FLOOD_DISASTER" in prompt

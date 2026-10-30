@@ -168,6 +168,16 @@ def claim_lifecycle(view: InformationView, claim_id: str) -> dict:
             components[e] = merged
     dependent = {frozenset((e, t)) for group in components.values() for e in group for t in group}
     supporting_ids = {e for r in support for e in r.payload["evidence_ids"]}
+
+    def same_publisher(left, right):
+        a = left.payload.get("publisher_group")
+        b = right.payload.get("publisher_group")
+        return (
+            isinstance(a, str) and isinstance(b, str)
+            and a.strip().casefold() not in {"", "unknown"}
+            and a.strip().casefold() == b.strip().casefold()
+        )
+
     independent = [
         r
         for r in active
@@ -177,6 +187,7 @@ def claim_lifecycle(view: InformationView, claim_id: str) -> dict:
             and t in supporting_ids
             and history[e].source_id != history[t].source_id
             and history[e].subject != history[t].subject
+            and not same_publisher(history[e], history[t])
             and frozenset((history[e].subject, history[t].subject)) not in dependent
             for e in r.payload["evidence_ids"]
             for t in r.payload["target_ids"]
