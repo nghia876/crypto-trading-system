@@ -1,3 +1,27 @@
+# Current M2A.2 bounded checkpoint — 2026-10-30
+
+BLS CPI/core CPI SA indexes, nonfarm payroll employment level and unemployment
+rate now use original-publisher keyless API snapshots, canonical SQLite/view_at
+and the real Market Analyst context. Bounded collection, cooldown/Retry-After,
+monthly periods, units, footnotes and prospective corrections are implemented.
+Existing BLS schedule contracts are reused through a bounded adapter; live schedule
+coverage is unavailable, not a verified actual-release/vintage chronology.
+Treasury 2y/10y par XML parsing is implemented but expanded ingestion/analyst use
+remains rights-gated. BEA GDP/PCE/core PCE remains gated/unimplemented numerical
+coverage (free registration, incorporated policies and exact mappings unvalidated).
+Daily TGA remains gated; default FRED remains disabled.
+
+See [M2A.2 evidence and operational gaps](M2A2_IMPLEMENTATION.md). New M2A.2 commits are LOCAL
+ONLY. Authorized M2A.1 push attempted once; credential helper denied with MSYS
+BaseNamedObjects 0xC0000022. Last fresh remote verification remains `82c6ba6`;
+local M2A.1 is `72a7273`. A guarded host PowerShell script targets only M2A.1.
+Historical unimplemented/local-only statements below are superseded by this checkpoint.
+
+Independent Phase 3 WORLD discovery stays active scope: drought/water, floods,
+wildfires, food/agriculture, energy/grid, geopolitics, pandemics, technology,
+cyber, regulation and crypto, without BTC-keyword or movement prerequisites.
+Specialized collectors/operational coverage remain unproven; macro is no substitute.
+
 # Current M2A.1 checkpoint — 2026-10-30
 
 M2A.1 is locally implemented and tested for the eligible subset: original Board

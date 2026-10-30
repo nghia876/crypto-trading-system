@@ -46,11 +46,20 @@ TRADE_DATE = "2026-01-09"
 def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline):
     from tests.test_claim_lifecycle import article, persist
     from tests.test_liquidity import NOW, PARSERS, h41, rrp
+    from tests.test_original_macro import bls
+    from tests.test_scheduled_events import BLS_SCHEDULE_HTML
+    from tradingagents.information.original_macro import parse_bls_json
+    from tradingagents.information.scheduled_events import parse_bls_release_calendar
 
     store = SQLiteInformationStore(tmp_path / "combined.db")
     store.append(PARSERS[0](h41(), NOW))
     store.append(PARSERS[1](rrp(), NOW))
+    macro = parse_bls_json(bls(), retrieved_at=NOW)
+    store.append(macro)
+    store.append(parse_bls_release_calendar(BLS_SCHEDULE_HTML, retrieved_at=NOW, year=2026))
+    store.append(parse_bls_json(bls("987654"), retrieved_at=NOW + timedelta(hours=1)))
     persist(store, article("world-flood", "Flood disrupts agriculture and energy infrastructure"))
+    persist(store, article("world-radar", "War and drought strain agriculture; energy grid disruption; technology and cyber incident"))
     btc = Observation(
         observation_id="btc-core", source_id="derivatives.binance.usdm.funding",
         subject="BTCUSDT", metric="derivatives.funding_rate.usdm", payload={"funding_rate": "0.001"},
@@ -65,6 +74,11 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     prompt = "\n".join(model.prompts)
     assert "6745635 million USD" in prompt and "353000000 USD" in prompt
     assert "Flood disrupts agriculture" in prompt and "btc-core" in prompt
+    assert "War and drought" in prompt and "technology and cyber" in prompt
+    assert "325.5 index (1982-84=100)" in prompt
+    assert "Consumer Price Index for October 2026" in prompt
+    assert all(o.observation_id in prompt for o in macro.observations)
+    assert "987654" not in prompt
     assert "7999999" not in prompt
     assert len(state["analysis_information"]) <= 28000
 

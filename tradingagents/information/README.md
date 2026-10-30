@@ -377,3 +377,25 @@ the returned coverage, including unavailable results, and append it. Parser test
 do not authorize collection from a pending source. Exact definitions, terms,
 live samples and remaining gaps are in
 [`M2A1_IMPLEMENTATION.md`](../../docs/project-handoff/M2A1_IMPLEMENTATION.md).
+
+## Original-publisher M2A.2 bounded subset
+
+`original_macro.OriginalMacroCollector` registers BLS, Treasury par expansion and
+BEA source definitions. `collect()` obtains the four pinned monthly BLS level
+series; `collect("bls_calendar")` reuses the existing annual schedule parser and
+scheduled-event schema. Both are bounded (2 MB, 3.05/15 s timeouts, no redirects,
+no automatic retry, per-instance hourly cooldown extended by Retry-After).
+Append returned batches, including unavailable coverage, to the SAME configured
+SQLiteInformationStore. `view_at` and the actual consumer include BLS evidence;
+period dates are not publication times. Backfilled values become available only
+on acquisition; later changes retain prior known versions. No historical vintage
+or growth arithmetic is invented. Preserve BLS attribution/date/disclaimer.
+
+`collect("treasury_par")` and `collect("bea")` make no request, returning explicit
+unavailable coverage. Treasury parser outputs are also excluded from analyst
+selection; there is no enable flag. This does not change the legacy Treasury
+10-year CSV adapter. BEA numerical parsing is not implemented. TGA stays gated;
+FRED remains disabled by default. See `docs/project-handoff/M2A2_IMPLEMENTATION.md`.
+The collector is caller driven; no scheduler, cross-process quota coordination
+or continuous source coverage is established. Broad world discovery remains an
+independent Phase 3 track in the same store and graph.

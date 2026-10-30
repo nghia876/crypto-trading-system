@@ -12,6 +12,7 @@ from tradingagents.information.narrative_events import (
     render_narrative_events,
     selected_narrative_events,
 )
+from tradingagents.information.original_macro import render_original_macro, selected_original_macro
 from tradingagents.information.store import InformationView, SQLiteInformationStore
 
 
@@ -82,6 +83,8 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
         )
     lines.append("Original-publisher liquidity:")
     lines.extend(render_liquidity(result.view))
+    lines.append("Original-publisher inflation/labor/rates:")
+    lines.extend(render_original_macro(result.view))
     ordered_events = sorted(
         state.upcoming_macro_events,
         key=lambda item: (str(item.payload.get("scheduled_at", "")), item.observation_id),
@@ -111,6 +114,7 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
         state.latest_liquidation_snapshot_evidence_observation_id,
         *(item.evidence_observation_id for item in state.macro.series),
         *(row.observation_id for _, row in selected_liquidity(result.view) if row is not None),
+        *(row.observation_id for _, row in selected_original_macro(result.view) if row is not None),
         *(item.observation_id for item in ordered_events[:5]),
     } - {None}
     priority_ids = core_ids | {item.observation_id for item in ordered_events}
@@ -203,13 +207,14 @@ def _ids(values) -> str:
 MAX_ANALYSIS_INFORMATION_CHARS = 28000
 _SECTION_BUDGETS = {
     "Signals:": 6000,
-    "Macro series:": 2000,
+    "Macro series:": 1500,
     "Original-publisher liquidity:": 3500,
-    "Upcoming scheduled macro events:": 3500,
+    "Original-publisher inflation/labor/rates:": 3500,
+    "Upcoming scheduled macro events:": 2500,
     "Narrative events:": 4000,
     "Recorded coverage:": 2000,
-    "Point-in-time source definitions:": 2500,
-    "Evidence metadata (schema and unit):": 3000,
+    "Point-in-time source definitions:": 2000,
+    "Evidence metadata (schema and unit):": 1500,
 }
 
 
