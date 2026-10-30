@@ -1,3 +1,22 @@
+# Living checkpoint / nonnegotiable scope — 2026-10-30
+
+Work sessions and ordinary ChatGPT chats must start here. This section supersedes older checkpoint/next-step instructions below. This is the user's binding scope clarification of the existing Blueprint and Phase 3, not a new top-level phase. Canonical project `sources/PRODUCT_BLUEPRINT.md`, `sources/MASTER_PROMPT.md` and `sources/RESOURCE_MANIFEST.md` remain strictly read-only.
+
+- One integrated TradingAgents repo, BTC-first (ETH later), one canonical SQLite provenance/replay store shared by acquisition and analyst context. Use only free, legally eligible sources; public access alone is not clearance. No parallel project or paid replacement.
+- Phase 3 owns comprehensive domain-independent WORLD-event discovery now, using broad plus specialized free sources. Discovery has no BTC keyword, price movement, anomaly or analyst-request prerequisite. Financial announcements and generic headline search alone are insufficient.
+- Recover the full domain list and workstream boundaries from [Phase 3 architecture](../project-handoff/PHASE_3_ARCHITECTURE.md), and explicit source/metric gaps from [coverage matrix](../project-handoff/SOURCE_COVERAGE_MATRIX.md). Never narrow future sessions to financial-only coverage or defer world discovery to Phase 4.
+- Critically challenge hypotheses, preserve counterevidence and alternatives, expose uncertainty and require point-in-time (PIT) evidence. Phase 4 tests causal transmission and regimes; events never automatically imply bullish/bearish BTC labels.
+
+Verified locally before these documentation edits: repository `nghia876/crypto-trading-system`, branch `phase-3-event-narrative-slice`, HEAD `359756e2105fbc5ebc72d603cd7a6621f3ccf72d`; tracked tree clean, only pre-existing `.phase12-tools/` untracked. The user reports this baseline was pushed; remote equality was not rechecked in this documentation session. Older failed-push reports below are historical.
+
+M2A has NOT started. Next implementation priority is narrow structured macro restoration from eligible original publishers, followed by separately tracked Phase 3 world-radar expansion and M2B-D market-data work; Phase 4 remains later causal/world-regime reasoning. See the architecture for boundaries and [macro eligibility](../project-handoff/MACRO_SOURCE_ELIGIBILITY.md) / [detailed macro sequence and canonical-store trial](../project-handoff/NEXT_GITHUB_CANONICAL_STORE.md). M2A complements world radar; it neither substitutes for it nor postpones it. Phase 3 remains IN_PROGRESS.
+
+Existing evidence includes the recurring coordinator and broad news adapters, append-only claims/replay, bounded graph context, historical full regression and a manual 47-item BBC same-store replay/graph trial in the linked handoffs. These are limited proofs, not comprehensive world coverage, legal clearance, continuously scheduled operation or trading effectiveness. GDELT live parsing and specialized world-source coverage remain not yet proven; no scheduler was installed in the recorded trial.
+
+Next-session instructions: read this section and linked architecture/matrix before selecting work; verify actual branch/HEAD/status and current code/tests. Keep `sources/` read-only, leave `.phase12-tools/` untouched and unstaged, preserve user changes and the existing canonical store, never change `main`, and do not push without explicit authorization. Ordinary chats recover this checkpoint before proposing work; implementation requires the user's task authorization. This session changes documentation only, adds no collectors and starts no M2A work.
+
+Documentation verification: current-section relative links resolve; Markdown fences/table columns and `git diff --check` pass. Reviewed the seven-document diff against existing source configuration, default disabled macro routing and recorded release/trial evidence. Application tests were not rerun for prose-only changes. Only intended docs are committed locally; no push. Use `git log -1` for the documentation commit SHA.
+
 # Current checkpoint: Phase 3.2B (2026-10-27)
 
 Locally implemented explicit evidence-backed claim correlation/provenance and

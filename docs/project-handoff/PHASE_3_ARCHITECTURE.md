@@ -1,3 +1,27 @@
+# Binding Phase 3 scope clarification and roadmap — 2026-10-30
+
+This clarifies the existing product vision and Phase 3, not a new top-level phase. Read the [living checkpoint](../project-settings/PROJECT_STATUS_AND_PHASE_2_HANDOFF.md) for current state and constraints. The first-slice design below is historical and deliberately narrower than the full product.
+
+## Product and discovery contract
+
+One integrated TradingAgents repo, BTC-first, one canonical SQLite provenance/replay store, free-only legally eligible acquisition. The full product joins information, market/world state, critical causal/regime reasoning, conditional scenarios, deterministic risk, execution simulation, PIT evaluation and learning. Scope is not proof of implementation or profitability.
+
+Phase 3 continuously discovers WORLD events independently of domain-to-BTC relevance: wars/conflicts; sanctions/trade; drought, floods, wildfires, storms and water scarcity; agriculture/crop and food supply disruptions; energy/oil/gas/electric grid/infrastructure; pandemics/public health events; technology breakthroughs/AI/chips; cybersecurity; geopolitics; regulation; and crypto. Discovery requires neither BTC keywords nor observed price moves. Relevance assessment and anomaly-triggered deeper research follow discovery.
+
+Combine broad global/regional reporting with specialized environmental, agricultural, energy, disaster, health, science, cyber and official sources. Generic headline search and financial release feeds alone are insufficient. The [coverage matrix](SOURCE_COVERAGE_MATRIX.md) owns detailed source-family/metric gaps. Candidates require access/rights, latency, region/language, revision and PIT validation before operational use; naming a domain does not establish a collector.
+
+## Next implementation priorities and phase boundaries
+
+| Workstream | Scope / boundary | State at this clarification |
+|---|---|---|
+| M2A — next implementation task | Narrow structured economic/macroeconomic restoration after default FRED disablement: Fed H.4.1 assets/reserves/TGA, NY Fed ON RRP, Treasury daily TGA, BLS CPI/employment, Treasury yields, BEA GDP/PCE. Use eligible free original publishers and existing store/contracts, units, release/first-seen/retrieval timestamps, append-only revisions, provenance and explicit missing/stale reporting. See [eligibility](MACRO_SOURCE_ELIGIBILITY.md) and [sequence](NEXT_GITHUB_CANONICAL_STORE.md). | NOT STARTED; source review and existing direct Treasury support are not completed replacement coverage. |
+| Phase 3 world-radar expansion — explicit next workstream | Expand specialized environmental/agricultural/energy/disaster and other global sources alongside broad discovery; close matrix gaps and rights/live gates. Existing Phase 3 obligation, separate from narrow M2A and not deferred to Phase 4. | Required; specialized breadth and operational coverage NOT YET PROVEN. |
+| M2B-D — separate market-data backlog | BTC microstructure/multi-venue, derivatives/options, on-chain, institutional/stablecoin flows and related cross-asset/expectations gaps. Distinct from M2A and world discovery. Exact B/C/D allocation and acceptance slices must be verified/agreed before implementation; this clarification does not invent completed milestones. | Remaining matrix gaps; no new implementation here. |
+| Phase 3 M3 evaluation | Measure provenance/origin, correlation/confirmation quality, latency, omissions and market-reaction alignment. Never gate discovery on price moves or count syndication as independent evidence. | Later evaluation against acquired PIT evidence. |
+| Phase 4 — World Model + Regime | Test transmission mechanisms, competing hypotheses and counterevidence: e.g. drought -> crops/food -> inflation/policy, or energy disruption -> costs/growth/liquidity -> conditional BTC exposure. Challenge each link, timing, confounders and already-priced-in alternatives; allow unknown/no material effect. | Later reasoning, not automatic bullish/bearish event labels. |
+
+Acceptance for expansion requires domain-specific discovery examples without BTC/price gates, explicit source/metric coverage and missingness, conservative publication/first-seen availability, immutable revisions, same-store reopen/replay and analyst lineage. Domain/region omissions, uncertain event times and source dependence remain visible. Offline fixtures, sampled downloads and source health alone cannot certify complete or continuous world coverage.
+
 # Phase 3 first slice: event and narrative contracts
 
 Date: 2026-10-27 (Asia/Saigon). Decision: accepted for this bounded slice.

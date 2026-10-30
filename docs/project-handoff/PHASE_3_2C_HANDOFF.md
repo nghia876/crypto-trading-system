@@ -1,3 +1,7 @@
+# Current handoff navigation — 2026-10-30
+
+Read the [living checkpoint](../project-settings/PROJECT_STATUS_AND_PHASE_2_HANDOFF.md), [Phase 3 roadmap](PHASE_3_ARCHITECTURE.md) and [coverage gaps](SOURCE_COVERAGE_MATRIX.md) for current binding scope and next-session instructions. This 3.2C handoff remains historical evidence; later release verification and the [canonical-store trial](NEXT_GITHUB_CANONICAL_STORE.md) supersede its blocked-regression/no-trial status. M2A has NOT started. Comprehensive world discovery belongs to Phase 3 now; macro restoration is only complementary.
+
 # Phase 3.2C / M0 + M1 handoff — 2026-10-29
 
 **Follow-up:** [release verification](M0_M1_RELEASE_VERIFICATION.md) now records

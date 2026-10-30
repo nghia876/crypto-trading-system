@@ -1,3 +1,25 @@
+# World scope and explicit expansion gaps — 2026-10-30
+
+Read [binding Phase 3 roadmap](PHASE_3_ARCHITECTURE.md) and [living checkpoint](../project-settings/PROJECT_STATUS_AND_PHASE_2_HANDOFF.md). This extends the original nine-family audit below; nine families are not a product-scope limit. Documentation-only clarification: no new runtime registry or collectors.
+
+Actual broad configuration in `tradingagents/information/sources.py` contains BBC world/technology and GDELT geopolitics/technology; `NewsDiscoveryConfig` accepts only `WAR_GEOPOLITICS` and `TECHNOLOGY`. Generic RSS/Atom capability does not prove specialized acquisition. The later manual 47-item BBC canonical-store trial in [NEXT_GITHUB_CANONICAL_STORE.md](NEXT_GITHUB_CANONICAL_STORE.md) supersedes the older no-live-corpus statement below for that bounded trial only. No continuous production or complete domain gate passed.
+
+All families below belong to Phase 3 now. Source types are research candidates, not approved endpoints, registered collectors or cleared rights. Use broad plus specialized free legally eligible sources without BTC keywords or a price prerequisite. Per-family target cadence, regional/language recall, discovery latency, missing/stale rates and origin independence are NOT YET PROVEN. A matched headline or empty feed proves neither metric coverage nor event absence.
+
+| Required family | Specialized free source types to assess (not clearance) | Explicit evidence / metric gaps | Current status |
+|---|---|---|---|
+| Wars/conflicts, geopolitics, sanctions/trade | Official sanctions/trade notices, regional and conflict/humanitarian reporting | Geography, escalation, effective dates, affected routes/entities, shipping/trade disruption, independent confirmation | PARTIAL broad discovery; specialized breadth NOT YET PROVEN |
+| Drought and water scarcity | Meteorological/hydrological agencies, drought monitors, reservoir/water authorities | Severity/extent, rainfall anomalies, soil moisture, reservoir/storage and water restrictions | Incidental headlines possible; specialized collectors/metrics NOT YET PROVEN |
+| Floods, wildfires, storms and disasters | Weather warnings, disaster agencies, satellite/fire and flood bulletins | Location/severity, forecasts vs observed impact, outages/damage, evacuation and update timing | Specialized collectors/metrics NOT YET PROVEN |
+| Agriculture/crops and food supply | Agricultural agencies, crop reports, food-security bulletins | Crop condition/yield, planting/harvest, stocks, export restrictions, food supply/logistics disruption | Specialized collectors/metrics NOT YET PROVEN |
+| Energy/oil/gas/electric grid/infrastructure | Energy agencies, grid operators, pipeline/port/infrastructure notices | Supply/production/inventory, outages, capacity, flows, restoration and physical bottlenecks | Legacy oil proxy is not physical event coverage; specialized collectors/metrics NOT YET PROVEN |
+| Pandemics/public health | Health agencies, outbreak/surveillance bulletins | Outbreak geography, case/report definitions, reporting delays/revisions and restrictions | Specialized collectors/metrics NOT YET PROVEN |
+| Technology breakthroughs/AI/chips/science | Research institutions, primary publications, chip/export-control and industry notices | Claimed vs validated breakthroughs, capability evidence, chip capacity/supply and deployment dates | PARTIAL broad technology; specialized verification/metrics NOT YET PROVEN |
+| Cybersecurity | Official security advisories, vulnerability databases, incident disclosures | Exploit status, affected systems, severity, incident scope, fixes and infrastructure disruption | PARTIAL headline discovery; specialized collectors/metrics NOT YET PROVEN |
+| Regulation and crypto | Regulator/legislative sources, protocol/exchange/issuer notices | Jurisdiction, proposed vs effective rules, enforcement, protocol/security events, operational effects | Existing Fed feed is not comprehensive regulation/crypto radar; specialized breadth NOT YET PROVEN |
+
+M2A is only structured economic/macroeconomic restoration (H.4.1, RRP, TGA, CPI/employment, yields, GDP/PCE), NOT STARTED. It complements every world family above. M2B-D market data remain separate. Phase 4 tests causal transmission, alternatives and uncertainty from PIT evidence; no row implies automatic BTC direction. Older undifferentiated M2 priorities below are refined by the linked roadmap.
+
 # Source coverage matrix — M0 audit, 2026-10-29
 
 Status: code audit VERIFIED; runtime live coverage UNKNOWN. This is documentation,

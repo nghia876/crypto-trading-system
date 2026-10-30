@@ -1,3 +1,9 @@
+# Current recovery pointer — 2026-10-30
+
+Start with the [living checkpoint](../project-settings/PROJECT_STATUS_AND_PHASE_2_HANDOFF.md) and [binding Phase 3 roadmap](PHASE_3_ARCHITECTURE.md). Verified local baseline: `phase-3-event-narrative-slice` at `359756e2105fbc5ebc72d603cd7a6621f3ccf72d`; user reports pushed. Failed-push reports below are historical, not current remote verification or standing push authorization. This documentation task does not push.
+
+The six-step structured macro sequence below is **M2A only, NOT STARTED**, complementary to Phase 3 world-radar expansion. Environmental/geopolitical/technology discovery is already required in Phase 3, not postponed by M2A. M2B-D market data and Phase 4 causal reasoning remain separate workstreams. The canonical-store trial below is bounded evidence, not continuous operational coverage.
+
 # NEXT session: GitHub recovery and canonical live-store trial — 2026-10-29
 
 ## Observed outcome

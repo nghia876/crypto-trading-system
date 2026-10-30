@@ -1,3 +1,9 @@
+# M2A scope boundary — 2026-10-30
+
+The original-publisher mapping below supports narrow M2A structured macro restoration, which has NOT started. Include BEA GDP and headline/core PCE price indexes (separate from consumption spending); exact PCE table/line, units and revision mapping remain to be validated as described in the [six-step sequence](NEXT_GITHUB_CANONICAL_STORE.md). No mapping grants blanket eligibility or proves replacement coverage.
+
+M2A complements Phase 3 comprehensive world radar; it does not substitute for or postpone environmental, agricultural, disaster, energy, geopolitical, health, technology, cyber, regulatory or crypto discovery. See [binding architecture/roadmap](PHASE_3_ARCHITECTURE.md) and [source gaps](SOURCE_COVERAGE_MATRIX.md). Retain the existing canonical SQLite store and free-only legally eligible sources; default FRED remains disabled. Historical M2 references below mean bounded macro work where applicable, not all world-event acquisition.
+
 # Bounded macro source eligibility review — 2026-10-29
 
 Decision: default `data_vendors.macro_data` is `disabled`. The router returns an
