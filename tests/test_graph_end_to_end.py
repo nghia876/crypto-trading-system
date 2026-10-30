@@ -58,8 +58,11 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     store.append(macro)
     store.append(parse_bls_release_calendar(BLS_SCHEDULE_HTML, retrieved_at=NOW, year=2026))
     store.append(parse_bls_json(bls("987654"), retrieved_at=NOW + timedelta(hours=1)))
-    persist(store, article("world-flood", "Flood disrupts agriculture and energy infrastructure"))
-    from tradingagents.information.event_intelligence import record_incident_membership
+    persist(store, article("world-flood", "Delta Flood disrupts agriculture and energy infrastructure"))
+    from tradingagents.information.event_intelligence import (
+        record_event_candidates,
+        record_incident_membership,
+    )
 
     record_incident_membership(
         store, incident_id="delta-flood-episode", evidence_ids=("world-flood",),
@@ -76,9 +79,10 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
 
     for config in SPECIALIST_WORLD_CONFIG:
         store.append(parse_news_snapshot(
-            rss(config.domain + " specialist warning", url=config.source.endpoint),
+            rss("Delta Flood disrupts agriculture and energy infrastructure" if config.domain == "FLOOD_DISASTER" else config.domain + " specialist warning", url=config.source.endpoint),
             config, retrieved_at=NOW,
         ))
+    record_event_candidates(store, now=NOW)
     btc = Observation(
         observation_id="btc-core", source_id="derivatives.binance.usdm.funding",
         subject="BTCUSDT", metric="derivatives.funding_rate.usdm", payload={"funding_rate": "0.001"},
@@ -93,6 +97,8 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     prompt = "\n".join(model.prompts)
     assert "6745635 million USD" in prompt and "353000000 USD" in prompt
     assert "Flood disrupts agriculture" in prompt and "btc-core" in prompt
+    assert "event_link_candidates" in prompt and "candidate_requires_review" in prompt
+    assert "open_gaps" in prompt
     assert "delta-flood-episode" in prompt and "FUTURE-INCIDENT-LINK" not in prompt
     assert "War and drought" in prompt and "technology and cyber" in prompt
     assert "DROUGHT_WATER" in prompt and "AGRICULTURE_FOOD" in prompt

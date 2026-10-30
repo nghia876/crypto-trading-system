@@ -1,3 +1,11 @@
+# Phase 3.3 local checkpoint — 2026-10-30
+
+Bounded heuristic event-link suggestions and adaptive evidence-gap research extend the existing canonical SQLite/TradingAgents pipeline. Candidate status is separate from reviewed membership and corroboration; first-known/availability, corrections, syndication safeguards and reopen replay remain explicit. WORLD discovery has no BTC/price prerequisite. Actual mixed BTC/BLS/H.4.1/RRP/WORLD graph retains candidate/gap annotations under 28k characters.
+
+See [Phase 3.3 handoff](../project-handoff/PHASE_3_3_HANDOFF.md) for exact limits, tests, live failure and next actions. Full semantic Phase 3.3 and Phase 3 remain IN_PROGRESS; original global health/cyber/trade/disaster/grid breadth and recall evaluation remain open. Daily TGA and Treasury yield rights gates, incomplete BEA GDP/PCE, absent BLS live calendar and disabled FRED are unchanged.
+
+Starting local HEAD e801a80; host synchronization through f87ddbe is reported verified by the master handoff, superseding older remote statements below. No push authorized for e801a80 or this new implementation; no push attempted. Canonical sources/ and .phase12-tools/ preserved. The earlier live SQLite database is absent, so historical preserved-row/live counts below were not reverified here.
+
 # Event intelligence checkpoint - 2026-10-30
 
 Bounded reviewed incident identity, immutable membership correction/replay, competing-claim lifecycle integration, known shared-publisher safeguards and adaptive evidence-gap feed research are implemented locally. Uses existing SQLite, health/quotas and analyst graph; no new sources/database or BTC/price gate. Semantic grouping/contradiction judgments remain reviewed, truth UNKNOWN; unsupported research domains explicit. See [event intelligence handoff](../project-handoff/EVENT_INTELLIGENCE_IMPLEMENTATION.md) for verification, CLI, rights, synchronization and gaps. New implementation is not authorized for push. This checkpoint supersedes older synchronization authorization descriptions below; pre-session range through f87ddbe is now authorized, but has not been pushed here.

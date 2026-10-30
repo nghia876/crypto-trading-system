@@ -1,3 +1,9 @@
+# Phase 3.3 local checkpoint — 2026-10-30
+
+Bounded automatic heuristic event-link CANDIDATES, immutable PIT/reopen suggestion history, seed-driven evidence-gap questions and existing eligible-feed research are implemented. Suggestions never establish membership, confirmation, independent support or truth. The actual mixed BTC/macro/WORLD graph retains candidate annotations within 28k characters. See [Phase 3.3 scope, acceptance evidence, limits and next actions](PHASE_3_3_HANDOFF.md).
+
+Phase 3/full semantic Phase 3.3 remain IN_PROGRESS. All macro/source-rights gates remain. This checkpoint supersedes older synchronization statements below: host push through f87ddbe is reported verified in the master handoff; starting e801a80 and this implementation remain LOCAL/UNPUSHED. No fresh remote query or push here. The former live database is absent; historical live counts below are not reverified in this session.
+
 # Phase 3 event intelligence and bounded adaptive research â€” 2026-10-30
 
 Status: VERIFIED bounded local implementation. Phase 3 remains IN_PROGRESS.

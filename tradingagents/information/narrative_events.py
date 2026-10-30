@@ -195,7 +195,7 @@ NARRATIVE_NOTICE = (
 
 
 def _narrative_line(row, view=None):
-    from tradingagents.information.event_intelligence import incident_prompt
+    from tradingagents.information.event_intelligence import candidate_prompt, incident_prompt
 
     data = {
         "event_id": row.subject,
@@ -240,8 +240,18 @@ def _narrative_line(row, view=None):
             data["attribution"] = row.payload.get("attribution")
     if view is not None:
         incidents = incident_prompt(view, row)
+        suggestions = candidate_prompt(view, row)
+        if incidents or suggestions:
+            # Keep evidence/times/attribution while avoiding repeated unknown/hash
+            # fields crowding other WORLD domains out of the reserved budget.
+            keys = ("event_id", "claim", "domain", "evidence_id", "source", "url",
+                    "published_at", "updated_at", "observed_at", "retrieved_at",
+                    "available_at", "attribution", "claim_lifecycle")
+            data = {key: data[key] for key in keys if key in data}
         if incidents:
             data["incidents"] = incidents
+        if suggestions:
+            data["event_link_candidates"] = suggestions
     return "- " + json.dumps(data, sort_keys=True)
 
 
