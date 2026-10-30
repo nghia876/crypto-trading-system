@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 import time
 from dataclasses import replace
 from datetime import UTC, datetime
@@ -24,7 +25,7 @@ from tradingagents.information.binance_spot import (
     MarketDataCollectionError,
 )
 from tradingagents.information.observations import Observation, Transformation, _require_aware
-from tradingagents.information.sources import BROAD_NEWS_CONFIG, NewsDiscoveryConfig
+from tradingagents.information.sources import WORLD_NEWS_CONFIG, NewsDiscoveryConfig
 
 
 def canonical_article_url(value: str) -> str:
@@ -125,11 +126,18 @@ def parse_news_snapshot(
         if len(entries) > config.max_items:
             raise ValueError("news item limit exceeded")
         rows = {}
+        excluded_articles = 0
         for title, original, pub_raw, updated_raw, seen_raw, publisher in entries:
             title = " ".join(title.split())
             if not title or len(title) > 2000:
                 raise ValueError("missing or oversized headline")
             canonical = canonical_article_url(original)
+            # Specialist eligibility covers agency-authored metadata, not linked third parties.
+            suffix = dict(config.source.metadata).get("article_host_suffix")
+            host = urlsplit(canonical).hostname
+            if suffix and host != suffix and not host.endswith("." + suffix):
+                excluded_articles += 1
+                continue
             published, updated = _date(pub_raw), _date(updated_raw)
             article_id = "article:" + _digest(canonical)
             content_hash = _digest(json.dumps([title, pub_raw, updated_raw], ensure_ascii=False))
@@ -177,6 +185,11 @@ def parse_news_snapshot(
                 "lifecycle": "unconfirmed",
                 "credibility": "unmeasured",
                 "event_time_status": "unknown; envelope uses publication or local retrieval proxy",
+                "event_occurrence_time": None,
+                "attribution": config.source.provider,
+                "source_type": config.source.source_type,
+                "publisher_group": dict(config.source.metadata).get("publisher_group", "unknown"),
+                "rights_reference": dict(config.source.metadata).get("rights_reference"),
                 "confirmed_at": None,
                 "reaction_at": None,
                 "contradiction_search": "not_performed",
@@ -206,6 +219,17 @@ def parse_news_snapshot(
                 ),
             )
             rows[row.observation_id] = row
+        rows = {
+            key: replace(
+                row,
+                payload={
+                    **row.payload,
+                    "snapshot_item_count": len(entries),
+                    "excluded_article_count": excluded_articles,
+                },
+            )
+            for key, row in rows.items()
+        }
         return MarketDataBatch(
             tuple(sorted(rows.values(), key=lambda x: x.observation_id)),
             (),
@@ -248,10 +272,16 @@ def fetch_news_snapshot(config, session):
             if size > config.max_bytes:
                 raise MarketDataCollectionError("news byte limit exceeded")
             chunks.append(chunk)
-    return b"".join(chunks).decode("utf-8-sig")
+    raw = b"".join(chunks)
+    # Honor a bounded XML declaration, never locale guesses or lossy replacement.
+    declaration = re.match(rb"\s*<\?xml[^>]{0,200}encoding=['\"]([A-Za-z0-9_-]+)['\"]", raw[:256])
+    encoding = declaration.group(1).decode("ascii").lower() if declaration else "utf-8-sig"
+    if encoding not in {"utf-8", "utf8", "utf-8-sig", "iso-8859-1", "windows-1252"}:
+        raise MarketDataCollectionError("unsupported news encoding")
+    return raw.decode(encoding)
 
 
-def poll_once(store, configs=BROAD_NEWS_CONFIG, *, poll_id: str, session=None, clock=None):
+def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, clock=None):
     """Persist each outcome atomically; a durable poll ID retries without refetching.
 
     Callers use a new ID for each new poll; same ID/config resumes partial runs.
@@ -325,6 +355,13 @@ def poll_once(store, configs=BROAD_NEWS_CONFIG, *, poll_id: str, session=None, c
                 "query": config.query,
                 "snapshot_hash": _digest(text) if text is not None else None,
                 "items": len(batch.observations),
+                "excluded_article_count": max(
+                    (r.payload.get("excluded_article_count", 0) for r in batch.observations),
+                    default=None,
+                ),
+                "content_scope": "eligible agency links only"
+                if dict(config.source.metadata).get("article_host_suffix")
+                else "discovery headlines",
                 "completeness": "unknown",
                 "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
             },

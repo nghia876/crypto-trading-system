@@ -60,6 +60,15 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     store.append(parse_bls_json(bls("987654"), retrieved_at=NOW + timedelta(hours=1)))
     persist(store, article("world-flood", "Flood disrupts agriculture and energy infrastructure"))
     persist(store, article("world-radar", "War and drought strain agriculture; energy grid disruption; technology and cyber incident"))
+    from tests.test_broad_news import rss
+    from tradingagents.information.news import parse_news_snapshot
+    from tradingagents.information.sources import SPECIALIST_WORLD_CONFIG
+
+    for config in SPECIALIST_WORLD_CONFIG:
+        store.append(parse_news_snapshot(
+            rss(config.domain + " specialist warning", url=config.source.endpoint),
+            config, retrieved_at=NOW,
+        ))
     btc = Observation(
         observation_id="btc-core", source_id="derivatives.binance.usdm.funding",
         subject="BTCUSDT", metric="derivatives.funding_rate.usdm", payload={"funding_rate": "0.001"},
@@ -75,6 +84,8 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     assert "6745635 million USD" in prompt and "353000000 USD" in prompt
     assert "Flood disrupts agriculture" in prompt and "btc-core" in prompt
     assert "War and drought" in prompt and "technology and cyber" in prompt
+    assert "DROUGHT_WATER" in prompt and "AGRICULTURE_FOOD" in prompt
+    assert "ENERGY_GRID" in prompt and "FLOOD_DISASTER" in prompt
     assert "325.5 index (1982-84=100)" in prompt
     assert "Consumer Price Index for October 2026" in prompt
     assert all(o.observation_id in prompt for o in macro.observations)

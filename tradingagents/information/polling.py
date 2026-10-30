@@ -19,7 +19,7 @@ import requests
 from tradingagents.information.binance_spot import CoverageRecord, CoverageStatus, MarketDataBatch
 from tradingagents.information.news import _digest, poll_once
 from tradingagents.information.observations import _require_aware
-from tradingagents.information.sources import BROAD_NEWS_CONFIG
+from tradingagents.information.sources import WORLD_DISCOVERY_DOMAINS, WORLD_NEWS_CONFIG
 from tradingagents.information.store import SQLiteInformationStore
 
 
@@ -93,7 +93,7 @@ def _state(store, config, now, interval):
 
 def coordinate(
     store,
-    configs=BROAD_NEWS_CONFIG,
+    configs=WORLD_NEWS_CONFIG,
     *,
     now=None,
     interval=900,
@@ -117,7 +117,10 @@ def coordinate(
         raise ValueError("one to sixteen distinct configurations required")
     states = {c.fingerprint: _state(store, c, now, interval) for c in configs}
     # Round robin domains; oldest due within each domain rotates providers naturally.
-    domains = sorted({c.domain for c in configs})
+    domains = sorted(
+        {c.domain for c in configs},
+        key=lambda d: (min(states[c.fingerprint][3] for c in configs if c.domain == d), d),
+    )
     queues = {
         d: sorted(
             (c for c in configs if c.domain == d and states[c.fingerprint][3] <= now),
@@ -224,6 +227,61 @@ def coordinate(
     return tuple(outcomes), tuple(health)
 
 
+def source_gap_report(view, configs=WORLD_NEWS_CONFIG):
+    """As-of source health, including families with no adapter. Never event absence.
+
+    Only evidence/coverage in the supplied immutable view is inspected. A configured
+    source is not proof of live collection, regional recall or independent confirmation.
+    """
+    report = {}
+    for domain in WORLD_DISCOVERY_DOMAINS:
+        sources = []
+        for config in configs:
+            if config.domain != domain:
+                continue
+            history = [
+                r
+                for r in view.coverage
+                if r.source_id == config.source.source_id
+                and r.metric == "narrative.event"
+                and r.observed_at <= view.decision_time
+                and json.loads(r.detail).get("config") == config.fingerprint
+            ]
+            last = max(history, key=lambda r: (r.observed_at, r.coverage_id), default=None)
+            rows = [
+                r
+                for r in view.observations
+                if r.source_id == config.source.source_id
+                and r.metric == "narrative.event"
+                and r.is_available_at(view.decision_time)
+                and r.payload.get("config_fingerprint") == config.fingerprint
+            ]
+            newest = max((r.publication_time for r in rows if r.publication_time), default=None)
+            sources.append(
+                {
+                    "source": config.source.source_id,
+                    "original_specialist": config.source.source_type == "original_specialist_news",
+                    "poll_status": last.status.value if last else "never_polled",
+                    "last_attempt": last.observed_at.isoformat() if last else None,
+                    "collection_stale": last is None or view.decision_time - last.observed_at > timedelta(minutes=30),
+                    "collection_stale_threshold_seconds": 1800,
+                    "content_stale": view.decision_time - newest > timedelta(days=1)
+                    if newest
+                    else None,
+                    "publication_unknown": sum(r.publication_time is None for r in rows),
+                    "eligible_items": len(rows),
+                    "rights_reference": dict(config.source.metadata).get("rights_reference"),
+                }
+            )
+        report[domain] = {
+            "adapter_status": "configured_partial" if sources else "missing_adapter",
+            "specialist_gap": not any(s["original_specialist"] for s in sources),
+            "sources": sources,
+            "completeness": "unknown; no event absence or independent confirmation inferred",
+        }
+    return report
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("poll-once", "health"))
@@ -241,7 +299,8 @@ def main(argv=None):
                 {
                     k: {"observed_at": v.observed_at.isoformat(), **json.loads(v.detail)}
                     for k, v in latest.items()
-                },
+                }
+                | {"source_gaps": source_gap_report(view)},
                 indent=2,
             )
         )
@@ -255,6 +314,7 @@ def main(argv=None):
             {
                 "polls": [json.loads(r.detail) for r in outcomes],
                 "health": [json.loads(r.detail) for r in health],
+                "source_gaps": source_gap_report(store.view_at(datetime.now(UTC))),
             },
             indent=2,
         )

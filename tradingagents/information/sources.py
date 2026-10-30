@@ -88,6 +88,20 @@ class SourceRegistry:
         return len(self._sources)
 
 
+WORLD_DISCOVERY_DOMAINS = (
+    "WAR_GEOPOLITICS",
+    "TRADE",
+    "DROUGHT_WATER",
+    "FLOOD_DISASTER",
+    "WILDFIRE",
+    "AGRICULTURE_FOOD",
+    "ENERGY_GRID",
+    "PUBLIC_HEALTH",
+    "TECHNOLOGY",
+    "CYBERSECURITY",
+)
+
+
 @dataclass(frozen=True, slots=True)
 class NewsDiscoveryConfig:
     """Versioned public discovery request; domains never depend on market moves."""
@@ -103,7 +117,7 @@ class NewsDiscoveryConfig:
     def __post_init__(self):
         from urllib.parse import urlsplit
 
-        if self.domain not in {"WAR_GEOPOLITICS", "TECHNOLOGY"}:
+        if self.domain not in WORLD_DISCOVERY_DOMAINS:
             raise ValueError("unsupported discovery domain")
         if self.format not in {"rss", "atom", "gdelt"}:
             raise ValueError("unsupported discovery format")
@@ -114,7 +128,7 @@ class NewsDiscoveryConfig:
             raise ValueError("news discovery requires FREE public access")
         if (
             not self.version.strip()
-            or not 1 <= self.max_items <= 250
+            or not 1 <= self.max_items <= 500
             or not 1 <= self.max_bytes <= 2_000_000
         ):
             raise ValueError("invalid version or discovery bounds")
@@ -168,9 +182,7 @@ def _news_source(source_id, provider, endpoint):
             "Origin and syndication unverified",
             "No independent corroboration",
         ),
-        legal_constraints=(
-            "Public feed/API only; no article body crawling or access bypass",
-        ),
+        legal_constraints=("Public feed/API only; no article body crawling or access bypass",),
     )
 
 
@@ -206,3 +218,76 @@ BROAD_NEWS_CONFIG = (
         '(technology OR semiconductor OR "artificial intelligence" OR cybersecurity)',
     ),
 )
+
+
+def _specialist_source(source_id, provider, endpoint, rights_url):
+    from dataclasses import replace
+
+    return replace(
+        _news_source(source_id, provider, endpoint),
+        source_type="original_specialist_news",
+        legal_constraints=(
+            "Agency-produced headline/link/date fields only; no bodies, images or logos",
+            "Attribute agency, publication date when supplied, and original link; no endorsement",
+            "Third-party protected content excluded; eligibility is bounded, not blanket clearance",
+        ),
+        metadata=(
+            ("rights_review_date", "2026-10-30"),
+            ("rights_reference", rights_url),
+            (
+                "article_host_suffix",
+                {
+                    "U.S. Geological Survey": "usgs.gov",
+                    "U.S. Energy Information Administration": "eia.gov",
+                    "USDA-NASS": "nass.usda.gov",
+                }[provider],
+            ),
+            ("publisher_group", provider),
+            ("credibility_basis", "original agency reporting; accuracy unmeasured"),
+        ),
+    )
+
+
+SPECIALIST_WORLD_CONFIG = (
+    NewsDiscoveryConfig(
+        _specialist_source(
+            "news.usgs.drought",
+            "U.S. Geological Survey",
+            "https://water.usgs.gov/alerts/rss/Drought.xml",
+            "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+        ),
+        "DROUGHT_WATER",
+    ),
+    NewsDiscoveryConfig(
+        _specialist_source(
+            "news.usgs.river_flood",
+            "U.S. Geological Survey",
+            "https://water.usgs.gov/alerts/rss/River_Flooding.xml",
+            "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+        ),
+        "FLOOD_DISASTER",
+        max_items=500,
+    ),
+    NewsDiscoveryConfig(
+        _specialist_source(
+            "news.eia.today",
+            "U.S. Energy Information Administration",
+            "https://www.eia.gov/rss/todayinenergy.xml",
+            "https://www.eia.gov/about/copyrights_reuse.php",
+        ),
+        "ENERGY_GRID",
+    ),
+    NewsDiscoveryConfig(
+        _specialist_source(
+            "news.nass.news",
+            "USDA-NASS",
+            "https://www.nass.usda.gov/rss/news.xml",
+            "https://data.nass.usda.gov/Data_and_Statistics/Citation_Request/index.php",
+        ),
+        "AGRICULTURE_FOOD",
+        max_items=500,
+    ),
+)
+
+# Existing broad discovery remains intact. All recurring jobs use this same registry/store.
+WORLD_NEWS_CONFIG = BROAD_NEWS_CONFIG + SPECIALIST_WORLD_CONFIG

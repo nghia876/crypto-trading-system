@@ -267,7 +267,7 @@ def test_mixed_fed_news_domain_budget_and_exact_metadata(tmp_path):
     rendered = render_analysis_information(info)
     assert len(rendered) <= 28000 and "OMITTED" in rendered
     narrative = rendered.split("Narrative events:\n")[1].split("\nRecorded coverage:")[0]
-    assert len(narrative) < 4000
+    assert len(narrative) < 6000
     metadata = rendered.split("Evidence metadata (schema and unit):\n")[1]
     for row in selected:
         assert row.observation_id in narrative and row.observation_id in metadata

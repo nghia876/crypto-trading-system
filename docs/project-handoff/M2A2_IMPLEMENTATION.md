@@ -1,3 +1,10 @@
+# Independent WORLD track now verified - 2026-10-30
+
+The next bounded specialist-world slice is implemented, tested and sampled live.
+See [WORLD specialist handoff](WORLD_SPECIALIST_IMPLEMENTATION.md). This does not
+complete M2A.2 or Phase 3. All macro rights, numeric and calendar gaps described
+below remain open; FRED remains disabled. New code remains local-only.
+
 # M2A.2 bounded implementation — 2026-10-30
 
 Status: VERIFIED BLS numeric subset; PARTIAL M2A.2. This is not whole-source,

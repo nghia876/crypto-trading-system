@@ -146,7 +146,7 @@ def test_large_events_fit_total_budget_and_omit_whole_records(tmp_path):
     section = text.split("Narrative events:")[1].split("Recorded coverage:")[0]
     assert "OMITTED" in section
     assert '"event_id"' in section
-    assert len(section) <= 4000
+    assert len(section) <= 6000
 
 
 def test_query_variants_correlate_but_distinct_releases_do_not(tmp_path):

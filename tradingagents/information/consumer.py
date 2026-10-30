@@ -9,6 +9,7 @@ from datetime import datetime
 from tradingagents.information.liquidity import render_liquidity, selected_liquidity
 from tradingagents.information.market_state import BTCMarketState, build_btc_market_state
 from tradingagents.information.narrative_events import (
+    NARRATIVE_CONTEXT_CHARS,
     render_narrative_events,
     selected_narrative_events,
 )
@@ -210,10 +211,10 @@ _SECTION_BUDGETS = {
     "Macro series:": 1500,
     "Original-publisher liquidity:": 3500,
     "Original-publisher inflation/labor/rates:": 3500,
-    "Upcoming scheduled macro events:": 2500,
-    "Narrative events:": 4000,
-    "Recorded coverage:": 2000,
-    "Point-in-time source definitions:": 2000,
+    "Upcoming scheduled macro events:": 2000,
+    "Narrative events:": NARRATIVE_CONTEXT_CHARS,
+    "Recorded coverage:": 1500,
+    "Point-in-time source definitions:": 1000,
     "Evidence metadata (schema and unit):": 1500,
 }
 

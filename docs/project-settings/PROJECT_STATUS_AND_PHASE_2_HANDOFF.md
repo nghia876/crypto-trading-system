@@ -1,3 +1,26 @@
+# Current specialist WORLD checkpoint - 2026-10-30
+
+VERIFIED bounded USGS drought/river-flood, EIA energy and NASS agriculture
+headline discovery now shares existing news polling, source definitions,
+canonical SQLite/replay and the real Market Analyst graph. No BTC keyword or
+movement gate. BBC/GDELT broad discovery remains enabled. Automated source-gap
+reporting exposes absent adapters, stale content/collection and specialist gaps.
+Live samples: drought 8, floods 370, EIA 21, NASS 288 unique eligible articles
+(24 external-host entries excluded). No bodies, images, logos or second database.
+Narrative reservation is 6,000 characters within the unchanged 28,000 total;
+BTC/numerical macro reservations remain protected. Full offline suite:
+1,510 passed + 99 subtests; four skipped, one deselected. Ruff/syntax/diff passed.
+All 129 live BLS observations preserved; SQLite integrity OK.
+
+Phase 3 remains IN_PROGRESS. US-centric agency headlines do not establish global
+hazard/food metrics, grid incident monitoring, wildfire, health, original cyber,
+trade or regional coverage. Source reporting is not independent confirmation.
+OPEN macro gaps: daily TGA gated; Treasury 2y/10y XML collection/analyst use
+rights-gated; BEA GDP/PCE/core PCE numerical integration incomplete; BLS live
+release calendar unavailable; FRED disabled. New work is LOCAL ONLY; no push.
+See [implementation, rights, exact evidence and next gaps](../project-handoff/WORLD_SPECIALIST_IMPLEMENTATION.md).
+This checkpoint supersedes older claims below that no specialized adapters exist.
+
 # Current M2A.2 bounded checkpoint — 2026-10-30
 
 BLS CPI/core CPI SA indexes, nonfarm payroll employment level and unemployment
