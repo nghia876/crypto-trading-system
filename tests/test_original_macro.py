@@ -270,3 +270,54 @@ def test_retry_after_http_date_and_invalid_header(retry):
     collector = OriginalMacroCollector(session=session, clock=lambda: NOW)
     collector.collect()
     assert collector.next_request_at == NOW + timedelta(hours=3 if retry.startswith("Fri") else 1)
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("year", 2025.9),
+        ("year", True),
+        ("year", "2025.9"),
+        ("value", "1e10000"),
+        ("value", "9" * 65),
+        ("value", 325.5),
+    ],
+)
+def test_numeric_schema_bounds_reject_coercion_and_expansion(field, value):
+    doc = json.loads(bls())
+    doc["Results"]["series"][0]["data"][0][field] = value
+    with pytest.raises(MarketDataCollectionError):
+        parse_bls_json(json.dumps(doc), retrieved_at=NOW)
+
+
+@pytest.mark.parametrize("key", ["bls", "bls_calendar"])
+def test_connection_lost_mid_stream_never_returns_partial_values(tmp_path, key):
+    session = Mock()
+    reply = response()
+
+    def interrupted_stream(*args):
+        yield bls().encode()[:100]
+        raise requests.ConnectionError("secret-like remote detail")
+
+    reply.iter_content.side_effect = interrupted_stream
+    session.post.return_value = reply
+    session.get.return_value = reply
+    collector = OriginalMacroCollector(session=session, clock=lambda: NOW)
+    batch = collector.collect(key)
+    assert not batch.observations
+    assert all(c.status.value == "unavailable" for c in batch.coverage)
+    assert all("Network failure (ConnectionError)" in c.detail for c in batch.coverage)
+    assert all("secret-like" not in c.detail for c in batch.coverage)
+    store = SQLiteInformationStore(tmp_path / "interrupted.db")
+    store.append(batch)
+    reopened = SQLiteInformationStore(store.path)
+    assert not reopened.view_at(NOW).observations
+    assert reopened.view_at(NOW).coverage
+
+
+@pytest.mark.parametrize("status", [403, 429, 503])
+def test_http_failure_diagnostics_are_distinct_from_network_and_schema(status):
+    session = Mock()
+    session.post.return_value = response(status=status)
+    batch = OriginalMacroCollector(session=session, clock=lambda: NOW).collect()
+    assert all(f"HTTP {status}" in c.detail for c in batch.coverage)

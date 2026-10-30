@@ -188,3 +188,43 @@ Next concrete actions:
    explicit missingness, update/correction replay and domain examples requiring
    neither BTC keywords nor market movement. No source candidates are implicitly
    cleared or operational. Keep all evidence in this same store/graph.
+
+
+## Quality recheck after reported network interruption — 2026-10-30
+
+Rechecked committed baseline `2f6db789c5d6515640a9f35bfd1205a71b175006`.
+The complete baseline offline suite independently passed again: 1,486 tests,
+99 subtests, four skips, one deselected, 42.19 seconds. Ruff, compilation and
+committed-diff checks passed. The code commit and local live report were present;
+network interruption did not leave an incomplete tracked checkout.
+
+Read-only SQLite audit: integrity_check=ok, 281 stored observations including
+all 129 BLS rows. Every BLS row has finite numeric text, matching units, reference
+time no later than retrieval, equal local first-seen/retrieval times, and unknown
+publication. This confirms stored evidence integrity, not continuous live access
+or independent revalidation of publisher values. No live data was refetched or
+changed during this recheck. The earlier calendar failure's precise cause cannot
+be reconstructed from the old generic diagnostic; it remains unavailable.
+
+Adversarial parser checks reproduced two real gaps and fixed them: a fractional
+JSON year was silently truncated by int(), and exponent text could expand into
+an arbitrarily large formatted number despite the response byte cap. BLS years
+now require four-digit publisher text. Numeric levels require bounded plain
+decimal publisher text before Decimal conversion/formatting. Both numeric
+parsers use this check. Normal published values and units are unchanged.
+
+Request failures now distinguish network timeouts, connection failures, HTTP
+status and schema/encoding errors without logging remote bodies, URLs or secrets.
+Added regression cases for a connection lost AFTER the first streamed chunk;
+both API/calendar adapters return only unavailable coverage and no partial
+observations, with persistence/reopen verified. Tests also reject fractional
+years, numeric type drift, exponent expansion and oversized numeric text.
+
+GitHub read-only verification initially hit restricted-environment DNS failure;
+the approved outside-environment read succeeded and confirmed remote feature SHA
+`82c6ba6e4abc209dee605cda1b05ef74fc23dd2e`. No push or credential-helper retry.
+Treasury/BEA/daily-TGA gates, default FRED disablement and independent world-radar
+scope are preserved. This quality recheck does not complete the documented
+calendar, rights, BEA, scheduler or specialized world-source gaps.
+
+Final recheck after fixes: **1,497 passed + 99 subtests**, four skipped, one integration test deselected, 55.99 seconds. Project Ruff, syntax compilation and whitespace checks passed. Fixes are a new local-only commit; no history rewrite or push.

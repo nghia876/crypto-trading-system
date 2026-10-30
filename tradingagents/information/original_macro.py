@@ -144,6 +144,14 @@ SOURCES = (BLS, TREASURY, BEA)
 def _row(source, spec, period, value, at, *, extra=None):
     from decimal import Decimal, InvalidOperation
 
+    # Both feeds publish ordinary decimal text. Bound it before Decimal/format:
+    # a tiny exponent string can otherwise allocate an arbitrarily large value.
+    if (
+        not isinstance(value, str)
+        or len(value) > 64
+        or not re.fullmatch(r"[0-9]+(?:\.[0-9]+)?", value)
+    ):
+        raise MarketDataCollectionError("Expected bounded plain decimal text")
     try:
         number = Decimal(str(value))
     except InvalidOperation as exc:
@@ -222,7 +230,10 @@ def parse_bls_json(body: str, *, retrieved_at: datetime, series_ids=None):
                     continue
                 if not re.fullmatch(r"M(0[1-9]|1[0-2])", period):
                     raise MarketDataCollectionError("Unsupported BLS period")
-                year, month = int(item["year"]), int(period[1:])
+                raw_year = item["year"]
+                if not isinstance(raw_year, str) or not re.fullmatch(r"[0-9]{4}", raw_year):
+                    raise MarketDataCollectionError("Expected four-digit BLS year text")
+                year, month = int(raw_year), int(period[1:])
                 ref = date(year, month, 1)
                 if item.get("periodName", calendar.month_name[month]) != calendar.month_name[month]:
                     raise MarketDataCollectionError("BLS period label mismatch")
@@ -316,6 +327,18 @@ def parse_treasury_par_xml(body: str, *, retrieved_at: datetime):
     return _batch(TREASURY, rows, at)
 
 
+def _failure_detail(exc):
+    """Classify failures without exposing response bodies, URLs or credentials."""
+    if isinstance(exc, requests.Timeout):
+        return "Network timeout"
+    if isinstance(exc, requests.RequestException):
+        return f"Network failure ({type(exc).__name__})"
+    status = re.match(r"HTTP [0-9]{3}(?:;|$)", str(exc))
+    if status:
+        return status[0].rstrip(";")
+    return f"Schema/encoding failure ({type(exc).__name__})"
+
+
 class OriginalMacroCollector:
     """One request per call with bounded streaming, no redirects and cooldown.
 
@@ -397,12 +420,12 @@ class OriginalMacroCollector:
                     parts.append(chunk)
                 body = b"".join(parts).decode("utf-8-sig")
             return parse_bls_json(body, retrieved_at=_aware(self.clock()), series_ids=ids)
-        except (requests.RequestException, MarketDataCollectionError, UnicodeError):
+        except (requests.RequestException, MarketDataCollectionError, UnicodeError) as exc:
             return _batch(
                 source,
                 (),
                 _aware(self.clock()),
-                failure="Request/schema failure; no value inferred; respect cooldown",
+                failure=f"{_failure_detail(exc)}; no value inferred; respect cooldown",
             )
 
     def _calendar(self, source, at):
@@ -426,7 +449,9 @@ class OriginalMacroCollector:
                     except (ValueError, TypeError, OverflowError):
                         pass
                 if response.status_code != 200:
-                    raise MarketDataCollectionError("Calendar HTTP failure")
+                    raise MarketDataCollectionError(
+                        f"HTTP {response.status_code}; calendar unavailable"
+                    )
                 parts, size = [], 0
                 for chunk in response.iter_content(65536):
                     size += len(chunk)
@@ -436,12 +461,12 @@ class OriginalMacroCollector:
                 body = b"".join(parts).decode("utf-8-sig")
             # A schedule is never relabeled as actual release time for numeric rows.
             return parse_bls_release_calendar(body, retrieved_at=_aware(self.clock()), year=at.year)
-        except (requests.RequestException, MarketDataCollectionError, UnicodeError):
+        except (requests.RequestException, MarketDataCollectionError, UnicodeError) as exc:
             return _batch(
                 source,
                 (),
                 _aware(self.clock()),
-                failure="Calendar request/schema failure; release dates unknown",
+                failure=f"{_failure_detail(exc)}; release dates unknown",
             )
 
 
