@@ -1,3 +1,25 @@
+# Phase 3.6 real evidence and frozen review checkpoint - 2026-11-01
+
+LOCAL ONLY; no new push. Starting local HEAD and freshly queried remote feature
+ref both bcb700fdd06385c90fa7399e4fe9525a87c67d62. Previous backup complete.
+Eight actual USGS headline/link/date observations retained in the single canonical
+SQLite information store. Both feeds contain stale reports; no current global
+coverage or independent confirmation claim. Bodies/images/third-party content
+excluded. Frozen connected incident/origin/duplicate split, hash-bound reviews,
+external labels and manual adjudication workflow implemented. Agent title-label
+diagnostic: TP0 FP0 TN3 FN0; two unknowns; precision/recall undefined. Zero human
+reviews, no positives, one conservative publisher component, all eight held out.
+Inspected holdout retired; no tuning. Phase 3 remains IN_PROGRESS.
+Full offline suite: 1,562 passed + 99 subtests; four skipped, one deselected.
+Project lint/syntax/diff and SQLite integrity passed. Actual BTC + H.4.1/RRP/BLS
++ real USGS evidence graph within 28k. Independent human-reviewed quality, fresh
+global source diversity and Phase 3 exit remain open. All WORLD families remain
+required without BTC/price gates. Daily TGA/yield rights, incomplete BEA GDP/PCE,
+absent BLS live calendar and disabled FRED unchanged. SECURE_EXECUTION.md followed;
+no observed new security block, no Defender log audit or proven false positive.
+
+See [Phase 3.6 handoff and human workflow](PHASE_3_6_HANDOFF.md).
+
 # Phase 3.5 local context and security checkpoint - 2026-11-01
 
 Reviewed occurrence/location/episode conflict vetoes implemented locally.

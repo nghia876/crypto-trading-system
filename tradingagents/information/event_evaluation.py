@@ -21,7 +21,9 @@ def evaluate(view, labels):
         seen.add(pair)
         if item["label"] not in {"same_event", "different_event", "unknown"}:
             raise ValueError("invalid identity label")
-        if item["review_status"] not in {"synthetic_authored", "human_reviewed", "pending"}:
+        if item["review_status"] not in {
+            "synthetic_authored", "agent_reviewed", "human_reviewed", "pending", "disputed"
+        }:
             raise ValueError("invalid review status")
         if item["confidence"] not in {"high", "medium", "low", "unknown"}:
             raise ValueError("invalid confidence")
@@ -42,7 +44,7 @@ def evaluate(view, labels):
         pair = tuple(sorted(item["evidence_ids"]))
         if not set(pair) <= available:
             outcome = "unavailable"
-        elif item["label"] == "unknown" or item["review_status"] == "pending":
+        elif item["label"] == "unknown" or item["review_status"] in {"pending", "disputed"}:
             outcome = "unknown"
         else:
             positive = item["label"] == "same_event"
@@ -54,6 +56,7 @@ def evaluate(view, labels):
                 "family:" + item["family"],
                 "stratum:" + item["stratum"],
                 "reporting:" + item["reporting_relationship"],
+                "review:" + item["review_status"],
             ):
                 groups[group][outcome] += 1
         details.append({"evidence_ids": list(pair), "outcome": outcome})

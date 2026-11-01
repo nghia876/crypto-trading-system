@@ -110,6 +110,38 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     assert "7999999" not in prompt
     assert len(state["analysis_information"]) <= 28000
 
+def test_real_usgs_slice_combined_actual_graph(tmp_path, monkeypatch, offline):
+    import json
+    from pathlib import Path
+
+    from tests.test_liquidity import PARSERS, h41, rrp
+    from tests.test_original_macro import bls
+    from tradingagents.information.evidence_slice import replay_specimens
+    from tradingagents.information.original_macro import parse_bls_json
+
+    data = json.loads((Path(__file__).parent / "fixtures/phase36/phase36_usgs_specimens.json")
+                      .read_text(encoding="utf-8"))
+    cutoff = datetime.fromisoformat(data["cutoff"])
+    store = SQLiteInformationStore(tmp_path / "canonical.db")
+    replay_specimens(store, data)
+    store.append(PARSERS[0](h41(), cutoff))
+    store.append(PARSERS[1](rrp(), cutoff))
+    store.append(parse_bls_json(bls(), retrieved_at=cutoff))
+    btc = Observation("btc-real-slice", "derivatives.binance.usdm.funding", "BTCUSDT",
+                      "derivatives.funding_rate.usdm", {"funding_rate": "0.001"},
+                      cutoff, cutoff, cutoff)
+    store.append(MarketDataBatch((btc,), (), cutoff))
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
+    state, _ = graph.propagate("BTCUSDT", "2026-11-01", asset_type="crypto", decision_time=cutoff)
+    prompt = "\n".join(model.prompts)
+    assert "6745635 million USD" in prompt and "353000000 USD" in prompt
+    assert "325.5 index" in prompt and "btc-real-slice" in prompt
+    assert any(s["title"] in prompt for s in data["specimens"])
+    assert "FLOOD_DISASTER" in prompt and "DROUGHT_WATER" in prompt
+    assert len(state["analysis_information"]) <= 28000
+
+
 # Enough for every free-text reader: the PM's labelled rating and the trader's
 # closing proposal line.
 TEXT = "Report.\n\n**Rating**: Overweight\n\nFINAL TRANSACTION PROPOSAL: **BUY**"

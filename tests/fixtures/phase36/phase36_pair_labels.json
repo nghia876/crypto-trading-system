@@ -1,0 +1,82 @@
+[
+  {
+    "confidence": "low",
+    "evidence_ids": [
+      "news:0f1ef3bcc03c16eb1f78f72c5768ab17416e82f47bc71d2763333ee6fdd6ee23",
+      "news:0363725dc0048a69394cbedf1023e70986b8e9a4ba5b1bd3eeb6e8f555122817"
+    ],
+    "family": "real_usgs_water",
+    "label": "different_event",
+    "provenance": "Real acquired headline fields; agent title-only labels; no body/human review",
+    "rationale": "NY streamflow versus CA flood: different reported places",
+    "reporting_relationship": "same_publisher_syndication",
+    "review_status": "agent_reviewed",
+    "reviewed_at": "2026-11-01T04:43:18.585225+00:00",
+    "reviewer": "Codex agent (not human)",
+    "stratum": "nearby_unrelated"
+  },
+  {
+    "confidence": "low",
+    "evidence_ids": [
+      "news:68255a13e8a9f0d9c3794878f5e1452e6fafdd73c32b8c04bcca239eb75e980f",
+      "news:03d45cb77b33ed5e8c261c8ba547a4b97818ef7273c302fd17d3aca59f5e11c7"
+    ],
+    "family": "real_usgs_water",
+    "label": "different_event",
+    "provenance": "Real acquired headline fields; agent title-only labels; no body/human review",
+    "rationale": "Oregon fires/gages versus Oregon atmospheric river; title-only different hazards",
+    "reporting_relationship": "same_publisher_syndication",
+    "review_status": "agent_reviewed",
+    "reviewed_at": "2026-11-01T04:43:18.585225+00:00",
+    "reviewer": "Codex agent (not human)",
+    "stratum": "hard_negative"
+  },
+  {
+    "confidence": "low",
+    "evidence_ids": [
+      "news:3c008e91320f40575a60b399e87e4e3634cf7f61baebd92030ccf20a8ebb9dce",
+      "news:04da5f442375c84b21a8e228acddd12e17d0fa890d2b7d96eab4a1d05d45ef86"
+    ],
+    "family": "real_usgs_water",
+    "label": "different_event",
+    "provenance": "Real acquired headline fields; agent title-only labels; no body/human review",
+    "rationale": "NJ low flow versus Ohio flooding: different reported places",
+    "reporting_relationship": "same_publisher_syndication",
+    "review_status": "agent_reviewed",
+    "reviewed_at": "2026-11-01T04:43:18.585225+00:00",
+    "reviewer": "Codex agent (not human)",
+    "stratum": "hard_negative"
+  },
+  {
+    "confidence": "low",
+    "evidence_ids": [
+      "news:49d41891793aa50362acf11c751d9653be2de8c410e3cc4afdfaf4034528dbdf",
+      "news:03ae9e62853103bc71eae8a5fb5769779e29d4f775632ad2956623698c24db6d"
+    ],
+    "family": "real_usgs_water",
+    "label": "unknown",
+    "provenance": "Real acquired headline fields; agent title-only labels; no body/human review",
+    "rationale": "CA runoff reports: occurrence identity/correction relationship unresolved",
+    "reporting_relationship": "same_publisher_syndication",
+    "review_status": "agent_reviewed",
+    "reviewed_at": "2026-11-01T04:43:18.585225+00:00",
+    "reviewer": "Codex agent (not human)",
+    "stratum": "correction"
+  },
+  {
+    "confidence": "low",
+    "evidence_ids": [
+      "news:0363725dc0048a69394cbedf1023e70986b8e9a4ba5b1bd3eeb6e8f555122817",
+      "news:03ae9e62853103bc71eae8a5fb5769779e29d4f775632ad2956623698c24db6d"
+    ],
+    "family": "real_usgs_water",
+    "label": "unknown",
+    "provenance": "Real acquired headline fields; agent title-only labels; no body/human review",
+    "rationale": "CA flooding/runoff: one publisher; shared reporting origin unresolved",
+    "reporting_relationship": "same_publisher_syndication",
+    "review_status": "agent_reviewed",
+    "reviewed_at": "2026-11-01T04:43:18.585225+00:00",
+    "reviewer": "Codex agent (not human)",
+    "stratum": "syndication"
+  }
+]

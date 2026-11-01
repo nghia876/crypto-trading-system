@@ -1,5 +1,13 @@
 # Reviewed occurrence context and held-out evaluation
 
+Phase 3.6 implements the [manual review, frozen connected-cluster manifest and
+offline scoring workflow](PHASE_3_6_HANDOFF.md) in `evidence_review`. Eight actual
+USGS observations and title-only agent labels are archived separately from
+synthetic fixtures. The whole one-publisher slice is conservatively held out and
+now retired; TP0/FP0/TN3/FN0, two unknowns, precision/recall undefined. No human
+review or independent real-world quality validation. The independent corpus
+requirement below remains open. Never tune against these inspected outcomes.
+
 Freeze v2 logic before scoring: only explicit conflicts between two reviewed
 canonical episode keys, location keys or non-overlapping occurrence windows
 can veto an otherwise v1-eligible pair. Agreement cannot create a pair. Missing

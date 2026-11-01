@@ -281,7 +281,8 @@ def fetch_news_snapshot(config, session):
     return raw.decode(encoding)
 
 
-def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, clock=None):
+def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, clock=None,
+              observation_limit=None):
     """Persist each outcome atomically; a durable poll ID retries without refetching.
 
     Callers use a new ID for each new poll; same ID/config resumes partial runs.
@@ -290,6 +291,8 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
     """
     if not poll_id.strip() or len(poll_id) > 256 or len(configs) > 16:
         raise ValueError("bounded poll ID and at most 16 sources required")
+    if observation_limit is not None and not 1 <= observation_limit <= 500:
+        raise ValueError("observation limit must be between 1 and 500")
     session = session or requests.Session()
     clock = clock or (lambda: datetime.now(UTC))
     outcomes = []
@@ -338,6 +341,9 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
                 for row in batch.observations
             ),
         )
+        parsed_count = len(batch.observations)
+        if observation_limit is not None:
+            batch = replace(batch, observations=batch.observations[:observation_limit])
         eligible = tuple(
             x.observation_id
             for x in batch.observations
@@ -355,6 +361,7 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
                 "query": config.query,
                 "snapshot_hash": _digest(text) if text is not None else None,
                 "items": len(batch.observations),
+                "omitted_by_slice_limit": parsed_count - len(batch.observations),
                 "excluded_article_count": max(
                     (r.payload.get("excluded_article_count", 0) for r in batch.observations),
                     default=None,

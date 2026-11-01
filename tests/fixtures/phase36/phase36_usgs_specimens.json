@@ -1,0 +1,290 @@
+{
+  "cutoff": "2026-11-01T04:41:45.720056+00:00",
+  "data_kind": "real_source_unreviewed",
+  "gaps": {
+    "AGRICULTURE_FOOD": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": true,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 0,
+          "last_attempt": null,
+          "original_specialist": true,
+          "poll_status": "never_polled",
+          "publication_unknown": 0,
+          "rights_reference": "https://data.nass.usda.gov/Data_and_Statistics/Citation_Request/index.php",
+          "source": "news.nass.news"
+        }
+      ],
+      "specialist_gap": false
+    },
+    "CYBERSECURITY": {
+      "adapter_status": "missing_adapter",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [],
+      "specialist_gap": true
+    },
+    "DROUGHT_WATER": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": true,
+          "eligible_items": 4,
+          "last_attempt": "2026-11-01T04:41:44.730843+00:00",
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 0,
+          "rights_reference": "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+          "source": "news.usgs.drought"
+        }
+      ],
+      "specialist_gap": false
+    },
+    "ENERGY_GRID": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": true,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 0,
+          "last_attempt": null,
+          "original_specialist": true,
+          "poll_status": "never_polled",
+          "publication_unknown": 0,
+          "rights_reference": "https://www.eia.gov/about/copyrights_reuse.php",
+          "source": "news.eia.today"
+        }
+      ],
+      "specialist_gap": false
+    },
+    "FLOOD_DISASTER": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": true,
+          "eligible_items": 4,
+          "last_attempt": "2026-11-01T04:41:45.720056+00:00",
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 0,
+          "rights_reference": "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+          "source": "news.usgs.river_flood"
+        }
+      ],
+      "specialist_gap": false
+    },
+    "PUBLIC_HEALTH": {
+      "adapter_status": "missing_adapter",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [],
+      "specialist_gap": true
+    },
+    "TECHNOLOGY": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": true,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 0,
+          "last_attempt": null,
+          "original_specialist": false,
+          "poll_status": "never_polled",
+          "publication_unknown": 0,
+          "rights_reference": null,
+          "source": "news.bbc.technology"
+        },
+        {
+          "collection_stale": true,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 0,
+          "last_attempt": null,
+          "original_specialist": false,
+          "poll_status": "never_polled",
+          "publication_unknown": 0,
+          "rights_reference": null,
+          "source": "news.gdelt.technology"
+        }
+      ],
+      "specialist_gap": true
+    },
+    "TRADE": {
+      "adapter_status": "missing_adapter",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [],
+      "specialist_gap": true
+    },
+    "WAR_GEOPOLITICS": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": true,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 0,
+          "last_attempt": null,
+          "original_specialist": false,
+          "poll_status": "never_polled",
+          "publication_unknown": 0,
+          "rights_reference": null,
+          "source": "news.bbc.world"
+        },
+        {
+          "collection_stale": true,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 0,
+          "last_attempt": null,
+          "original_specialist": false,
+          "poll_status": "never_polled",
+          "publication_unknown": 0,
+          "rights_reference": null,
+          "source": "news.gdelt.geopolitics"
+        }
+      ],
+      "specialist_gap": true
+    },
+    "WILDFIRE": {
+      "adapter_status": "missing_adapter",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [],
+      "specialist_gap": true
+    }
+  },
+  "human_reviews": 0,
+  "outcomes": [
+    {
+      "detail": {
+        "completeness": "unknown",
+        "config": "c150eaa7900a7d5c1d7bc9495dc6a1719da83a8cbb9257ec203c8dd4b3328b5f",
+        "content_scope": "eligible agency links only",
+        "error": null,
+        "excluded_article_count": 0,
+        "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+        "http_status": null,
+        "items": 4,
+        "omitted_by_slice_limit": 4,
+        "outcome": "success",
+        "query": "",
+        "retry_after_seconds": null,
+        "snapshot_hash": "a0ede3d049d96d5feba2163fa6fb188caa71725099c114dac02e608bc4053f69",
+        "version": "1"
+      },
+      "source": "news.usgs.drought",
+      "status": "present"
+    },
+    {
+      "detail": {
+        "completeness": "unknown",
+        "config": "15eafd4c5a58bb7aeb79c817082462eb4ea363070d7d4bcc6c490f5b9ac03c6e",
+        "content_scope": "eligible agency links only",
+        "error": null,
+        "excluded_article_count": 0,
+        "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+        "http_status": null,
+        "items": 4,
+        "omitted_by_slice_limit": 366,
+        "outcome": "success",
+        "query": "",
+        "retry_after_seconds": null,
+        "snapshot_hash": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+        "version": "1"
+      },
+      "source": "news.usgs.river_flood",
+      "status": "present"
+    }
+  ],
+  "poll_id": "phase36-20261101-network",
+  "rights": {
+    "ai_processing": true,
+    "archiving": true,
+    "basis": "USGS-produced information is US public domain; third-party exceptions excluded",
+    "excluded": "bodies, third-party content, photographs, logos, personnel likeness/voice",
+    "limitations": "US public-domain basis; other-jurisdiction rights not independently adjudicated",
+    "reference": "https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits",
+    "reviewed_at": "2026-11-01",
+    "reviewer": "Codex agent; not legal counsel or human article review",
+    "scope": "USGS-produced feed headline, URL and supplied dates only"
+  },
+  "specimens": [
+    {
+      "published_raw": "Fri, 19 Aug 2022 16:02:50 EDT",
+      "retrieved_at": "2026-11-01T04:41:44.730843+00:00",
+      "snapshot_sha256": "a0ede3d049d96d5feba2163fa6fb188caa71725099c114dac02e608bc4053f69",
+      "source_id": "news.usgs.drought",
+      "title": "PROJECT ALERT NOTICE (NY) Below normal streamflow in New York",
+      "url": "http://water.usgs.gov/alerts/item_2022-08-19_16:02:50.html"
+    },
+    {
+      "published_raw": "Wed, 24 Jul 2024 14:50:03 EDT",
+      "retrieved_at": "2026-11-01T04:41:44.730843+00:00",
+      "snapshot_sha256": "a0ede3d049d96d5feba2163fa6fb188caa71725099c114dac02e608bc4053f69",
+      "source_id": "news.usgs.drought",
+      "title": "PROJECT ALERT NOTICE (OR) Oregon Fires and Gages",
+      "url": "http://water.usgs.gov/alerts/item_2024-07-24_14:50:03.html"
+    },
+    {
+      "published_raw": "Wed, 06 Nov 2024 13:33:17 EST",
+      "retrieved_at": "2026-11-01T04:41:44.730843+00:00",
+      "snapshot_sha256": "a0ede3d049d96d5feba2163fa6fb188caa71725099c114dac02e608bc4053f69",
+      "source_id": "news.usgs.drought",
+      "title": "PROJECT ALERT NOTICE (NJ) Low Flow Discharge Measurements",
+      "url": "http://water.usgs.gov/alerts/item_2024-11-06_13:33:17.html"
+    },
+    {
+      "published_raw": "Fri, 27 Dec 2024 10:16:41 EST",
+      "retrieved_at": "2026-11-01T04:41:44.730843+00:00",
+      "snapshot_sha256": "a0ede3d049d96d5feba2163fa6fb188caa71725099c114dac02e608bc4053f69",
+      "source_id": "news.usgs.drought",
+      "title": "PROJECT ALERT NOTICE (CA) Minor runoff in North west CA.",
+      "url": "http://water.usgs.gov/alerts/item_2024-12-27_10:16:41.html"
+    },
+    {
+      "published_raw": "Thu, 13 Mar 2025 12:33:50 EDT",
+      "retrieved_at": "2026-11-01T04:41:45.720056+00:00",
+      "snapshot_sha256": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+      "source_id": "news.usgs.river_flood",
+      "title": "PROJECT ALERT NOTICE (CA) Minor flooding in Southern California",
+      "url": "http://water.usgs.gov/alerts/item_2025-03-13_12:33:50.html"
+    },
+    {
+      "published_raw": "Wed, 10 Dec 2025 11:25:19 EST",
+      "retrieved_at": "2026-11-01T04:41:45.720056+00:00",
+      "snapshot_sha256": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+      "source_id": "news.usgs.river_flood",
+      "title": "PROJECT ALERT NOTICE (OR) Atmospheric River Impacting rivers in Northwest Oregon",
+      "url": "http://water.usgs.gov/alerts/item_2025-12-10_11:25:19.html"
+    },
+    {
+      "published_raw": "Thu, 01 Jan 2026 13:24:26 EST",
+      "retrieved_at": "2026-11-01T04:41:45.720056+00:00",
+      "snapshot_sha256": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+      "source_id": "news.usgs.river_flood",
+      "title": "PROJECT ALERT NOTICE (CA) Runoff in San Diego and Riverside Counties",
+      "url": "http://water.usgs.gov/alerts/item_2026-01-01_13:24:26.html"
+    },
+    {
+      "published_raw": "Sat, 28 Mar 2026 07:04:21 EDT",
+      "retrieved_at": "2026-11-01T04:41:45.720056+00:00",
+      "snapshot_sha256": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+      "source_id": "news.usgs.river_flood",
+      "title": "PROJECT ALERT NOTICE (OH) Minor flooding in Ohio continues",
+      "url": "http://water.usgs.gov/alerts/item_2026-03-28_07:04:21.html"
+    }
+  ],
+  "sqlite_integrity": "ok"
+}

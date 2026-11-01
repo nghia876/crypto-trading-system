@@ -1,0 +1,154 @@
+{
+  "data_kind": "real_source_agent_title_labels",
+  "development_items": 0,
+  "holdout_items": 8,
+  "holdout_retired": true,
+  "human_reviews": 0,
+  "human_validation": "not established by this tool",
+  "independent_origins": 1,
+  "limitations": "No positives, independent labels, body review or accuracy validation; holdout retired",
+  "manifest_sha256": "145c776e4531859d4ca6f80c281f2875465fdd9bb70ea10cdfd4d2a64d36ad0a",
+  "reopen_identical": true,
+  "reports": [
+    {
+      "cutoff": "2026-11-01T04:41:44.730842+00:00",
+      "metrics": {},
+      "omitted_candidates": 0,
+      "omitted_records": 0,
+      "pairs": [
+        {
+          "evidence_ids": [
+            "news:0363725dc0048a69394cbedf1023e70986b8e9a4ba5b1bd3eeb6e8f555122817",
+            "news:0f1ef3bcc03c16eb1f78f72c5768ab17416e82f47bc71d2763333ee6fdd6ee23"
+          ],
+          "outcome": "unavailable"
+        },
+        {
+          "evidence_ids": [
+            "news:03d45cb77b33ed5e8c261c8ba547a4b97818ef7273c302fd17d3aca59f5e11c7",
+            "news:68255a13e8a9f0d9c3794878f5e1452e6fafdd73c32b8c04bcca239eb75e980f"
+          ],
+          "outcome": "unavailable"
+        },
+        {
+          "evidence_ids": [
+            "news:04da5f442375c84b21a8e228acddd12e17d0fa890d2b7d96eab4a1d05d45ef86",
+            "news:3c008e91320f40575a60b399e87e4e3634cf7f61baebd92030ccf20a8ebb9dce"
+          ],
+          "outcome": "unavailable"
+        },
+        {
+          "evidence_ids": [
+            "news:03ae9e62853103bc71eae8a5fb5769779e29d4f775632ad2956623698c24db6d",
+            "news:49d41891793aa50362acf11c751d9653be2de8c410e3cc4afdfaf4034528dbdf"
+          ],
+          "outcome": "unavailable"
+        },
+        {
+          "evidence_ids": [
+            "news:0363725dc0048a69394cbedf1023e70986b8e9a4ba5b1bd3eeb6e8f555122817",
+            "news:03ae9e62853103bc71eae8a5fb5769779e29d4f775632ad2956623698c24db6d"
+          ],
+          "outcome": "unavailable"
+        }
+      ],
+      "policy": "event-link-reviewed-context-v2",
+      "unlabeled_predictions": 0
+    },
+    {
+      "cutoff": "2026-11-01T04:41:45.720056+00:00",
+      "metrics": {
+        "family:real_usgs_water": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tn": 3,
+          "tp": 0
+        },
+        "overall": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tn": 3,
+          "tp": 0
+        },
+        "reporting:same_publisher_syndication": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tn": 3,
+          "tp": 0
+        },
+        "review:agent_reviewed": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tn": 3,
+          "tp": 0
+        },
+        "stratum:hard_negative": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tn": 2,
+          "tp": 0
+        },
+        "stratum:nearby_unrelated": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tn": 1,
+          "tp": 0
+        }
+      },
+      "omitted_candidates": 0,
+      "omitted_records": 0,
+      "pairs": [
+        {
+          "evidence_ids": [
+            "news:0363725dc0048a69394cbedf1023e70986b8e9a4ba5b1bd3eeb6e8f555122817",
+            "news:0f1ef3bcc03c16eb1f78f72c5768ab17416e82f47bc71d2763333ee6fdd6ee23"
+          ],
+          "outcome": "tn"
+        },
+        {
+          "evidence_ids": [
+            "news:03d45cb77b33ed5e8c261c8ba547a4b97818ef7273c302fd17d3aca59f5e11c7",
+            "news:68255a13e8a9f0d9c3794878f5e1452e6fafdd73c32b8c04bcca239eb75e980f"
+          ],
+          "outcome": "tn"
+        },
+        {
+          "evidence_ids": [
+            "news:04da5f442375c84b21a8e228acddd12e17d0fa890d2b7d96eab4a1d05d45ef86",
+            "news:3c008e91320f40575a60b399e87e4e3634cf7f61baebd92030ccf20a8ebb9dce"
+          ],
+          "outcome": "tn"
+        },
+        {
+          "evidence_ids": [
+            "news:03ae9e62853103bc71eae8a5fb5769779e29d4f775632ad2956623698c24db6d",
+            "news:49d41891793aa50362acf11c751d9653be2de8c410e3cc4afdfaf4034528dbdf"
+          ],
+          "outcome": "unknown"
+        },
+        {
+          "evidence_ids": [
+            "news:0363725dc0048a69394cbedf1023e70986b8e9a4ba5b1bd3eeb6e8f555122817",
+            "news:03ae9e62853103bc71eae8a5fb5769779e29d4f775632ad2956623698c24db6d"
+          ],
+          "outcome": "unknown"
+        }
+      ],
+      "policy": "event-link-reviewed-context-v2",
+      "unlabeled_predictions": 0
+    }
+  ],
+  "sqlite_integrity": "ok"
+}
