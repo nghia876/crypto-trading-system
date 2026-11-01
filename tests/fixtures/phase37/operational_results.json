@@ -1,0 +1,695 @@
+{
+  "accuracy_evaluation": "NOT RUN; all proposals UNREVIEWED",
+  "cutoff": "2026-11-01T08:18:55.835718+00:00",
+  "gaps": {
+    "AGRICULTURE_FOOD": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": true,
+          "eligible_items": 23,
+          "last_attempt": "2026-11-01T08:18:55.176759+00:00",
+          "newest_source_update": null,
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 0,
+          "rights_reference": "https://data.nass.usda.gov/Data_and_Statistics/Citation_Request/index.php",
+          "source": "news.nass.news",
+          "source_update_stale_24h": null
+        }
+      ],
+      "specialist_gap": false
+    },
+    "CYBERSECURITY": {
+      "adapter_status": "missing_adapter",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [],
+      "specialist_gap": true
+    },
+    "DROUGHT_WATER": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": true,
+          "eligible_items": 8,
+          "last_attempt": "2026-11-01T08:14:32.134457+00:00",
+          "newest_source_update": null,
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 0,
+          "rights_reference": "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+          "source": "news.usgs.drought",
+          "source_update_stale_24h": null
+        }
+      ],
+      "specialist_gap": false
+    },
+    "ENERGY_GRID": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 0,
+          "last_attempt": "2026-11-01T08:14:27.530329+00:00",
+          "newest_source_update": null,
+          "original_specialist": true,
+          "poll_status": "unavailable",
+          "publication_unknown": 0,
+          "rights_reference": "https://www.eia.gov/about/copyrights_reuse.php",
+          "source": "news.eia.today",
+          "source_update_stale_24h": null
+        }
+      ],
+      "specialist_gap": false
+    },
+    "FLOOD_DISASTER": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": true,
+          "eligible_items": 16,
+          "last_attempt": "2026-11-01T08:15:39.768474+00:00",
+          "newest_source_update": null,
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 0,
+          "rights_reference": "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+          "source": "news.usgs.river_flood",
+          "source_update_stale_24h": null
+        },
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 1,
+          "last_attempt": "2026-11-01T08:15:36.359469+00:00",
+          "newest_source_update": "2026-10-30T10:38:47.040000+00:00",
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 1,
+          "rights_reference": "https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits",
+          "source": "news.usgs.earthquakes",
+          "source_update_stale_24h": true
+        }
+      ],
+      "specialist_gap": false
+    },
+    "PUBLIC_HEALTH": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 12,
+          "last_attempt": "2026-11-01T08:16:03.159331+00:00",
+          "newest_source_update": "2026-10-30T13:33:30+00:00",
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 12,
+          "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+          "source": "news.uk.health",
+          "source_update_stale_24h": true
+        }
+      ],
+      "specialist_gap": false
+    },
+    "TECHNOLOGY": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": false,
+          "eligible_items": 10,
+          "last_attempt": "2026-11-01T08:16:03.462249+00:00",
+          "newest_source_update": null,
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 0,
+          "rights_reference": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+          "source": "news.nasa.recent",
+          "source_update_stale_24h": null
+        },
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": true,
+          "eligible_items": 10,
+          "last_attempt": "2026-11-01T08:14:30.846465+00:00",
+          "newest_source_update": null,
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 0,
+          "rights_reference": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+          "source": "news.nasa.technology",
+          "source_update_stale_24h": null
+        }
+      ],
+      "specialist_gap": false
+    },
+    "TRADE": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 12,
+          "last_attempt": "2026-11-01T08:16:47.446196+00:00",
+          "newest_source_update": "2026-10-30T15:32:00+00:00",
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 12,
+          "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+          "source": "news.uk.trade",
+          "source_update_stale_24h": true
+        }
+      ],
+      "specialist_gap": false
+    },
+    "WAR_GEOPOLITICS": {
+      "adapter_status": "configured_partial",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [
+        {
+          "collection_stale": false,
+          "collection_stale_threshold_seconds": 1800,
+          "content_stale": null,
+          "eligible_items": 12,
+          "last_attempt": "2026-11-01T08:17:31.799626+00:00",
+          "newest_source_update": "2026-11-01T02:47:08+00:00",
+          "original_specialist": true,
+          "poll_status": "present",
+          "publication_unknown": 12,
+          "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+          "source": "news.uk.fcdo",
+          "source_update_stale_24h": false
+        }
+      ],
+      "specialist_gap": false
+    },
+    "WILDFIRE": {
+      "adapter_status": "missing_adapter",
+      "completeness": "unknown; no event absence or independent confirmation inferred",
+      "sources": [],
+      "specialist_gap": true
+    }
+  },
+  "human_reviews": 0,
+  "live_runs": [
+    {
+      "cutoff": "2026-11-01T08:14:32.134457+00:00",
+      "polls": [
+        {
+          "completeness": "unknown",
+          "config": "2f460b4223949b20b5543f11472d703c1c4d1755375b2f13c1b9f5108cc8038e",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 24,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 12,
+          "observed_at": "2026-11-01T08:14:26.784286+00:00",
+          "omitted_by_slice_limit": 276,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "519db74bf9ee6a5a3b66528a29b41c9cef094832b0fd349ca7ca16f54a5b02d6",
+          "source_id": "news.nass.news",
+          "status": "present",
+          "version": "1"
+        },
+        {
+          "completeness": "unknown",
+          "config": "7f3fb0893b24c45be358c01307ebdc74cb837c5c9439c6d735e06f74ecc279aa",
+          "content_scope": "eligible agency links only",
+          "error": "RequestException",
+          "excluded_article_count": null,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 0,
+          "observed_at": "2026-11-01T08:14:27.530329+00:00",
+          "omitted_by_slice_limit": 0,
+          "outcome": "failure",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": null,
+          "source_id": "news.eia.today",
+          "status": "unavailable",
+          "version": "1"
+        },
+        {
+          "completeness": "unknown",
+          "config": "e78d2a358dacf0101b4ca59479bfb2d432193e107c05dc769bd46895f554c28c",
+          "content_scope": "eligible agency links only",
+          "error": "MarketDataCollectionError",
+          "excluded_article_count": null,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 0,
+          "observed_at": "2026-11-01T08:14:30.485291+00:00",
+          "omitted_by_slice_limit": 0,
+          "outcome": "failure",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "25637191064c0f340bd004ea76fe3cee62d20244beed2a9f921c3a1c8c525b8c",
+          "source_id": "news.cdc.newsroom",
+          "status": "unavailable",
+          "version": "1"
+        },
+        {
+          "completeness": "unknown",
+          "config": "82fd1aade3c33b169733de636783f517a3d7911725351eae6227697ab875ec64",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 10,
+          "observed_at": "2026-11-01T08:14:30.846465+00:00",
+          "omitted_by_slice_limit": 0,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "2d44c63c31fc086198edcbbb91ba2216a02e038a58ac32e69896d2ac5382670b",
+          "source_id": "news.nasa.technology",
+          "status": "present",
+          "version": "1"
+        },
+        {
+          "completeness": "unknown",
+          "config": "c150eaa7900a7d5c1d7bc9495dc6a1719da83a8cbb9257ec203c8dd4b3328b5f",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 8,
+          "observed_at": "2026-11-01T08:14:32.134457+00:00",
+          "omitted_by_slice_limit": 0,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "a0ede3d049d96d5feba2163fa6fb188caa71725099c114dac02e608bc4053f69",
+          "source_id": "news.usgs.drought",
+          "status": "present",
+          "version": "1"
+        }
+      ],
+      "robots": {
+        "https://tools.cdc.gov": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:14:27.543136+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "b6bf785b2227da54d5d2df43c1888ef367009c949d7c07970758a28512a9c8e2",
+          "status": 200
+        },
+        "https://water.usgs.gov": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:14:30.872504+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "cf37c5adee7f1698d6cce556f43117a9d345689365054862b17a9b5e18edf839",
+          "status": 200
+        },
+        "https://www.eia.gov": {
+          "allowed": false,
+          "checked_at": "2026-11-01T08:14:27.026767+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "0e3264650ea99daf72b4aa98233e64b3d1583b1480c2a3755857c41a20743c16",
+          "status": 200
+        },
+        "https://www.nasa.gov": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:14:30.526119+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "44d72c5ad1a94bb45f25caaba917c39b39b383af3a121b59a5a7e46fbe3ccb05",
+          "status": 200
+        },
+        "https://www.nass.usda.gov": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:14:24.552979+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "cd9900dc2b2835f53e80842230316109ec0fa1071adcd5e2a63acd40d9568874",
+          "status": 200
+        }
+      }
+    },
+    {
+      "cutoff": "2026-11-01T08:15:39.768474+00:00",
+      "polls": [
+        {
+          "completeness": "unknown",
+          "config": "dfc4300110ee531aa59e3e296ecfc5c189d85c7cc0e285744a56de8c317939ea",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 1,
+          "observed_at": "2026-11-01T08:15:36.359469+00:00",
+          "omitted_by_slice_limit": 0,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "473708f79fc11f65b90f5dae64c39a367c5fce2e828330e66fe09a8581915c7f",
+          "source_id": "news.usgs.earthquakes",
+          "status": "present",
+          "version": "1"
+        },
+        {
+          "completeness": "unknown",
+          "config": "62c38bb0b4bfa45d03bd71cf091df3c51e8d82f472c09bd0511e6c8078d3bf8a",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 12,
+          "observed_at": "2026-11-01T08:15:37.700148+00:00",
+          "omitted_by_slice_limit": 8,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "a7faf6275e6a40cedd06b8341b792fd55a8b6a6f178e2a43e1c3c02b8a567b58",
+          "source_id": "news.uk.health",
+          "status": "present",
+          "version": "1"
+        },
+        {
+          "completeness": "unknown",
+          "config": "15eafd4c5a58bb7aeb79c817082462eb4ea363070d7d4bcc6c490f5b9ac03c6e",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 12,
+          "observed_at": "2026-11-01T08:15:39.768474+00:00",
+          "omitted_by_slice_limit": 358,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+          "source_id": "news.usgs.river_flood",
+          "status": "present",
+          "version": "1"
+        }
+      ],
+      "robots": {
+        "https://earthquake.usgs.gov": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:15:34.876748+00:00",
+          "crawl_delay_seconds": null,
+          "sha256": null,
+          "status": 404
+        },
+        "https://water.usgs.gov": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:15:37.740773+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "cf37c5adee7f1698d6cce556f43117a9d345689365054862b17a9b5e18edf839",
+          "status": 200
+        },
+        "https://www.gov.uk": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:15:36.369545+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "459835d29527b9c00f00f6af00f45c73a909af1944e81fefa153f585e1857305",
+          "status": 200
+        }
+      }
+    },
+    {
+      "cutoff": "2026-11-01T08:16:03.462249+00:00",
+      "polls": [
+        {
+          "completeness": "unknown",
+          "config": "8e650f42426e818bc9b8bf29bcb395abb97c2c19944c99bb21a91cecf51feeb0",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 12,
+          "observed_at": "2026-11-01T08:16:03.159331+00:00",
+          "omitted_by_slice_limit": 8,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "a7faf6275e6a40cedd06b8341b792fd55a8b6a6f178e2a43e1c3c02b8a567b58",
+          "source_id": "news.uk.health",
+          "status": "present",
+          "version": "1"
+        },
+        {
+          "completeness": "unknown",
+          "config": "978d1004f70b45a91b31ed7c9b45fc55dde130224c92428c8e896ab440064858",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 10,
+          "observed_at": "2026-11-01T08:16:03.462249+00:00",
+          "omitted_by_slice_limit": 0,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "2629d6ac22c1f09eb82bc169e7d601cfde53106bffe581b7a7d510a147457089",
+          "source_id": "news.nasa.recent",
+          "status": "present",
+          "version": "1"
+        }
+      ],
+      "robots": {
+        "https://www.gov.uk": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:16:02.702817+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "459835d29527b9c00f00f6af00f45c73a909af1944e81fefa153f585e1857305",
+          "status": 200
+        },
+        "https://www.nasa.gov": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:16:03.186676+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "44d72c5ad1a94bb45f25caaba917c39b39b383af3a121b59a5a7e46fbe3ccb05",
+          "status": 200
+        }
+      }
+    },
+    {
+      "cutoff": "2026-11-01T08:16:47.446196+00:00",
+      "polls": [
+        {
+          "completeness": "unknown",
+          "config": "c026f19918f49e596ecbbd27d52131bfe7cb4ac1856fe02acf7f45a08ef60693",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 12,
+          "observed_at": "2026-11-01T08:16:47.446196+00:00",
+          "omitted_by_slice_limit": 8,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "26bea4feb29d014293a289e4d008aa8663eb4437607081a739a4433c4ebcb238",
+          "source_id": "news.uk.trade",
+          "status": "present",
+          "version": "1"
+        }
+      ],
+      "robots": {
+        "https://www.gov.uk": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:16:46.194921+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "459835d29527b9c00f00f6af00f45c73a909af1944e81fefa153f585e1857305",
+          "status": 200
+        }
+      }
+    },
+    {
+      "cutoff": "2026-11-01T08:17:31.799626+00:00",
+      "polls": [
+        {
+          "completeness": "unknown",
+          "config": "ef6f48f834e37fb7cd3c3c27e467664c6c584f941ce7cde60ea356e383e9dea6",
+          "content_scope": "eligible agency links only",
+          "error": null,
+          "excluded_article_count": 0,
+          "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+          "http_status": null,
+          "items": 12,
+          "observed_at": "2026-11-01T08:17:31.799626+00:00",
+          "omitted_by_slice_limit": 8,
+          "outcome": "success",
+          "query": "",
+          "retry_after_seconds": null,
+          "snapshot_hash": "ca744d628659c232ae72b2a2e42aace66a9033a4b3775e6d28e8540780758e3d",
+          "source_id": "news.uk.fcdo",
+          "status": "present",
+          "version": "1"
+        }
+      ],
+      "robots": {
+        "https://www.gov.uk": {
+          "allowed": true,
+          "checked_at": "2026-11-01T08:17:31.512358+00:00",
+          "crawl_delay_seconds": 0,
+          "sha256": "459835d29527b9c00f00f6af00f45c73a909af1944e81fefa153f585e1857305",
+          "status": 200
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "fresh_families": [
+      "FLOOD_DISASTER",
+      "PUBLIC_HEALTH",
+      "TECHNOLOGY",
+      "TRADE",
+      "WAR_GEOPOLITICS"
+    ],
+    "fresh_publisher_groups": [
+      "NASA",
+      "U.S. Geological Survey",
+      "UK Government"
+    ],
+    "freshness_basis": "Source publication, else source update; update is not incident occurrence or original publication",
+    "freshness_window_days": 7,
+    "human_reviews": 0,
+    "independent_original_origins": "UNVERIFIED; publisher diversity is not independent corroboration",
+    "sources": [
+      {
+        "family": "DROUGHT_WATER",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 8,
+        "newest_publication": "2026-08-12T19:58:48+00:00",
+        "newest_update": null,
+        "publisher_group": "U.S. Geological Survey",
+        "source_id": "news.usgs.drought"
+      },
+      {
+        "family": "FLOOD_DISASTER",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 16,
+        "newest_publication": "2026-10-23T12:16:18+00:00",
+        "newest_update": null,
+        "publisher_group": "U.S. Geological Survey",
+        "source_id": "news.usgs.river_flood"
+      },
+      {
+        "family": "ENERGY_GRID",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 0,
+        "newest_publication": null,
+        "newest_update": null,
+        "publisher_group": "U.S. Energy Information Administration",
+        "source_id": "news.eia.today"
+      },
+      {
+        "family": "AGRICULTURE_FOOD",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 23,
+        "newest_publication": "2025-09-24T16:00:00+00:00",
+        "newest_update": null,
+        "publisher_group": "USDA-NASS",
+        "source_id": "news.nass.news"
+      },
+      {
+        "family": "TECHNOLOGY",
+        "fresh_24h": 1,
+        "fresh_7d": 10,
+        "fresh_update_only": 0,
+        "items": 10,
+        "newest_publication": "2026-11-01T04:05:00+00:00",
+        "newest_update": null,
+        "publisher_group": "NASA",
+        "source_id": "news.nasa.recent"
+      },
+      {
+        "family": "TECHNOLOGY",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 10,
+        "newest_publication": "2026-10-22T04:01:00+00:00",
+        "newest_update": null,
+        "publisher_group": "NASA",
+        "source_id": "news.nasa.technology"
+      },
+      {
+        "family": "FLOOD_DISASTER",
+        "fresh_24h": 0,
+        "fresh_7d": 1,
+        "fresh_update_only": 1,
+        "items": 1,
+        "newest_publication": null,
+        "newest_update": "2026-10-30T10:38:47.040000+00:00",
+        "publisher_group": "U.S. Geological Survey",
+        "source_id": "news.usgs.earthquakes"
+      },
+      {
+        "family": "WAR_GEOPOLITICS",
+        "fresh_24h": 1,
+        "fresh_7d": 12,
+        "fresh_update_only": 12,
+        "items": 12,
+        "newest_publication": null,
+        "newest_update": "2026-11-01T02:47:08+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.fcdo"
+      },
+      {
+        "family": "TRADE",
+        "fresh_24h": 0,
+        "fresh_7d": 12,
+        "fresh_update_only": 12,
+        "items": 12,
+        "newest_publication": null,
+        "newest_update": "2026-10-30T15:32:00+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.trade"
+      },
+      {
+        "family": "PUBLIC_HEALTH",
+        "fresh_24h": 0,
+        "fresh_7d": 18,
+        "fresh_update_only": 18,
+        "items": 18,
+        "newest_publication": null,
+        "newest_update": "2026-10-30T13:33:30+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.health"
+      }
+    ]
+  },
+  "sqlite_integrity": "ok"
+}

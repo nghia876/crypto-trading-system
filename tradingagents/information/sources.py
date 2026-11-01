@@ -240,6 +240,9 @@ def _specialist_source(source_id, provider, endpoint, rights_url):
                     "U.S. Geological Survey": "usgs.gov",
                     "U.S. Energy Information Administration": "eia.gov",
                     "USDA-NASS": "nass.usda.gov",
+                    "NASA": "nasa.gov",
+                    "CDC": "cdc.gov",
+                    "UK Government": "www.gov.uk",
                 }[provider],
             ),
             ("publisher_group", provider),
@@ -290,4 +293,52 @@ SPECIALIST_WORLD_CONFIG = (
 )
 
 # Existing broad discovery remains intact. All recurring jobs use this same registry/store.
-WORLD_NEWS_CONFIG = BROAD_NEWS_CONFIG + SPECIALIST_WORLD_CONFIG
+OPERATIONAL_ADDITIONS = (
+    NewsDiscoveryConfig(
+        _specialist_source(
+            "news.nasa.recent", "NASA", "https://www.nasa.gov/feed/",
+            "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+        ), "TECHNOLOGY",
+    ),
+    NewsDiscoveryConfig(
+        _specialist_source(
+            "news.nasa.technology", "NASA",
+            "https://www.nasa.gov/technology/feed/",
+            "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+        ), "TECHNOLOGY",
+    ),
+    NewsDiscoveryConfig(
+        _specialist_source(
+            "news.usgs.earthquakes", "U.S. Geological Survey",
+            "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.atom",
+            "https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits",
+        ), "FLOOD_DISASTER", "atom",
+    ),
+)
+
+
+def _uk_config(source_id, organisation, domain):
+    from dataclasses import replace
+
+    source = _specialist_source(
+        source_id, "UK Government",
+        f"https://www.gov.uk/government/organisations/{organisation}.atom",
+        "https://www.gov.uk/help/reuse-govuk-content",
+    )
+    return NewsDiscoveryConfig(replace(source, metadata=source.metadata + (
+        ("licence_attribution", "Contains public sector information licensed under the Open Government Licence v3.0."),
+        ("licence_url", "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"),
+        ("rights_review_date", "2026-11-01"),
+    ), legal_constraints=(
+        "Open Government Licence v3.0; attribution and original link required",
+        "Headline/link/date only; no third-party content, personal data, logos or endorsement",
+    )), domain, "atom")
+
+
+UK_WORLD_CONFIG = (
+    _uk_config("news.uk.fcdo", "foreign-commonwealth-development-office", "WAR_GEOPOLITICS"),
+    _uk_config("news.uk.trade", "department-for-business-and-trade", "TRADE"),
+    _uk_config("news.uk.health", "uk-health-security-agency", "PUBLIC_HEALTH"),
+)
+WORLD_NEWS_CONFIG = (BROAD_NEWS_CONFIG + SPECIALIST_WORLD_CONFIG
+                     + OPERATIONAL_ADDITIONS + UK_WORLD_CONFIG)

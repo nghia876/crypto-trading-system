@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from email.utils import parsedate_to_datetime
 from urllib.parse import urlsplit, urlunsplit
 from xml.etree import ElementTree
@@ -228,8 +228,8 @@ def _narrative_line(row, view=None):
         )
     if row.payload.get("source_type") == "original_specialist_news":
         data = {key: data[key] for key in (
-            "event_id", "claim", "domain", "source", "published_at", "updated_at", "observed_at",
-            "retrieved_at", "available_at", "event_time_status", "url", "evidence_id",
+            "event_id", "claim", "domain", "source", "published_at", "updated_at",
+            "available_at", "url", "evidence_id",
         )}
         data["attribution"] = row.payload.get("attribution")
         data["status"] = "agency claim; accuracy unmeasured; independence unknown; contradiction search not performed"
@@ -252,6 +252,8 @@ def _narrative_line(row, view=None):
             data["incidents"] = incidents
         if suggestions:
             data["event_link_candidates"] = suggestions
+    if licence := row.payload.get("licence_attribution"):
+        data["licence_attribution"] = licence
     return "- " + json.dumps(data, sort_keys=True)
 
 
@@ -264,9 +266,24 @@ def selected_narrative_events(view: InformationView) -> tuple[Observation, ...]:
     groups = {}
     for row in narrative_events(view):
         groups.setdefault(row.payload.get("domain", "MONETARY"), []).append(row)
+    def priority(row):
+        # Prefer timely original report formats over routine guidance/photo notices.
+        # These are selection priorities, never semantic incident labels or BTC gates.
+        stamp = row.publication_time or row.effective_time
+        recent = stamp is not None and timedelta(0) <= view.decision_time - stamp <= timedelta(days=7)
+        path = urlsplit(row.raw_reference or "").path
+        report = any(part in path for part in (
+            "/government/news/", "/government/speeches/", "/news-release/",
+            "/missions/", "/earthquakes/eventpage/",
+        ))
+        return (recent, report, stamp or datetime.min.replace(tzinfo=UTC), row.available_at)
+
+    for rows in groups.values():
+        rows.sort(key=priority, reverse=True)
+    domains = sorted(groups, key=lambda domain: (priority(groups[domain][0]), domain), reverse=True)
     ordered = []
     while any(groups.values()):
-        for domain in sorted(groups):
+        for domain in domains:
             if groups[domain]:
                 ordered.append(groups[domain].pop(0))
     used = len(NARRATIVE_NOTICE) + 1

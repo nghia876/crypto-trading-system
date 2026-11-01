@@ -1,0 +1,161 @@
+[
+  {
+    "articles": [
+      {
+        "available_at": "2026-11-01T08:15:39.768474+00:00",
+        "duplicate_cluster": "article:733a2791bd57228b67e5deed3a1c15f89a49a84f926511e27799e5d0061e6d59",
+        "evidence_id": "news:16887874c8d8aeb2bc87e635f9017c9abb30ab3bb55f6cae579ce688ea1df905",
+        "first_seen_time": "2026-11-01T08:15:39.768474+00:00",
+        "origin_cluster": "publisher:U.S. Geological Survey",
+        "published_raw": "Sun, 11 Oct 2026 11:27:02 EDT",
+        "publisher_group": "U.S. Geological Survey",
+        "retrieved_at": "2026-11-01T08:15:39.768474+00:00",
+        "snapshot_sha256": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+        "source_id": "news.usgs.river_flood",
+        "status": "UNREVIEWED",
+        "syndication": "UNKNOWN",
+        "title": "PROJECT ALERT NOTICE (FL) Flooding Response in the Florida Panhandle Following Hurricane Isaias, Day 2",
+        "updated_raw": null,
+        "url": "http://water.usgs.gov/alerts/item_2026-10-11_11:27:02.html"
+      },
+      {
+        "available_at": "2026-11-01T08:15:39.768474+00:00",
+        "duplicate_cluster": "article:07bb96eaae32ab6f524967e308f883bbaaccd45b1d981395d9f029d48aa4958d",
+        "evidence_id": "news:5de860803e8bb8d72df91cba79105c480d54d241427eda3a5a6eb3e2e4847a3d",
+        "first_seen_time": "2026-11-01T08:15:39.768474+00:00",
+        "origin_cluster": "publisher:U.S. Geological Survey",
+        "published_raw": "Sat, 10 Oct 2026 11:35:45 EDT",
+        "publisher_group": "U.S. Geological Survey",
+        "retrieved_at": "2026-11-01T08:15:39.768474+00:00",
+        "snapshot_sha256": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+        "source_id": "news.usgs.river_flood",
+        "status": "UNREVIEWED",
+        "syndication": "UNKNOWN",
+        "title": "PROJECT ALERT NOTICE (FL) Flooding Response in the Florida Panhandle Following Hurricane Isaias",
+        "updated_raw": null,
+        "url": "http://water.usgs.gov/alerts/item_2026-10-10_11:35:45.html"
+      }
+    ],
+    "evidence_ids": [
+      "news:16887874c8d8aeb2bc87e635f9017c9abb30ab3bb55f6cae579ce688ea1df905",
+      "news:5de860803e8bb8d72df91cba79105c480d54d241427eda3a5a6eb3e2e4847a3d"
+    ],
+    "human_reviews": 0,
+    "independent_original_origins": "UNVERIFIED",
+    "independent_publishers": false,
+    "label": "unknown",
+    "location": "Florida Panhandle, USA (title only)",
+    "occurrence_date": null,
+    "rationale": "Same named hurricane, Florida Panhandle flood response and explicit Day 2 follow-up. Same USGS publisher; not independent corroboration.",
+    "review_status": "pending",
+    "status": "UNREVIEWED",
+    "suggested_pair_identity": "plausible_same_incident",
+    "uncertainty": "Headlines only; occurrence and identity require article adjudication"
+  },
+  {
+    "articles": [
+      {
+        "available_at": "2026-11-01T08:15:39.768474+00:00",
+        "duplicate_cluster": "article:07bb96eaae32ab6f524967e308f883bbaaccd45b1d981395d9f029d48aa4958d",
+        "evidence_id": "news:5de860803e8bb8d72df91cba79105c480d54d241427eda3a5a6eb3e2e4847a3d",
+        "first_seen_time": "2026-11-01T08:15:39.768474+00:00",
+        "origin_cluster": "publisher:U.S. Geological Survey",
+        "published_raw": "Sat, 10 Oct 2026 11:35:45 EDT",
+        "publisher_group": "U.S. Geological Survey",
+        "retrieved_at": "2026-11-01T08:15:39.768474+00:00",
+        "snapshot_sha256": "00c3a90ebbd5c3b13a80ee75245401f01dd8c509097cdf2292b147fb3c43f502",
+        "source_id": "news.usgs.river_flood",
+        "status": "UNREVIEWED",
+        "syndication": "UNKNOWN",
+        "title": "PROJECT ALERT NOTICE (FL) Flooding Response in the Florida Panhandle Following Hurricane Isaias",
+        "updated_raw": null,
+        "url": "http://water.usgs.gov/alerts/item_2026-10-10_11:35:45.html"
+      },
+      {
+        "available_at": "2026-11-01T08:15:36.359469+00:00",
+        "duplicate_cluster": "article:288f88ba8aca7b92ba9e376f0db832dc9df57ea58f707ce40e8dbf18524f3791",
+        "evidence_id": "news:d7f98d6124d8b70dd62548a59ade86358f2b8e62b03cba5b2c6d226fe282aa72",
+        "first_seen_time": "2026-11-01T08:15:36.359469+00:00",
+        "origin_cluster": "publisher:U.S. Geological Survey",
+        "published_raw": null,
+        "publisher_group": "U.S. Geological Survey",
+        "retrieved_at": "2026-11-01T08:15:36.359469+00:00",
+        "snapshot_sha256": "473708f79fc11f65b90f5dae64c39a367c5fce2e828330e66fe09a8581915c7f",
+        "source_id": "news.usgs.earthquakes",
+        "status": "UNREVIEWED",
+        "syndication": "UNKNOWN",
+        "title": "M 6.4 - southeast of Easter Island",
+        "updated_raw": "2026-10-30T10:38:47.040Z",
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttxz"
+      }
+    ],
+    "evidence_ids": [
+      "news:5de860803e8bb8d72df91cba79105c480d54d241427eda3a5a6eb3e2e4847a3d",
+      "news:d7f98d6124d8b70dd62548a59ade86358f2b8e62b03cba5b2c6d226fe282aa72"
+    ],
+    "human_reviews": 0,
+    "independent_original_origins": "UNVERIFIED",
+    "independent_publishers": false,
+    "label": "unknown",
+    "location": "Florida Panhandle / southeast of Easter Island (titles only)",
+    "occurrence_date": null,
+    "rationale": "Florida flood response versus Easter Island earthquake. Same USGS publishing group.",
+    "review_status": "pending",
+    "status": "UNREVIEWED",
+    "suggested_pair_identity": "plausible_distinct_incidents",
+    "uncertainty": "Headlines only; occurrence and identity require article adjudication"
+  },
+  {
+    "articles": [
+      {
+        "available_at": "2026-11-01T08:16:03.159331+00:00",
+        "duplicate_cluster": "article:0120196f38ac0fd88b663fd6e012ee225cc735fe2e5fbd4dd46073ab4ba37051",
+        "evidence_id": "news:950ac13781a8efc39317c46886675efb0cef59d0426e37eadd268e9b201547b3",
+        "first_seen_time": "2026-11-01T08:16:03.159331+00:00",
+        "origin_cluster": "publisher:UK Government",
+        "published_raw": null,
+        "publisher_group": "UK Government",
+        "retrieved_at": "2026-11-01T08:16:03.159331+00:00",
+        "snapshot_sha256": "a7faf6275e6a40cedd06b8341b792fd55a8b6a6f178e2a43e1c3c02b8a567b58",
+        "source_id": "news.uk.health",
+        "status": "UNREVIEWED",
+        "syndication": "UNKNOWN",
+        "title": "New report shows toll of Chickenpox with over 3,000 infants hospitalised last year",
+        "updated_raw": "2026-10-30T10:21:14Z",
+        "url": "https://www.gov.uk/government/news/new-report-shows-toll-of-chickenpox-with-over-3000-infants-hospitalised-last-year"
+      },
+      {
+        "available_at": "2026-11-01T08:16:03.159331+00:00",
+        "duplicate_cluster": "article:8748ae553c93de47b823d4db056579763e6299540c698b03dbc4a420994155dc",
+        "evidence_id": "news:a409e2c5fb876f737b0c057c958a6bf3a6ab107dea537e578e736d707fb36594",
+        "first_seen_time": "2026-11-01T08:15:37.700148+00:00",
+        "origin_cluster": "publisher:UK Government",
+        "published_raw": null,
+        "publisher_group": "UK Government",
+        "retrieved_at": "2026-11-01T08:16:03.159331+00:00",
+        "snapshot_sha256": "a7faf6275e6a40cedd06b8341b792fd55a8b6a6f178e2a43e1c3c02b8a567b58",
+        "source_id": "news.uk.health",
+        "status": "UNREVIEWED",
+        "syndication": "UNKNOWN",
+        "title": "Research: Varicella epidemiological reports",
+        "updated_raw": "2026-10-30T09:30:02Z",
+        "url": "https://www.gov.uk/government/publications/varicella-epidemiological-reports"
+      }
+    ],
+    "evidence_ids": [
+      "news:950ac13781a8efc39317c46886675efb0cef59d0426e37eadd268e9b201547b3",
+      "news:a409e2c5fb876f737b0c057c958a6bf3a6ab107dea537e578e736d707fb36594"
+    ],
+    "human_reviews": 0,
+    "independent_original_origins": "UNVERIFIED",
+    "independent_publishers": false,
+    "label": "unknown",
+    "location": "UK; exact reporting geography unreviewed",
+    "occurrence_date": null,
+    "rationale": "Possible news release and underlying varicella report; not established same outbreak/incident.",
+    "review_status": "pending",
+    "status": "UNREVIEWED",
+    "suggested_pair_identity": "possible_same_report_release",
+    "uncertainty": "Headlines only; occurrence and identity require article adjudication"
+  }
+]

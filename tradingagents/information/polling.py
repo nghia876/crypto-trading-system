@@ -101,6 +101,7 @@ def coordinate(
     session=None,
     clock=None,
     source_ids=None,
+    observation_limit=None,
 ):
     """Run due configurations fairly, at most one request each, then persist health.
 
@@ -165,6 +166,7 @@ def coordinate(
                 poll_id=f"recurring-v1:{interval}:{slot}",
                 session=session,
                 clock=clock,
+                observation_limit=observation_limit,
             )
         )
     completed = max([now] + [r.observed_at for r in outcomes])
@@ -176,6 +178,8 @@ def coordinate(
         evidence = store.evidence_by_ids(success.evidence_ids, completed) if success else ()
         publications = [r.publication_time for r in evidence if r.publication_time]
         newest_publication = max(publications) if publications else None
+        updates = [r.effective_time for r in evidence if r.effective_time]
+        newest_update = max(updates) if updates else None
         detail = {
             "policy_version": "recurring-v1",
             "interval_seconds": interval,
@@ -183,6 +187,8 @@ def coordinate(
             "host_cooldown_seconds": 30,
             "slot": slot,
             "newest_publication": newest_publication.isoformat() if newest_publication else None,
+            "newest_source_update": newest_update.isoformat() if newest_update else None,
+            "update_is_not_publication_or_occurrence": True,
             "content_stale": (completed - newest_publication > timedelta(days=1))
             if newest_publication
             else None,
@@ -261,6 +267,7 @@ def source_gap_report(view, configs=WORLD_NEWS_CONFIG):
                 and r.payload.get("config_fingerprint") == config.fingerprint
             ]
             newest = max((r.publication_time for r in rows if r.publication_time), default=None)
+            newest_update = max((r.effective_time for r in rows if r.effective_time), default=None)
             sources.append(
                 {
                     "source": config.source.source_id,
@@ -273,6 +280,9 @@ def source_gap_report(view, configs=WORLD_NEWS_CONFIG):
                     if newest
                     else None,
                     "publication_unknown": sum(r.publication_time is None for r in rows),
+                    "newest_source_update": newest_update.isoformat() if newest_update else None,
+                    "source_update_stale_24h": view.decision_time - newest_update > timedelta(days=1)
+                    if newest_update else None,
                     "eligible_items": len(rows),
                     "rights_reference": dict(config.source.metadata).get("rights_reference"),
                 }
@@ -309,9 +319,12 @@ def main(argv=None):
             )
         )
         return 0
+    from tradingagents.information.world_radar import ELIGIBLE_CONFIGS, PolicySession
+
     with job_lock(store), requests.Session() as session:
         outcomes, health = coordinate(
-            store, interval=args.interval, max_sources=args.max_sources, session=session
+            store, ELIGIBLE_CONFIGS, interval=args.interval, max_sources=args.max_sources,
+            session=PolicySession(session), observation_limit=12,
         )
     print(
         json.dumps(

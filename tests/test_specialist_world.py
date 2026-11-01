@@ -98,7 +98,8 @@ def test_domain_gaps_and_poll_fairness(tmp_path):
     store = SQLiteInformationStore(tmp_path / "canonical.db")
     before = source_gap_report(store.view_at(T))
     assert before["WILDFIRE"]["adapter_status"] == "missing_adapter"
-    assert before["PUBLIC_HEALTH"]["specialist_gap"]
+    assert not before["PUBLIC_HEALTH"]["specialist_gap"]
+    assert before["PUBLIC_HEALTH"]["sources"][0]["poll_status"] == "never_polled"
     assert len(WORLD_NEWS_CONFIG) <= 16
     assert all(
         not c.source.asset_scope and not c.source.authentication_required for c in WORLD_NEWS_CONFIG

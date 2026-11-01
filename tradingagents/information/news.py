@@ -199,6 +199,8 @@ def parse_news_snapshot(
                 "snapshot_hash": snapshot_hash,
             }
             # Source, domain and acquisition copy remain distinct evidence; URL overlap never adds votes.
+            if licence := dict(config.source.metadata).get("licence_attribution"):
+                payload["licence_attribution"] = licence
             row = Observation(
                 observation_id="news:"
                 + _digest(config.fingerprint + version_id + retrieved_at.isoformat()),
@@ -343,7 +345,13 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
         )
         parsed_count = len(batch.observations)
         if observation_limit is not None:
-            batch = replace(batch, observations=batch.observations[:observation_limit])
+            # Retain current usable reports, not a random hash-ordered historical slice.
+            ordered = sorted(batch.observations, key=lambda row: (
+                row.is_available_at(completed),
+                row.publication_time or row.effective_time or datetime.min.replace(tzinfo=UTC),
+                row.observation_id,
+            ), reverse=True)
+            batch = replace(batch, observations=tuple(ordered[:observation_limit]))
         eligible = tuple(
             x.observation_id
             for x in batch.observations

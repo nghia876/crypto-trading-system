@@ -142,6 +142,39 @@ def test_real_usgs_slice_combined_actual_graph(tmp_path, monkeypatch, offline):
     assert len(state["analysis_information"]) <= 28000
 
 
+def test_real_world_radar_combined_actual_graph(tmp_path, monkeypatch, offline):
+    import json
+    from pathlib import Path
+
+    from tests.test_liquidity import PARSERS, h41, rrp
+    from tests.test_original_macro import bls
+    from tradingagents.information.original_macro import parse_bls_json
+    from tradingagents.information.world_radar import replay_specimens
+
+    data = json.loads((Path(__file__).parent / "fixtures/phase37/real_specimens.json")
+                      .read_text(encoding="utf-8"))
+    cutoff = datetime.fromisoformat(data["cutoff"])
+    store = SQLiteInformationStore(tmp_path / "canonical.db")
+    replay_specimens(store, data["specimens"])
+    store.append(PARSERS[0](h41(), cutoff))
+    store.append(PARSERS[1](rrp(), cutoff))
+    store.append(parse_bls_json(bls(), retrieved_at=cutoff))
+    btc = Observation("btc-world-radar", "derivatives.binance.usdm.funding", "BTCUSDT",
+                      "derivatives.funding_rate.usdm", {"funding_rate": "0.001"},
+                      cutoff, cutoff, cutoff)
+    store.append(MarketDataBatch((btc,), (), cutoff))
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
+    state, _ = graph.propagate("BTCUSDT", "2026-11-01", asset_type="crypto", decision_time=cutoff)
+    prompt = "\n".join(model.prompts)
+    assert "6745635 million USD" in prompt and "353000000 USD" in prompt
+    assert "325.5 index" in prompt and "btc-world-radar" in prompt
+    assert "PUBLIC_HEALTH" in prompt and "WAR_GEOPOLITICS" in prompt
+    assert "Open Government Licence v3.0" in prompt
+    assert any(s["title"] in prompt for s in data["specimens"] if s["source_id"] == "news.nasa.recent")
+    assert len(state["analysis_information"]) <= 28000
+
+
 # Enough for every free-text reader: the PM's labelled rating and the trader's
 # closing proposal line.
 TEXT = "Report.\n\n**Rating**: Overweight\n\nFINAL TRANSACTION PROPOSAL: **BUY**"
