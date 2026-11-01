@@ -1,0 +1,17 @@
+{
+  "provenance": "Agent-authored synthetic prospective contract holdout, 2026-11-01. Not human reviewed or independently collected. New incident clusters, no v1 fixture copies. Labels withheld from matcher; design-aware authoring limits independence.",
+  "families": [
+    {"family": "flood", "claim": "Flood damages Kisumu lakeside homes transport", "location": "ke:kisumu:lakefront"},
+    {"family": "drought", "claim": "Drought reduces Salta reservoir irrigation capacity", "location": "ar:salta:reservoir"},
+    {"family": "energy", "claim": "Grid outage interrupts Tartu municipal heating service", "location": "ee:tartu:district"},
+    {"family": "cyber", "claim": "Cyber breach interrupts Meridia hospital patient scheduling", "location": "fictional:meridia:hospital"}
+  ],
+  "trials": [
+    {"id": "same", "label": "same_event", "a": {"episode_key": "episode:one", "location_key": "place:one", "start": 0, "end": 1}, "b": {"episode_key": "episode:one", "location_key": "place:one", "start": 1, "end": 2}},
+    {"id": "unknown-positive", "label": "same_event", "a": {}, "b": {}},
+    {"id": "recurring", "label": "different_event", "a": {"episode_key": "episode:one"}, "b": {"episode_key": "episode:two"}},
+    {"id": "nearby", "label": "different_event", "a": {"location_key": "place:one"}, "b": {"location_key": "place:two"}},
+    {"id": "separate-time", "label": "different_event", "a": {"start": 0, "end": 1}, "b": {"start": 2, "end": 3}},
+    {"id": "unknown-negative", "label": "different_event", "a": {}, "b": {}}
+  ]
+}

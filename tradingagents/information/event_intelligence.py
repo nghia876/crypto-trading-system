@@ -280,13 +280,14 @@ def _features(row):
     }
 
 
-def suggest_event_links(view, *, max_records=128, max_candidates=32):
+def suggest_event_links(view, *, max_records=128, max_candidates=32, use_reviewed_context=True):
     """Bounded deterministic suggestions; never membership, support or independence.
 
     Compare latest article versions only, within 72h publication/acquisition
     proxies. Require type, distinctive overlap, proper-name/entity anchor and
     similarity; explicitly disjoint locations veto a match. Unknown is skipped.
     """
+    from tradingagents.information.event_context import context_conflicts, reviewed_context
     from tradingagents.information.narrative_events import narrative_events
 
     if not 2 <= max_records <= 128 or not 1 <= max_candidates <= 32:
@@ -294,6 +295,8 @@ def suggest_event_links(view, *, max_records=128, max_candidates=32):
     all_rows = narrative_events(view)
     rows = all_rows[:max_records]
     features = {r.observation_id: _features(r) for r in rows}
+    contexts = reviewed_context(view) if use_reviewed_context else {}
+    vetoes = []
     candidates = []
     for i, left in enumerate(rows):
         a = features[left.observation_id]
@@ -323,6 +326,11 @@ def suggest_event_links(view, *, max_records=128, max_candidates=32):
                 or (a["locations"] and b["locations"] and not a["locations"] & b["locations"])
             ):
                 continue
+            conflict = context_conflicts(contexts.get(left.observation_id), contexts.get(right.observation_id))
+            if conflict:
+                vetoes.append({"evidence_ids": sorted((left.observation_id, right.observation_id)),
+                               "conflicts": conflict})
+                continue
             evidence = sorted((left, right), key=lambda r: r.observation_id)
             candidates.append(
                 {
@@ -349,11 +357,15 @@ def suggest_event_links(view, *, max_records=128, max_candidates=32):
                     "time_proxy_delta_seconds": delta,
                     "review_cues": sorted(set(a["review_cues"] + b["review_cues"])),
                     "truth": "unknown",
+                    "reviewed_context_ids": [contexts[r.observation_id].observation_id
+                                             for r in evidence if r.observation_id in contexts],
                 }
             )
     candidates.sort(key=lambda c: (-c["similarity"], c["evidence_ids"]))
     return {
-        "policy": "event-link-heuristic-v1",
+        "policy": "event-link-reviewed-context-v2" if use_reviewed_context else "event-link-heuristic-v1",
+        "context_veto_count": len(vetoes),
+        "context_vetoes": sorted(vetoes, key=lambda c: c["evidence_ids"])[:max_candidates],
         "cutoff": view.decision_time.isoformat(),
         "scanned_records": len(rows),
         "omitted_records": max(0, len(all_rows) - len(rows)),

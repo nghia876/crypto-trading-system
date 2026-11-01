@@ -1,3 +1,17 @@
+# Phase 3.5 local context and security checkpoint - 2026-11-01
+
+Reviewed occurrence/location/episode conflict vetoes implemented locally.
+Full offline suite: 1,554 passed + 99 subtests; four skipped, one deselected.
+24 synthetic contract trials: TP8/FP16/TN0/FN0 before; TP8/FP4/TN12/FN0 after.
+Design-aware synthetic acceptance only; independent reviewed holdout unavailable.
+No push here. Remote f87ddbe; guarded host backup authorized through 8717005 only.
+Phase 3.4 and all newer work remain LOCAL ONLY; Phase 3 IN_PROGRESS.
+No source/discovery/macro gate changes. No observed new security block; cause
+of prior detection uncertain despite user-reported clean FULL scan.
+See [handoff](../project-handoff/PHASE_3_5_HANDOFF.md),
+[required secure execution workflow](../project-handoff/SECURE_EXECUTION.md), and
+[held-out protocol](../project-handoff/EVENT_CONTEXT_HOLDOUT_PROTOCOL.md).
+
 # Phase 3.4 local checkpoint - 2026-11-01
 
 Bounded offline event-link evaluation is VERIFIED in the existing canonical SQLite/view_at pipeline. Eight-family agent-authored synthetic benchmark: 80 isolated pairs, 40 positive/40 negative; 30 TP/15 FP/25 TN/10 FN; precision 66.67%, recall 75%. Cross-source and same-publisher reporting channels are scored separately, never treated as independent confirmation. No human-reviewed, held-out or real-world accuracy claim. Separate labels carry provenance, rationale, confidence and review status; existing-store CLI is read-only. No candidate tuning or auto-merge. Real-world quality remains UNKNOWN; Phase 3 remains IN_PROGRESS.

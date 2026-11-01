@@ -1,3 +1,17 @@
+# Phase 3.5 local context and security checkpoint - 2026-11-01
+
+Reviewed occurrence/location/episode conflict vetoes implemented locally.
+Full offline suite: 1,554 passed + 99 subtests; four skipped, one deselected.
+24 synthetic contract trials: TP8/FP16/TN0/FN0 before; TP8/FP4/TN12/FN0 after.
+Design-aware synthetic acceptance only; independent reviewed holdout unavailable.
+No push here. Remote f87ddbe; guarded host backup authorized through 8717005 only.
+Phase 3.4 and all newer work remain LOCAL ONLY; Phase 3 IN_PROGRESS.
+No source/discovery/macro gate changes. No observed new security block; cause
+of prior detection uncertain despite user-reported clean FULL scan.
+See [handoff](PHASE_3_5_HANDOFF.md),
+[required secure execution workflow](SECURE_EXECUTION.md), and
+[held-out protocol](EVENT_CONTEXT_HOLDOUT_PROTOCOL.md).
+
 # Phase 3.3 local checkpoint — 2026-10-30
 
 Bounded automatic heuristic event-link CANDIDATES, immutable PIT/reopen suggestion history, seed-driven evidence-gap questions and existing eligible-feed research are implemented. Suggestions never establish membership, confirmation, independent support or truth. The actual mixed BTC/macro/WORLD graph retains candidate annotations within 28k characters. See [Phase 3.3 scope, acceptance evidence, limits and next actions](PHASE_3_3_HANDOFF.md).

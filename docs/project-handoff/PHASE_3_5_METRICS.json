@@ -1,0 +1,168 @@
+{
+  "cases": [
+    {
+      "baseline_v1": "tp",
+      "context_v2": "tp",
+      "id": "flood:same",
+      "label": "same_event"
+    },
+    {
+      "baseline_v1": "tp",
+      "context_v2": "tp",
+      "id": "flood:unknown-positive",
+      "label": "same_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "flood:recurring",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "flood:nearby",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "flood:separate-time",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "fp",
+      "id": "flood:unknown-negative",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "tp",
+      "context_v2": "tp",
+      "id": "drought:same",
+      "label": "same_event"
+    },
+    {
+      "baseline_v1": "tp",
+      "context_v2": "tp",
+      "id": "drought:unknown-positive",
+      "label": "same_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "drought:recurring",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "drought:nearby",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "drought:separate-time",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "fp",
+      "id": "drought:unknown-negative",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "tp",
+      "context_v2": "tp",
+      "id": "energy:same",
+      "label": "same_event"
+    },
+    {
+      "baseline_v1": "tp",
+      "context_v2": "tp",
+      "id": "energy:unknown-positive",
+      "label": "same_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "energy:recurring",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "energy:nearby",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "energy:separate-time",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "fp",
+      "id": "energy:unknown-negative",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "tp",
+      "context_v2": "tp",
+      "id": "cyber:same",
+      "label": "same_event"
+    },
+    {
+      "baseline_v1": "tp",
+      "context_v2": "tp",
+      "id": "cyber:unknown-positive",
+      "label": "same_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "cyber:recurring",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "cyber:nearby",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "tn",
+      "id": "cyber:separate-time",
+      "label": "different_event"
+    },
+    {
+      "baseline_v1": "fp",
+      "context_v2": "fp",
+      "id": "cyber:unknown-negative",
+      "label": "different_event"
+    }
+  ],
+  "fixture_sha256": "4120ddff27be3ab44203d9d2e2d234ce34212c1653cb01242e41148bbb4caf1a",
+  "metrics": {
+    "baseline_v1": {
+      "fn": 0,
+      "fp": 16,
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "tn": 0,
+      "tp": 8
+    },
+    "context_v2": {
+      "fn": 0,
+      "fp": 4,
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "tn": 12,
+      "tp": 8
+    }
+  },
+  "provenance": "Agent-authored synthetic prospective contract holdout, 2026-11-01. Not human reviewed or independently collected. New incident clusters, no v1 fixture copies. Labels withheld from matcher; design-aware authoring limits independence."
+}
