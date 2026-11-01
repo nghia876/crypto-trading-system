@@ -1,3 +1,12 @@
+# Phase 3 full validated backup authorization - 2026-11-01
+
+User now authorizes backup of all current validated Phase 3 commits,
+superseding the earlier 8717005-only limit. Temporary Process-scope
+RemoteSigned in one non-elevated host window is explicitly authorized.
+Backup remains pending until remote verification; Phase 3 IN_PROGRESS.
+See [backup review](../project-handoff/PHASE_3_BACKUP_REVIEW.md) and
+[scoped security rules](../project-handoff/SECURE_EXECUTION.md).
+
 # Phase 3.5 local context and security checkpoint - 2026-11-01
 
 Reviewed occurrence/location/episode conflict vetoes implemented locally.

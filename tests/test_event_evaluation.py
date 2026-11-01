@@ -31,6 +31,7 @@ def label(**changes):
 
 def test_frozen_benchmark_and_hard_negatives():
     result = run_fixture(FIXTURE)
+    assert result["policy"] == "event-link-reviewed-context-v2"
     assert len(result["cases"]) == 80
     assert result["metrics"]["overall"] == {
         "tp": 30,

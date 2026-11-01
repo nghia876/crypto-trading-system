@@ -139,7 +139,7 @@ def run_fixture(path):
         "dataset": fixture["provenance"],
         "sha256": hashlib.sha256(raw).hexdigest(),
         "protocol": "isolated_pair_trials; not corpus-wide recall",
-        "policy": "event-link-heuristic-v1",
+        "policy": result["policy"],
         "metrics": summarize(totals),
         "cases": details,
     }
