@@ -1,3 +1,13 @@
+# Phase 3.4 local checkpoint - 2026-11-01
+
+Bounded offline event-link evaluation is VERIFIED in the existing canonical SQLite/view_at pipeline. Eight-family agent-authored synthetic benchmark: 80 isolated pairs, 40 positive/40 negative; 30 TP/15 FP/25 TN/10 FN; precision 66.67%, recall 75%. Cross-source and same-publisher reporting channels are scored separately, never treated as independent confirmation. No human-reviewed, held-out or real-world accuracy claim. Separate labels carry provenance, rationale, confidence and review status; existing-store CLI is read-only. No candidate tuning or auto-merge. Real-world quality remains UNKNOWN; Phase 3 remains IN_PROGRESS.
+
+Full offline suite: 1,544 passed + 99 subtests, four skipped, one integration test deselected. Lint, AST syntax and diff whitespace checks passed. Mixed BTC/H.4.1/RRP/BLS/WORLD graph under 28,000 characters and PIT/reopen invariants remain tested. Next: reviewed real incident/origin metadata and incident-cluster held-out evaluation of recurring-template false positives and paraphrase misses. Broad original WORLD coverage remains required without BTC gating. No live store audit or new feed/rights clearance. Daily TGA/Treasury yields rights-gated; BEA GDP/PCE incomplete; BLS live calendar unavailable; FRED disabled.
+
+Starting local HEAD 8717005. Fresh remote f87ddbefd0126f05b0ad29b53d5065ea9796fddc; explicitly authorized e801a80 + 8717005 push failed once in known Git/MSYS credential helper. No successful push claimed; guarded host script supplied outside Git. All Phase 3.4 work LOCAL ONLY; sources/ and .phase12-tools/ untouched. This checkpoint supersedes older evaluation/synchronization statements below.
+
+See [Phase 3.4 handoff](../project-handoff/PHASE_3_4_HANDOFF.md) and its machine-readable metrics for exact protocol, limitations and evidence.
+
 # Phase 3.3 local checkpoint — 2026-10-30
 
 Bounded heuristic event-link suggestions and adaptive evidence-gap research extend the existing canonical SQLite/TradingAgents pipeline. Candidate status is separate from reviewed membership and corroboration; first-known/availability, corrections, syndication safeguards and reopen replay remain explicit. WORLD discovery has no BTC/price prerequisite. Actual mixed BTC/BLS/H.4.1/RRP/WORLD graph retains candidate/gap annotations under 28k characters.

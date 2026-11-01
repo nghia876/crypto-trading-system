@@ -112,10 +112,15 @@ class SQLiteInformationStore:
         "supersedes_observation_id, schema_version, unit"
     )
 
-    def __init__(self, path: str | Path) -> None:
+    def __init__(self, path: str | Path, *, read_only: bool = False) -> None:
         self.path = str(path)
+        self.read_only = read_only
         if self.path == ":memory:":
             raise ValueError("durable information storage requires a filesystem database path")
+        if read_only:
+            if not Path(path).is_file():
+                raise ValueError("existing canonical store required for read-only access")
+            return
         with self._connection() as connection:
             connection.executescript(
                 """
@@ -181,7 +186,10 @@ class SQLiteInformationStore:
 
     @contextmanager
     def _connection(self) -> Iterator[sqlite3.Connection]:
-        connection = sqlite3.connect(self.path, timeout=10.0)
+        connection = sqlite3.connect(
+            Path(self.path).resolve().as_uri() + "?mode=ro" if self.read_only else self.path,
+            timeout=10.0, uri=self.read_only,
+        )
         connection.execute("PRAGMA busy_timeout = 10000")
         try:
             yield connection

@@ -1,0 +1,2405 @@
+{
+  "provenance": "Agent-authored synthetic v1; 80 isolated pair trials; no human review, held-out or real-world accuracy claim",
+  "cases": [
+    {
+      "id": "drought-0",
+      "family": "drought",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode paraphrased",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-0-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-0-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Colorado irrigation farmland drought warning",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-1",
+      "family": "drought",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode with strongly different vocabulary",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-1-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-1-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Dry conditions paralyze western canals",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-2",
+      "family": "drought",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "update of same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-2-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-2-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Updated Colorado irrigation farmland drought warning",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-3",
+      "family": "drought",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "denial concerning same incident, not confirmation",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-3-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-3-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Colorado irrigation farmland drought warning denied",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-4",
+      "family": "drought",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "recovery update concerning same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-4-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-4-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Colorado irrigation farmland drought warning recovery",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-5",
+      "family": "drought",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "distinct recurring episode with identical headline; missing identity metadata deliberately ambiguous",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-5-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-5-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-6",
+      "family": "drought",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "nearby distinct named incident",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-6-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-6-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Drought threatens Utah farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-7",
+      "family": "drought",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "different episode seven days earlier",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-7-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-7-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2025-12-25T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-8",
+      "family": "drought",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "unrelated event type",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-8-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-8-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Unrelated health bulletin hospital capacity",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "drought-9",
+      "family": "drought",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "separate recurring episode with overlapping template",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "drought-9-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "drought-9-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Drought threatens Colorado farmland irrigation separate episode",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-0",
+      "family": "flood_disaster",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode paraphrased",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-0-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-0-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Lahore flood damages residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-1",
+      "family": "flood_disaster",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode with strongly different vocabulary",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-1-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-1-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Inundation destroys dwellings beside Ravi",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-2",
+      "family": "flood_disaster",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "update of same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-2-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-2-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Updated Lahore flood damages residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-3",
+      "family": "flood_disaster",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "denial concerning same incident, not confirmation",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-3-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-3-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Lahore flood damages residential homes bridges denied",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-4",
+      "family": "flood_disaster",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "recovery update concerning same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-4-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-4-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Lahore flood damages residential homes bridges recovery",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-5",
+      "family": "flood_disaster",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "distinct recurring episode with identical headline; missing identity metadata deliberately ambiguous",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-5-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-5-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-6",
+      "family": "flood_disaster",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "nearby distinct named incident",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-6-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-6-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Flood damages Karachi residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-7",
+      "family": "flood_disaster",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "different episode seven days earlier",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-7-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-7-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2025-12-25T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-8",
+      "family": "flood_disaster",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "unrelated event type",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-8-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-8-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Unrelated health bulletin hospital capacity",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "flood_disaster-9",
+      "family": "flood_disaster",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "separate recurring episode with overlapping template",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "flood_disaster-9-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "flood_disaster-9-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Flood damages Lahore residential homes bridges separate episode",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-0",
+      "family": "agriculture_food",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode paraphrased",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-0-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-0-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Kansas wheat crop harvest export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-1",
+      "family": "agriculture_food",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode with strongly different vocabulary",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-1-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-1-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Grain losses reduce prairie food supplies",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-2",
+      "family": "agriculture_food",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "update of same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-2-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-2-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Updated Kansas wheat crop harvest export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-3",
+      "family": "agriculture_food",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "denial concerning same incident, not confirmation",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-3-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-3-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Kansas wheat crop harvest export shortage denied",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-4",
+      "family": "agriculture_food",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "recovery update concerning same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-4-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-4-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Kansas wheat crop harvest export shortage recovery",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-5",
+      "family": "agriculture_food",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "distinct recurring episode with identical headline; missing identity metadata deliberately ambiguous",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-5-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-5-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-6",
+      "family": "agriculture_food",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "nearby distinct named incident",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-6-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-6-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Wheat harvest Nebraska crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-7",
+      "family": "agriculture_food",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "different episode seven days earlier",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-7-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-7-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2025-12-25T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-8",
+      "family": "agriculture_food",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "unrelated event type",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-8-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-8-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Unrelated health bulletin hospital capacity",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "agriculture_food-9",
+      "family": "agriculture_food",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "separate recurring episode with overlapping template",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "agriculture_food-9-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Wheat harvest Kansas crop export shortage",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "agriculture_food-9-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Wheat harvest Kansas crop export shortage separate episode",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-0",
+      "family": "war_geopolitics",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode paraphrased",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-0-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-0-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Kharkiv missile attack railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-1",
+      "family": "war_geopolitics",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode with strongly different vocabulary",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-1-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-1-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Bombardment destroys northeastern transport hub",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-2",
+      "family": "war_geopolitics",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "update of same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-2-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-2-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Updated Kharkiv missile attack railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-3",
+      "family": "war_geopolitics",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "denial concerning same incident, not confirmation",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-3-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-3-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Kharkiv missile attack railway depot damaged denied",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-4",
+      "family": "war_geopolitics",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "recovery update concerning same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-4-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-4-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Kharkiv missile attack railway depot damaged recovery",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-5",
+      "family": "war_geopolitics",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "distinct recurring episode with identical headline; missing identity metadata deliberately ambiguous",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-5-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-5-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-6",
+      "family": "war_geopolitics",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "nearby distinct named incident",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-6-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-6-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Missile attack Kyiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-7",
+      "family": "war_geopolitics",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "different episode seven days earlier",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-7-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-7-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2025-12-25T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-8",
+      "family": "war_geopolitics",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "unrelated event type",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-8-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-8-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Unrelated health bulletin hospital capacity",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "war_geopolitics-9",
+      "family": "war_geopolitics",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "separate recurring episode with overlapping template",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "war_geopolitics-9-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Missile attack Kharkiv railway depot damaged",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "war_geopolitics-9-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Missile attack Kharkiv railway depot damaged separate episode",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-0",
+      "family": "energy_grid",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode paraphrased",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-0-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-0-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Texas power outage transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-1",
+      "family": "energy_grid",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode with strongly different vocabulary",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-1-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-1-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Electricity failure darkens southern substations",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-2",
+      "family": "energy_grid",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "update of same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-2-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-2-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Updated Texas power outage transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-3",
+      "family": "energy_grid",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "denial concerning same incident, not confirmation",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-3-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-3-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Texas power outage transformer grid shutdown denied",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-4",
+      "family": "energy_grid",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "recovery update concerning same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-4-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-4-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Texas power outage transformer grid shutdown recovery",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-5",
+      "family": "energy_grid",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "distinct recurring episode with identical headline; missing identity metadata deliberately ambiguous",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-5-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-5-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-6",
+      "family": "energy_grid",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "nearby distinct named incident",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-6-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-6-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Power outage Ohio transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-7",
+      "family": "energy_grid",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "different episode seven days earlier",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-7-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-7-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2025-12-25T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-8",
+      "family": "energy_grid",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "unrelated event type",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-8-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-8-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Unrelated health bulletin hospital capacity",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "energy_grid-9",
+      "family": "energy_grid",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "separate recurring episode with overlapping template",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "energy_grid-9-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Power outage Texas transformer grid shutdown",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "energy_grid-9-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Power outage Texas transformer grid shutdown separate episode",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-0",
+      "family": "technology_cyber",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode paraphrased",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-0-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-0-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Acme cyber attack network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-1",
+      "family": "technology_cyber",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode with strongly different vocabulary",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-1-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-1-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Intruders encrypt enterprise servers overnight",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-2",
+      "family": "technology_cyber",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "update of same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-2-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-2-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Updated Acme cyber attack network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-3",
+      "family": "technology_cyber",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "denial concerning same incident, not confirmation",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-3-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-3-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Acme cyber attack network ransomware breach denied",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-4",
+      "family": "technology_cyber",
+      "stratum": "cross_source",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "recovery update concerning same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-4-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-4-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Acme cyber attack network ransomware breach recovery",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-5",
+      "family": "technology_cyber",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "distinct recurring episode with identical headline; missing identity metadata deliberately ambiguous",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-5-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-5-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-6",
+      "family": "technology_cyber",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "nearby distinct named incident",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-6-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-6-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Cyber attack Beta network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-7",
+      "family": "technology_cyber",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "different episode seven days earlier",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-7-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-7-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2025-12-25T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-8",
+      "family": "technology_cyber",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "unrelated event type",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-8-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-8-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Unrelated health bulletin hospital capacity",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "technology_cyber-9",
+      "family": "technology_cyber",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "separate recurring episode with overlapping template",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "technology_cyber-9-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Cyber attack Acme network ransomware breach",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "technology_cyber-9-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Cyber attack Acme network ransomware breach separate episode",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-0",
+      "family": "corrections",
+      "stratum": "correction",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode paraphrased",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-0-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-0-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Correction Lahore flood damages residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-1",
+      "family": "corrections",
+      "stratum": "correction",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode with strongly different vocabulary",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-1-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-1-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Officials retract inundation account beside Ravi",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-2",
+      "family": "corrections",
+      "stratum": "correction",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "update of same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-2-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-2-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Updated Correction Lahore flood damages residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-3",
+      "family": "corrections",
+      "stratum": "correction",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "denial concerning same incident, not confirmation",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-3-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-3-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Correction Lahore flood damages residential homes bridges denied",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-4",
+      "family": "corrections",
+      "stratum": "correction",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "recovery update concerning same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-4-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-4-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Correction Lahore flood damages residential homes bridges recovery",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-5",
+      "family": "corrections",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "distinct recurring episode with identical headline; missing identity metadata deliberately ambiguous",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-5-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-5-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-6",
+      "family": "corrections",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "nearby distinct named incident",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-6-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-6-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Flood damages Karachi residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-7",
+      "family": "corrections",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "different episode seven days earlier",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-7-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-7-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2025-12-25T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-8",
+      "family": "corrections",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "unrelated event type",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-8-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-8-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Unrelated health bulletin hospital capacity",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "corrections-9",
+      "family": "corrections",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "separate recurring episode with overlapping template",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "corrections-9-0",
+          "source": "fictional-0",
+          "publisher": "fictional-0",
+          "title": "Flood damages Lahore residential homes bridges",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "corrections-9-1",
+          "source": "fictional-1",
+          "publisher": "fictional-1",
+          "title": "Flood damages Lahore residential homes bridges separate episode",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "cross_source"
+    },
+    {
+      "id": "syndication-0",
+      "family": "syndication",
+      "stratum": "same_publisher_syndication",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode paraphrased",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-0-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-0-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Colorado drought threatens farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-1",
+      "family": "syndication",
+      "stratum": "same_publisher_syndication",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "same episode with strongly different vocabulary",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-1-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-1-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Dry conditions imperil western fields and canals",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-2",
+      "family": "syndication",
+      "stratum": "same_publisher_syndication",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "update of same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-2-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-2-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Updated Colorado drought threatens farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-3",
+      "family": "syndication",
+      "stratum": "same_publisher_syndication",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "denial concerning same incident, not confirmation",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-3-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-3-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Colorado drought threatens farmland irrigation denied",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-4",
+      "family": "syndication",
+      "stratum": "same_publisher_syndication",
+      "label": "same_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "recovery update concerning same episode",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-4-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-4-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Colorado drought threatens farmland irrigation recovery",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-5",
+      "family": "syndication",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "distinct recurring episode with identical headline; missing identity metadata deliberately ambiguous",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-5-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-5-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-6",
+      "family": "syndication",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "nearby distinct named incident",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-6-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-6-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Utah farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-7",
+      "family": "syndication",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "different episode seven days earlier",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-7-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-7-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2025-12-25T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-8",
+      "family": "syndication",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "unrelated event type",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-8-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-8-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Unrelated health bulletin hospital capacity",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    },
+    {
+      "id": "syndication-9",
+      "family": "syndication",
+      "stratum": "nearby_unrelated",
+      "label": "different_event",
+      "confidence": "high",
+      "review_status": "synthetic_authored",
+      "provenance": "Agent-authored synthetic identity scenario; no real article or human review",
+      "rationale": "separate recurring episode with overlapping template",
+      "cutoff": "2026-01-01T12:00:00+00:00",
+      "records": [
+        {
+          "id": "syndication-9-0",
+          "source": "fictional-0",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        },
+        {
+          "id": "syndication-9-1",
+          "source": "fictional-1",
+          "publisher": "fictional-wire",
+          "title": "Drought threatens Colorado farmland irrigation separate episode",
+          "published_at": "2026-01-01T10:00:00+00:00",
+          "available_at": "2026-01-01T12:00:00+00:00"
+        }
+      ],
+      "reporting_relationship": "same_publisher_syndication"
+    }
+  ]
+}
