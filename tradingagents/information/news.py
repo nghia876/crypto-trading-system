@@ -304,6 +304,8 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
         if existing is not None:
             outcomes.append(existing)
             continue
+        started = clock()
+        _require_aware("poll start", started)
         text, failure, http_status, retry_after = None, None, None, None
         try:
             text = fetch_news_snapshot(config, session)
@@ -324,6 +326,8 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
         completed = clock()
         _require_aware("poll completion", completed)
         completed = completed.astimezone(UTC)
+        if completed < started:
+            raise ValueError("poll clock moved backwards; no observations committed")
         batch = MarketDataBatch((), (), completed, source_definitions=(config.source_definition,))
         if failure is None:
             try:
@@ -361,6 +365,8 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
         detail = json.dumps(
             {
                 "outcome": "failure" if failure else ("success" if batch.observations else "empty"),
+                "request_started_at": started.isoformat(),
+                "elapsed_wall_seconds": (completed - started).total_seconds(),
                 "error": failure,
                 "http_status": http_status,
                 "retry_after_seconds": retry_after,

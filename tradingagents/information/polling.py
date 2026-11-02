@@ -303,8 +303,11 @@ def main(argv=None):
     parser.add_argument("--interval", type=int, default=900)
     parser.add_argument("--max-sources", type=int, default=4)
     args = parser.parse_args(argv)
-    store = SQLiteInformationStore(args.store)
+    store = SQLiteInformationStore(args.store, read_only=args.command == "health")
     if args.command == "health":
+        from tradingagents.information.source_health import health_report
+        from tradingagents.information.world_radar import ELIGIBLE_CONFIGS
+
         view = store.view_at(datetime.now(UTC))
         records = [r for r in view.coverage if r.metric == "narrative.collection_health"]
         latest = {r.source_id: r for r in sorted(records, key=lambda r: r.observed_at)}
@@ -314,7 +317,10 @@ def main(argv=None):
                     k: {"observed_at": v.observed_at.isoformat(), **json.loads(v.detail)}
                     for k, v in latest.items()
                 }
-                | {"source_gaps": source_gap_report(view)},
+                | {"source_gaps": source_gap_report(view, ELIGIBLE_CONFIGS),
+                   "operational_health": health_report(store, ELIGIBLE_CONFIGS,
+                                                       cutoff=view.decision_time,
+                                                       interval=args.interval)},
                 indent=2,
             )
         )

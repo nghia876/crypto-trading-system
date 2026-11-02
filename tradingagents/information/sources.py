@@ -317,7 +317,7 @@ OPERATIONAL_ADDITIONS = (
 )
 
 
-def _uk_config(source_id, organisation, domain):
+def _uk_config(source_id, organisation, domain, reviewed_at="2026-11-01"):
     from dataclasses import replace
 
     source = _specialist_source(
@@ -328,7 +328,7 @@ def _uk_config(source_id, organisation, domain):
     return NewsDiscoveryConfig(replace(source, metadata=source.metadata + (
         ("licence_attribution", "Contains public sector information licensed under the Open Government Licence v3.0."),
         ("licence_url", "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"),
-        ("rights_review_date", "2026-11-01"),
+        ("rights_review_date", reviewed_at),
     ), legal_constraints=(
         "Open Government Licence v3.0; attribution and original link required",
         "Headline/link/date only; no third-party content, personal data, logos or endorsement",
@@ -339,6 +339,13 @@ UK_WORLD_CONFIG = (
     _uk_config("news.uk.fcdo", "foreign-commonwealth-development-office", "WAR_GEOPOLITICS"),
     _uk_config("news.uk.trade", "department-for-business-and-trade", "TRADE"),
     _uk_config("news.uk.health", "uk-health-security-agency", "PUBLIC_HEALTH"),
+)
+# Explicit operational subset; legacy broad configs remain unchanged for replay.
+# Same OGL metadata scope; these are policy/agency streams, not outage telemetry.
+OPERATIONAL_REPAIR_CONFIG = (
+    _uk_config("news.uk.food", "department-for-environment-food-rural-affairs", "AGRICULTURE_FOOD", "2026-11-02"),
+    _uk_config("news.uk.water", "environment-agency", "DROUGHT_WATER", "2026-11-02"),
+    _uk_config("news.uk.energy", "department-for-energy-security-and-net-zero", "ENERGY_GRID", "2026-11-02"),
 )
 WORLD_NEWS_CONFIG = (BROAD_NEWS_CONFIG + SPECIALIST_WORLD_CONFIG
                      + OPERATIONAL_ADDITIONS + UK_WORLD_CONFIG)

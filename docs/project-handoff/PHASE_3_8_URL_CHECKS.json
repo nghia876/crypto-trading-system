@@ -1,0 +1,57 @@
+{
+  "http://water.usgs.gov/alerts/item_2026-10-11_11:27:02.html": {
+    "checked_on": "2026-11-02",
+    "reviewer_kind": "agent_reviewed",
+    "method": "web research returned cached original publisher representation; not an independently measured fresh HTTP response",
+    "resolved_url": "https://water.usgs.gov/alerts/item_2026-10-11_11:27:02.html",
+    "url_status": "original page accessible in research surface",
+    "publication_evidence": "Page date Oct 11 2026 11:27:02 EDT; footer says last modified Sep 1 2023. Chronology conflict needs human verification.",
+    "occurrence_evidence": "Describes second day after the named hurricane; absolute occurrence bounds unverified",
+    "location_evidence": "Florida Panhandle; Shoal River near Mossy Head, Florida mentioned",
+    "independence": "same USGS publisher; incident origin/copy relationship unverified",
+    "warning": "Do not substitute page date for incident occurrence or treat the chronology conflict as resolved."
+  },
+  "http://water.usgs.gov/alerts/item_2026-10-10_11:35:45.html": {
+    "checked_on": "2026-11-02",
+    "reviewer_kind": "agent_reviewed",
+    "method": "web research returned cached original publisher representation; not an independently measured fresh HTTP response",
+    "resolved_url": "https://water.usgs.gov/alerts/item_2026-10-10_11:35:45.html",
+    "url_status": "original page accessible in research surface",
+    "publication_evidence": "Page date Oct 10 2026 11:35:45 EDT; footer says last modified Sep 1 2023. Chronology conflict needs human verification.",
+    "occurrence_evidence": "Flooding response following named hurricane; no verified absolute occurrence bounds",
+    "location_evidence": "Florida Panhandle; Tallahassee Field Office response",
+    "independence": "same USGS publisher; incident origin/copy relationship unverified"
+  },
+  "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttxz": {
+    "checked_on": "2026-11-02",
+    "reviewer_kind": "agent_reviewed",
+    "method": "web research original URL returned JavaScript application shell",
+    "url_status": "reachable shell; event details NOT verified",
+    "publication_evidence": "Stored Atom update Oct 30 2026 10:38:47.040Z; no original publication supplied",
+    "occurrence_evidence": "UNKNOWN; browser event detail or official event data required",
+    "location_evidence": "Southeast of Easter Island from archived feed title only",
+    "independence": "USGS publisher; not independent of other USGS records"
+  },
+  "https://www.gov.uk/government/news/new-report-shows-toll-of-chickenpox-with-over-3000-infants-hospitalised-last-year": {
+    "checked_on": "2026-11-02",
+    "reviewer_kind": "agent_reviewed",
+    "method": "web research original publisher representation; no body retained in canonical store",
+    "url_status": "original page accessible in research surface",
+    "publication_evidence": "Published and last updated Oct 30 2026; feed update 10:21:14Z",
+    "occurrence_evidence": "Release discusses 2025 surveillance, not a newly occurring single outbreak; human must decide unit of event",
+    "location_evidence": "England explicitly stated; do not generalize to all UK",
+    "relationship_evidence": "Links to Varicella Annual Report 2025; separate report release from underlying disease occurrences",
+    "independence": "UKHSA/UK Government; same reporting origin as report"
+  },
+  "https://www.gov.uk/government/publications/varicella-epidemiological-reports": {
+    "checked_on": "2026-11-02",
+    "reviewer_kind": "agent_reviewed",
+    "method": "web research original publisher representation; linked report not downloaded",
+    "url_status": "original page accessible in research surface",
+    "publication_evidence": "Page publication Oct 30 2026; feed update 09:30:02Z",
+    "occurrence_evidence": "Report covers 2025; no single outbreak occurrence established",
+    "location_evidence": "Applies to England",
+    "relationship_evidence": "Landing page links Epidemiology of varicella in England, 2025",
+    "independence": "UKHSA/UK Government; no independent corroboration"
+  }
+}

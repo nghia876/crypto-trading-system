@@ -142,7 +142,8 @@ def test_real_usgs_slice_combined_actual_graph(tmp_path, monkeypatch, offline):
     assert len(state["analysis_information"]) <= 28000
 
 
-def test_real_world_radar_combined_actual_graph(tmp_path, monkeypatch, offline):
+@pytest.mark.parametrize("milestone", ["phase37", "phase38"])
+def test_real_world_radar_combined_actual_graph(tmp_path, monkeypatch, offline, milestone):
     import json
     from pathlib import Path
 
@@ -151,10 +152,14 @@ def test_real_world_radar_combined_actual_graph(tmp_path, monkeypatch, offline):
     from tradingagents.information.original_macro import parse_bls_json
     from tradingagents.information.world_radar import replay_specimens
 
-    data = json.loads((Path(__file__).parent / "fixtures/phase37/real_specimens.json")
+    data = json.loads((Path(__file__).parent / f"fixtures/{milestone}/real_specimens.json")
                       .read_text(encoding="utf-8"))
     cutoff = datetime.fromisoformat(data["cutoff"])
     store = SQLiteInformationStore(tmp_path / "canonical.db")
+    if milestone == "phase38":
+        prior = json.loads((Path(__file__).parent / "fixtures/phase37/real_specimens.json")
+                           .read_text(encoding="utf-8"))
+        replay_specimens(store, prior["specimens"])
     replay_specimens(store, data["specimens"])
     store.append(PARSERS[0](h41(), cutoff))
     store.append(PARSERS[1](rrp(), cutoff))
@@ -165,11 +170,13 @@ def test_real_world_radar_combined_actual_graph(tmp_path, monkeypatch, offline):
     store.append(MarketDataBatch((btc,), (), cutoff))
     model = PromptCapturingModel()
     graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
-    state, _ = graph.propagate("BTCUSDT", "2026-11-01", asset_type="crypto", decision_time=cutoff)
+    state, _ = graph.propagate("BTCUSDT", cutoff.date().isoformat(), asset_type="crypto", decision_time=cutoff)
     prompt = "\n".join(model.prompts)
     assert "6745635 million USD" in prompt and "353000000 USD" in prompt
     assert "325.5 index" in prompt and "btc-world-radar" in prompt
     assert "PUBLIC_HEALTH" in prompt and "WAR_GEOPOLITICS" in prompt
+    if milestone == "phase38":
+        assert all(domain in prompt for domain in ("AGRICULTURE_FOOD", "DROUGHT_WATER", "ENERGY_GRID"))
     assert "Open Government Licence v3.0" in prompt
     assert any(s["title"] in prompt for s in data["specimens"] if s["source_id"] == "news.nasa.recent")
     assert len(state["analysis_information"]) <= 28000

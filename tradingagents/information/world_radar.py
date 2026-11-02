@@ -23,16 +23,18 @@ from tradingagents.information.news import parse_news_snapshot
 from tradingagents.information.polling import coordinate, job_lock, source_gap_report
 from tradingagents.information.sources import (
     OPERATIONAL_ADDITIONS,
+    OPERATIONAL_REPAIR_CONFIG,
     SPECIALIST_WORLD_CONFIG,
     UK_WORLD_CONFIG,
 )
 from tradingagents.information.store import SQLiteInformationStore
 
-ELIGIBLE_CONFIGS = SPECIALIST_WORLD_CONFIG + OPERATIONAL_ADDITIONS + UK_WORLD_CONFIG
+ELIGIBLE_CONFIGS = (SPECIALIST_WORLD_CONFIG + OPERATIONAL_ADDITIONS + UK_WORLD_CONFIG
+                    + OPERATIONAL_REPAIR_CONFIG)
 REVIEWED_FINGERPRINTS = frozenset(c.fingerprint for c in ELIGIBLE_CONFIGS)
 USER_AGENT = "TradingAgentsWorldRadar/1.0"
 RIGHTS_SCOPE = {
-    "reviewed_at": "2026-11-01", "reviewer_kind": "agent_reviewed",
+    "reviewed_at": "2026-11-02", "reviewer_kind": "agent_reviewed",
     "retained": "Agency headline, original URL, supplied dates and provenance only",
     "excluded": "Article bodies, summaries, images, logos and third-party-host links",
     "storage_basis": "Agency public-domain/reuse policies and UK OGL v3.0; attribution retained",
@@ -40,6 +42,18 @@ RIGHTS_SCOPE = {
     "uncertainties": "US public-domain basis does not resolve every foreign jurisdiction; agency host alone cannot prove authorship of all linked works",
     "blocked": "BBC/GDELT publisher reuse unresolved; CDC syndication redistribution restricted; CISA policy inaccessible; State current feed/rights unverified; EIA robots disallows RSS",
 }
+
+
+class RobotsDenied(requests.RequestException):
+    """Reviewed endpoint denied by the publisher's access policy."""
+
+
+class RobotsUnavailable(requests.RequestException):
+    """Policy could not be verified; no feed request permitted."""
+
+
+class RobotsDeferred(requests.RequestException):
+    """Publisher crawl delay requires a later operator-controlled job."""
 
 
 class PolicySession:
@@ -94,11 +108,13 @@ class PolicySession:
                                        "error": "robots unavailable or invalid"}
         check = self.checks[origin]
         parser = check.get("parser")
+        if check.get("error"):
+            raise RobotsUnavailable("robots policy unverified")
         if not check["allowed"] or (parser and not parser.can_fetch(USER_AGENT, url)):
-            raise requests.RequestException("robots policy blocked or unverified")
+            raise RobotsDenied("robots policy blocked or unverified")
         # A nonzero crawl delay needs an external later job; do not sleep/retry here.
         if check.get("crawl_delay_seconds"):
-            raise requests.RequestException("robots crawl delay requires deferred acquisition")
+            raise RobotsDeferred("robots crawl delay requires deferred acquisition")
         return self.session.get(url, headers={"User-Agent": USER_AGENT}, **kwargs)
 
     def report(self):
@@ -154,10 +170,13 @@ def run(store, *, session, now=None, clock=None, max_sources=6):
                                   observation_limit=12)
     cutoff = max(r.observed_at for r in health)
     view = store.view_at(cutoff)
+    from tradingagents.information.source_health import health_report
+
     selected = {key for outcome in outcomes for key in outcome.evidence_ids}
     rows = [r for r in view.observations if r.observation_id in selected]
     return {
         "cutoff": cutoff.isoformat(), "rights_scope": RIGHTS_SCOPE,
+        "operational_health": health_report(store, ELIGIBLE_CONFIGS, cutoff=cutoff),
         "robots": policy.report(), "metrics": coverage_metrics(view),
         "polls": [{"source_id": r.source_id, "status": r.status.value,
                    "observed_at": r.observed_at.isoformat(), **json.loads(r.detail)}

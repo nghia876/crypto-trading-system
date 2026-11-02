@@ -1,3 +1,23 @@
+# Phase 3.8 current checkpoint - 2026-11-02
+
+Implemented LOCAL ONLY, Phase 3 IN_PROGRESS. Full-journal/as-of source health and
+neutral version-bound review forms integrated with existing canonical SQLite/PIT.
+New OGL DEFRA food, Environment Agency water, DESNZ energy feeds: 36 retained URLs,
+government announcements rather than incident telemetry. Eight recent topic
+families/three publisher groups; independent incident origins unverified. Three
+real pair proposals remain UNREVIEWED, zero human reviews. No scheduler installed.
+
+Full offline 1,585 passed +99 subtests, same four skips/one deselection; final
+focused 51 passed. Lint/syntax/diff/SQLite integrity and actual mixed graph within
+28k passed. Remote freshly bcb700f; no push here. Guarded host backup through
+a619fe40 provided; Phase 3.8 excluded. Main/sources/.phase12-tools preserved.
+No new observed alert; no Defender audit or established false positive. Sustained
+global evidence, independent human review/holdout and unattended cadence remain
+open. Macro gates unchanged: Treasury daily TGA/yields rights-gated, BEA GDP/PCE
+incomplete, BLS live calendar unavailable, FRED off.
+
+See [current validation/status](../project-handoff/PHASE_3_8_STATUS.md) and its linked handoff.
+
 # Phase 3.7 operational WORLD checkpoint — 2026-11-01
 
 Implemented LOCAL ONLY in existing branch/store; no push. Verified start 5d76ff1
