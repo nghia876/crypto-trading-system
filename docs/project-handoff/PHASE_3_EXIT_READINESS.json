@@ -1,0 +1,1272 @@
+{
+  "checklist": [
+    {
+      "evidence": [
+        "ok"
+      ],
+      "requirement": "SQLite integrity",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "article_count": 5,
+        "human_declared_pairs": 0,
+        "human_participation_authenticated": false,
+        "label_provenance": "External supplied packet only; agent URL checks are not human labels; no import or adjudication",
+        "original_versions_valid_at_cutoff": true,
+        "packet_hash_valid": true,
+        "pair_count": 3,
+        "pair_ids": [
+          "phase38-1",
+          "phase38-2",
+          "phase38-3"
+        ],
+        "pending_pairs": 3
+      },
+      "requirement": "Original review packet integrity and PIT version binding",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Journal span is not uptime. Finite jobs, gaps, rolling-feed omissions and host clock uncertainty remain.",
+      "requirement": "Sustained polling/restarts and bounded discovery latency",
+      "status": "NOT PROVEN"
+    },
+    {
+      "evidence": "Publication/update recency is metadata, not incident occurrence, recall or measured reaction alignment.",
+      "requirement": "Timely global WORLD incident coverage",
+      "status": "NOT PROVEN"
+    },
+    {
+      "evidence": "Publisher groups and canonical URL collapse do not establish reporting independence.",
+      "requirement": "Independent incident origins and syndication resolution",
+      "status": "NOT PROVEN"
+    },
+    {
+      "evidence": {
+        "article_count": 5,
+        "human_declared_pairs": 0,
+        "human_participation_authenticated": false,
+        "label_provenance": "External supplied packet only; agent URL checks are not human labels; no import or adjudication",
+        "original_versions_valid_at_cutoff": true,
+        "packet_hash_valid": true,
+        "pair_count": 3,
+        "pair_ids": [
+          "phase38-1",
+          "phase38-2",
+          "phase38-3"
+        ],
+        "pending_pairs": 3
+      },
+      "requirement": "Independent human article/pair adjudication and untouched cluster holdout",
+      "status": "NOT PROVEN"
+    },
+    {
+      "evidence": "BBC/GDELT publisher reuse unresolved; CDC syndication redistribution restricted; CISA policy inaccessible; State current feed/rights unverified; EIA robots disallows RSS",
+      "requirement": "Rights/access for withheld feeds",
+      "status": "BLOCKED"
+    },
+    {
+      "evidence": "Daily Treasury TGA/yields rights-gated; BEA GDP/PCE incomplete; BLS live calendar unavailable; FRED disabled.",
+      "requirement": "Macro completion",
+      "status": "BLOCKED"
+    },
+    {
+      "evidence": {
+        "early_cutoff": "2026-11-01T04:41:44.730842+00:00",
+        "early_narrative_records": 0,
+        "late_narrative_records": 165,
+        "reopened_health_identical": true,
+        "scope": "Store boundary and reopen probe; not end-to-end historical reasoning or clock authentication"
+      },
+      "requirement": "Canonical early/late store boundary and reopened health",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Separate offline test run required; this read-only inventory does not execute the analyst graph.",
+      "requirement": "Actual mixed analyst graph regression",
+      "status": "NOT PROVEN"
+    }
+  ],
+  "coverage": {
+    "fresh_families": [
+      "AGRICULTURE_FOOD",
+      "DROUGHT_WATER",
+      "ENERGY_GRID",
+      "FLOOD_DISASTER",
+      "PUBLIC_HEALTH",
+      "TECHNOLOGY",
+      "TRADE",
+      "WAR_GEOPOLITICS"
+    ],
+    "fresh_publisher_groups": [
+      "NASA",
+      "U.S. Geological Survey",
+      "UK Government"
+    ],
+    "freshness_basis": "Source publication, else source update; update is not incident occurrence or original publication",
+    "freshness_window_days": 7,
+    "independent_original_origins": "UNVERIFIED; publisher diversity is not independent corroboration",
+    "sources": [
+      {
+        "family": "DROUGHT_WATER",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 8,
+        "newest_publication": "2026-08-12T19:58:48+00:00",
+        "newest_update": null,
+        "publisher_group": "U.S. Geological Survey",
+        "source_id": "news.usgs.drought"
+      },
+      {
+        "family": "FLOOD_DISASTER",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 16,
+        "newest_publication": "2026-10-23T12:16:18+00:00",
+        "newest_update": null,
+        "publisher_group": "U.S. Geological Survey",
+        "source_id": "news.usgs.river_flood"
+      },
+      {
+        "family": "ENERGY_GRID",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 0,
+        "newest_publication": null,
+        "newest_update": null,
+        "publisher_group": "U.S. Energy Information Administration",
+        "source_id": "news.eia.today"
+      },
+      {
+        "family": "AGRICULTURE_FOOD",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 23,
+        "newest_publication": "2025-09-24T16:00:00+00:00",
+        "newest_update": null,
+        "publisher_group": "USDA-NASS",
+        "source_id": "news.nass.news"
+      },
+      {
+        "family": "TECHNOLOGY",
+        "fresh_24h": 1,
+        "fresh_7d": 10,
+        "fresh_update_only": 0,
+        "items": 10,
+        "newest_publication": "2026-11-01T04:05:00+00:00",
+        "newest_update": null,
+        "publisher_group": "NASA",
+        "source_id": "news.nasa.recent"
+      },
+      {
+        "family": "TECHNOLOGY",
+        "fresh_24h": 0,
+        "fresh_7d": 0,
+        "fresh_update_only": 0,
+        "items": 10,
+        "newest_publication": "2026-10-22T04:01:00+00:00",
+        "newest_update": null,
+        "publisher_group": "NASA",
+        "source_id": "news.nasa.technology"
+      },
+      {
+        "family": "FLOOD_DISASTER",
+        "fresh_24h": 0,
+        "fresh_7d": 1,
+        "fresh_update_only": 1,
+        "items": 1,
+        "newest_publication": null,
+        "newest_update": "2026-10-30T10:38:47.040000+00:00",
+        "publisher_group": "U.S. Geological Survey",
+        "source_id": "news.usgs.earthquakes"
+      },
+      {
+        "family": "WAR_GEOPOLITICS",
+        "fresh_24h": 1,
+        "fresh_7d": 12,
+        "fresh_update_only": 12,
+        "items": 12,
+        "newest_publication": null,
+        "newest_update": "2026-11-01T02:47:08+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.fcdo"
+      },
+      {
+        "family": "TRADE",
+        "fresh_24h": 0,
+        "fresh_7d": 12,
+        "fresh_update_only": 12,
+        "items": 12,
+        "newest_publication": null,
+        "newest_update": "2026-10-30T15:32:00+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.trade"
+      },
+      {
+        "family": "PUBLIC_HEALTH",
+        "fresh_24h": 0,
+        "fresh_7d": 18,
+        "fresh_update_only": 18,
+        "items": 18,
+        "newest_publication": null,
+        "newest_update": "2026-10-30T13:33:30+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.health"
+      },
+      {
+        "family": "AGRICULTURE_FOOD",
+        "fresh_24h": 0,
+        "fresh_7d": 12,
+        "fresh_update_only": 12,
+        "items": 12,
+        "newest_publication": null,
+        "newest_update": "2026-11-01T00:01:00+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.food"
+      },
+      {
+        "family": "DROUGHT_WATER",
+        "fresh_24h": 2,
+        "fresh_7d": 12,
+        "fresh_update_only": 12,
+        "items": 12,
+        "newest_publication": null,
+        "newest_update": "2026-11-01T16:05:03+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.water"
+      },
+      {
+        "family": "ENERGY_GRID",
+        "fresh_24h": 0,
+        "fresh_7d": 12,
+        "fresh_update_only": 12,
+        "items": 12,
+        "newest_publication": null,
+        "newest_update": "2026-10-30T17:05:01+00:00",
+        "publisher_group": "UK Government",
+        "source_id": "news.uk.energy"
+      }
+    ]
+  },
+  "cutoff": "2026-11-02T02:36:37.431168+00:00",
+  "decision": "NO-GO",
+  "health": {
+    "cutoff": "2026-11-02T02:36:37.431168+00:00",
+    "interval_seconds": 900,
+    "measurement": "canonical journal; no inferred polls or uptime; update is not occurrence",
+    "sources": [
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 4,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "POSSIBLY_INACTIVE",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T04:56:44.730843+00:00",
+            "seconds": 11867.403614,
+            "until": "2026-11-01T08:14:32.134457+00:00"
+          },
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T08:29:32.134457+00:00",
+            "seconds": 64098.050994,
+            "until": "2026-11-02T02:17:50.185451+00:00"
+          }
+        ],
+        "collection_unobserved": false,
+        "config": "c150eaa7900a7d5c1d7bc9495dc6a1719da83a8cbb9257ec203c8dd4b3328b5f",
+        "content": "stale_publication",
+        "domain": "DROUGHT_WATER",
+        "errors": {
+          "ConnectionError": 1
+        },
+        "first_seen_minus_publication": {
+          "count": 8,
+          "max_seconds": 135616819.134457,
+          "median_seconds": 65668820.43265,
+          "min_seconds": 6956144.134457
+        },
+        "first_seen_minus_source_update": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "last_attempt": "2026-11-02T02:17:50.185451+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:17:50.185451+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 8,
+          "max_seconds": 77765.454608,
+          "median_seconds": 71381.752801,
+          "min_seconds": 64998.050994
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 8,
+          "max_seconds": 135681817.185451,
+          "median_seconds": 65740202.185451,
+          "min_seconds": 7021142.185451
+        },
+        "newest_publication": "2026-08-12T19:58:48+00:00",
+        "newest_source_update": null,
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "failure": 1,
+          "success": 3
+        },
+        "publication_age_seconds": 7022269.431168,
+        "publication_unknown_articles": 0,
+        "publisher_group": "U.S. Geological Survey",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+        "source_id": "news.usgs.drought",
+        "source_update_age_seconds": null,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 8
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 4,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "POSSIBLY_INACTIVE",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T04:56:45.720056+00:00",
+            "seconds": 11934.048418,
+            "until": "2026-11-01T08:15:39.768474+00:00"
+          },
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T08:30:39.768474+00:00",
+            "seconds": 64080.169766,
+            "until": "2026-11-02T02:18:39.938240+00:00"
+          }
+        ],
+        "collection_unobserved": false,
+        "config": "15eafd4c5a58bb7aeb79c817082462eb4ea363070d7d4bcc6c490f5b9ac03c6e",
+        "content": "stale_publication",
+        "domain": "FLOOD_DISASTER",
+        "errors": {
+          "ConnectionError": 1
+        },
+        "first_seen_minus_publication": {
+          "count": 16,
+          "max_seconds": 51624475.720056,
+          "median_seconds": 1788673.268474,
+          "min_seconds": 763161.768474
+        },
+        "first_seen_minus_source_update": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "last_attempt": "2026-11-02T02:18:39.938240+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:18:39.938240+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 16,
+          "max_seconds": 64980.169766,
+          "median_seconds": 64980.169766,
+          "min_seconds": 0.0
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 16,
+          "max_seconds": 51624475.720056,
+          "median_seconds": 1853653.43824,
+          "min_seconds": 828141.93824
+        },
+        "newest_publication": "2026-10-23T12:16:18+00:00",
+        "newest_source_update": null,
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "failure": 1,
+          "success": 3
+        },
+        "publication_age_seconds": 829219.431168,
+        "publication_unknown_articles": 0,
+        "publisher_group": "U.S. Geological Survey",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted",
+        "source_id": "news.usgs.river_flood",
+        "source_update_age_seconds": null,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 16
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 2,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "empty_or_unavailable",
+          "transport": "FAILURE_OBSERVED"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T08:29:27.530329+00:00",
+            "seconds": 64103.089681,
+            "until": "2026-11-02T02:17:50.620010+00:00"
+          }
+        ],
+        "collection_unobserved": false,
+        "config": "7f3fb0893b24c45be358c01307ebdc74cb837c5c9439c6d735e06f74ecc279aa",
+        "content": "empty_or_unavailable",
+        "domain": "ENERGY_GRID",
+        "errors": {
+          "RequestException": 2
+        },
+        "first_seen_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "first_seen_minus_source_update": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "last_attempt": "2026-11-02T02:17:50.620010+00:00",
+        "last_error": "RequestException",
+        "last_success": null,
+        "latest_retrieval_minus_first_seen": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "newest_publication": null,
+        "newest_source_update": null,
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "failure": 2
+        },
+        "publication_age_seconds": null,
+        "publication_unknown_articles": 0,
+        "publisher_group": "U.S. Energy Information Administration",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.eia.gov/about/copyrights_reuse.php",
+        "source_id": "news.eia.today",
+        "source_update_age_seconds": null,
+        "timeout_count": 0,
+        "transport": "failed",
+        "unique_articles": 0
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 3,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "POSSIBLY_INACTIVE",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T08:33:55.176759+00:00",
+            "seconds": 63833.356191,
+            "until": "2026-11-02T02:17:48.532950+00:00"
+          }
+        ],
+        "collection_unobserved": false,
+        "config": "2f460b4223949b20b5543f11472d703c1c4d1755375b2f13c1b9f5108cc8038e",
+        "content": "stale_publication",
+        "domain": "AGRICULTURE_FOOD",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 23,
+          "max_seconds": 444683666.784286,
+          "median_seconds": 49385035.176759,
+          "min_seconds": 34791535.176759
+        },
+        "first_seen_minus_source_update": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "last_attempt": "2026-11-02T02:17:48.532950+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:17:48.532950+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 23,
+          "max_seconds": 65001.748664,
+          "median_seconds": 64733.356191,
+          "min_seconds": 0.0
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 23,
+          "max_seconds": 444683666.784286,
+          "median_seconds": 49449768.53295,
+          "min_seconds": 34856268.53295
+        },
+        "newest_publication": "2025-09-24T16:00:00+00:00",
+        "newest_source_update": null,
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 3
+        },
+        "publication_age_seconds": 34857397.431168,
+        "publication_unknown_articles": 0,
+        "publisher_group": "USDA-NASS",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://data.nass.usda.gov/Data_and_Statistics/Citation_Request/index.php",
+        "source_id": "news.nass.news",
+        "source_update_age_seconds": null,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 23
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 2,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "fresh_24h",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T08:31:03.462249+00:00",
+            "seconds": 64057.387775,
+            "until": "2026-11-02T02:18:40.850024+00:00"
+          }
+        ],
+        "collection_unobserved": false,
+        "config": "978d1004f70b45a91b31ed7c9b45fc55dde130224c92428c8e896ab440064858",
+        "content": "fresh_24h",
+        "domain": "TECHNOLOGY",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 10,
+          "max_seconds": 204208.462249,
+          "median_seconds": 157822.962249,
+          "min_seconds": 15063.462249
+        },
+        "first_seen_minus_source_update": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "last_attempt": "2026-11-02T02:18:40.850024+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:18:40.850024+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 10,
+          "max_seconds": 64957.387775,
+          "median_seconds": 64957.387775,
+          "min_seconds": 64957.387775
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 10,
+          "max_seconds": 269165.850024,
+          "median_seconds": 222780.350024,
+          "min_seconds": 80020.850024
+        },
+        "newest_publication": "2026-11-01T04:05:00+00:00",
+        "newest_source_update": null,
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 2
+        },
+        "publication_age_seconds": 81097.431168,
+        "publication_unknown_articles": 0,
+        "publisher_group": "NASA",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+        "source_id": "news.nasa.recent",
+        "source_update_age_seconds": null,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 10
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 2,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "POSSIBLY_INACTIVE",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T08:29:30.846465+00:00",
+            "seconds": 64093.807667,
+            "until": "2026-11-02T02:17:44.654132+00:00"
+          }
+        ],
+        "collection_unobserved": false,
+        "config": "82fd1aade3c33b169733de636783f517a3d7911725351eae6227697ab875ec64",
+        "content": "stale_publication",
+        "domain": "TECHNOLOGY",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 10,
+          "max_seconds": 2931270.846465,
+          "median_seconds": 1508000.346465,
+          "min_seconds": 879210.846465
+        },
+        "first_seen_minus_source_update": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "last_attempt": "2026-11-02T02:17:44.654132+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:17:44.654132+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 10,
+          "max_seconds": 64993.807667,
+          "median_seconds": 64993.807667,
+          "min_seconds": 64993.807667
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 10,
+          "max_seconds": 2996264.654132,
+          "median_seconds": 1572994.154132,
+          "min_seconds": 944204.654132
+        },
+        "newest_publication": "2026-10-22T04:01:00+00:00",
+        "newest_source_update": null,
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 2
+        },
+        "publication_age_seconds": 945337.431168,
+        "publication_unknown_articles": 0,
+        "publisher_group": "NASA",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+        "source_id": "news.nasa.technology",
+        "source_update_age_seconds": null,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 10
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 2,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "publication_unknown",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [
+          {
+            "cause": "UNKNOWN; offline PC, budget, backoff or missed invocation",
+            "from": "2026-11-01T08:30:36.359469+00:00",
+            "seconds": 64029.862689,
+            "until": "2026-11-02T02:17:46.222158+00:00"
+          }
+        ],
+        "collection_unobserved": false,
+        "config": "dfc4300110ee531aa59e3e296ecfc5c189d85c7cc0e285744a56de8c317939ea",
+        "content": "publication_unknown",
+        "domain": "FLOOD_DISASTER",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "first_seen_minus_source_update": {
+          "count": 1,
+          "max_seconds": 164209.319469,
+          "median_seconds": 164209.319469,
+          "min_seconds": 164209.319469
+        },
+        "last_attempt": "2026-11-02T02:17:46.222158+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:17:46.222158+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 1,
+          "max_seconds": 64929.862689,
+          "median_seconds": 64929.862689,
+          "min_seconds": 64929.862689
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "newest_publication": null,
+        "newest_source_update": "2026-10-30T10:38:47.040000+00:00",
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 2
+        },
+        "publication_age_seconds": null,
+        "publication_unknown_articles": 1,
+        "publisher_group": "U.S. Geological Survey",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits",
+        "source_id": "news.usgs.earthquakes",
+        "source_update_age_seconds": 230270.391168,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 1
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 1,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "UNKNOWN",
+          "content": "publication_unknown",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [],
+        "collection_unobserved": true,
+        "config": "ef6f48f834e37fb7cd3c3c27e467664c6c584f941ce7cde60ea356e383e9dea6",
+        "content": "publication_unknown",
+        "domain": "WAR_GEOPOLITICS",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "first_seen_minus_source_update": {
+          "count": 12,
+          "max_seconds": 145904.799626,
+          "median_seconds": 141928.799626,
+          "min_seconds": 19823.799626
+        },
+        "last_attempt": "2026-11-01T08:17:31.799626+00:00",
+        "last_error": null,
+        "last_success": "2026-11-01T08:17:31.799626+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 12,
+          "max_seconds": 0.0,
+          "median_seconds": 0.0,
+          "min_seconds": 0.0
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "newest_publication": null,
+        "newest_source_update": "2026-11-01T02:47:08+00:00",
+        "open_unknown_from": "2026-11-01T08:32:31.799626+00:00",
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 1
+        },
+        "publication_age_seconds": null,
+        "publication_unknown_articles": 12,
+        "publisher_group": "UK Government",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+        "source_id": "news.uk.fcdo",
+        "source_update_age_seconds": 85769.431168,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 12
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 1,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "UNKNOWN",
+          "content": "publication_unknown",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [],
+        "collection_unobserved": true,
+        "config": "c026f19918f49e596ecbbd27d52131bfe7cb4ac1856fe02acf7f45a08ef60693",
+        "content": "publication_unknown",
+        "domain": "TRADE",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "first_seen_minus_source_update": {
+          "count": 12,
+          "max_seconds": 317869.446196,
+          "median_seconds": 227927.446196,
+          "min_seconds": 146687.446196
+        },
+        "last_attempt": "2026-11-01T08:16:47.446196+00:00",
+        "last_error": null,
+        "last_success": "2026-11-01T08:16:47.446196+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 12,
+          "max_seconds": 0.0,
+          "median_seconds": 0.0,
+          "min_seconds": 0.0
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "newest_publication": null,
+        "newest_source_update": "2026-10-30T15:32:00+00:00",
+        "open_unknown_from": "2026-11-01T08:31:47.446196+00:00",
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 1
+        },
+        "publication_age_seconds": null,
+        "publication_unknown_articles": 12,
+        "publisher_group": "UK Government",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+        "source_id": "news.uk.trade",
+        "source_update_age_seconds": 212677.431168,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 12
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 1,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "UNKNOWN",
+          "content": "publication_unknown",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [],
+        "collection_unobserved": true,
+        "config": "8e650f42426e818bc9b8bf29bcb395abb97c2c19944c99bb21a91cecf51feeb0",
+        "content": "publication_unknown",
+        "domain": "PUBLIC_HEALTH",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "first_seen_minus_source_update": {
+          "count": 12,
+          "max_seconds": 233157.159331,
+          "median_seconds": 168348.4297395,
+          "min_seconds": 153753.159331
+        },
+        "last_attempt": "2026-11-01T08:16:03.159331+00:00",
+        "last_error": null,
+        "last_success": "2026-11-01T08:16:03.159331+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 12,
+          "max_seconds": 25.459183,
+          "median_seconds": 12.7295915,
+          "min_seconds": 0.0
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "newest_publication": null,
+        "newest_source_update": "2026-10-30T13:33:30+00:00",
+        "open_unknown_from": "2026-11-01T08:31:03.159331+00:00",
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 1
+        },
+        "publication_age_seconds": null,
+        "publication_unknown_articles": 12,
+        "publisher_group": "UK Government",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+        "source_id": "news.uk.health",
+        "source_update_age_seconds": 219787.431168,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 12
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 1,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "publication_unknown",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [],
+        "collection_unobserved": false,
+        "config": "fb4e2f7c1e838f4fcac42fcd171689a7f6eaef03d6606c95a4b13de2d621b57f",
+        "content": "publication_unknown",
+        "domain": "AGRICULTURE_FOOD",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "first_seen_minus_source_update": {
+          "count": 12,
+          "max_seconds": 231458.085223,
+          "median_seconds": 220347.585223,
+          "min_seconds": 94604.085223
+        },
+        "last_attempt": "2026-11-02T02:18:37.772185+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:18:37.772185+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 12,
+          "max_seconds": 53.686962,
+          "median_seconds": 53.686962,
+          "min_seconds": 53.686962
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "newest_publication": null,
+        "newest_source_update": "2026-11-01T00:01:00+00:00",
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 1
+        },
+        "publication_age_seconds": null,
+        "publication_unknown_articles": 12,
+        "publisher_group": "UK Government",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+        "source_id": "news.uk.food",
+        "source_update_age_seconds": 95737.431168,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 12
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 1,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "publication_unknown",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [],
+        "collection_unobserved": false,
+        "config": "e2043c4099d3db578abfd5a6b0fb97942048072f50a70c8a524b3ccbc737f328",
+        "content": "publication_unknown",
+        "domain": "DROUGHT_WATER",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "first_seen_minus_source_update": {
+          "count": 12,
+          "max_seconds": 233376.521282,
+          "median_seconds": 214366.021282,
+          "min_seconds": 36876.521282
+        },
+        "last_attempt": "2026-11-02T02:19:39.521282+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:19:39.521282+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 12,
+          "max_seconds": 115.436059,
+          "median_seconds": 0.0,
+          "min_seconds": 0.0
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "newest_publication": null,
+        "newest_source_update": "2026-11-01T16:05:03+00:00",
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 1
+        },
+        "publication_age_seconds": null,
+        "publication_unknown_articles": 12,
+        "publisher_group": "UK Government",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+        "source_id": "news.uk.water",
+        "source_update_age_seconds": 37894.431168,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 12
+      },
+      {
+        "activity_interpretation": "failure does not establish broken publisher; successful stale/empty feed may be inactive; absence of incidents UNKNOWN",
+        "attempts": 1,
+        "baseline_unknown": false,
+        "classification": {
+          "broken_publisher": "NOT PROVEN",
+          "collection": "OBSERVED_RECENTLY",
+          "content": "publication_unknown",
+          "transport": "responding"
+        },
+        "clock_anomalies": 0,
+        "closed_unknown_intervals": [],
+        "collection_unobserved": false,
+        "config": "16e8b4b71e06872537b1767db166c6edf5f874225848d7644f702f71398022d9",
+        "content": "publication_unknown",
+        "domain": "ENERGY_GRID",
+        "errors": {},
+        "first_seen_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "first_seen_minus_source_update": {
+          "count": 12,
+          "max_seconds": 312045.098082,
+          "median_seconds": 296445.098082,
+          "min_seconds": 206150.098082
+        },
+        "last_attempt": "2026-11-02T02:20:51.098082+00:00",
+        "last_error": null,
+        "last_success": "2026-11-02T02:20:51.098082+00:00",
+        "latest_retrieval_minus_first_seen": {
+          "count": 12,
+          "max_seconds": 0.0,
+          "median_seconds": 0.0,
+          "min_seconds": 0.0
+        },
+        "latest_retrieval_minus_publication": {
+          "count": 0,
+          "max_seconds": null,
+          "median_seconds": null,
+          "min_seconds": null
+        },
+        "newest_publication": null,
+        "newest_source_update": "2026-10-30T17:05:01+00:00",
+        "open_unknown_from": null,
+        "origin_independence": "UNKNOWN; publisher groups are not incident origins",
+        "outcomes": {
+          "success": 1
+        },
+        "publication_age_seconds": null,
+        "publication_unknown_articles": 12,
+        "publisher_group": "UK Government",
+        "rate_limit_count": 0,
+        "rights_gate": "caller-selected configuration; acquisition still requires exact policy and robots gate",
+        "rights_reference": "https://www.gov.uk/help/reuse-govuk-content",
+        "source_id": "news.uk.energy",
+        "source_update_age_seconds": 207096.431168,
+        "timeout_count": 0,
+        "transport": "responding",
+        "unique_articles": 12
+      }
+    ]
+  },
+  "journal": {
+    "attempts_all_fingerprints": 28,
+    "attempts_inactive_fingerprints": 3,
+    "first_attempt": "2026-11-01T04:41:25.567375+00:00",
+    "interpretation": "Elapsed span is not observed uptime or a restart count; absent intervals have unknown cause",
+    "last_attempt": "2026-11-02T02:20:51.098082+00:00",
+    "span_seconds": 77965.530707
+  },
+  "limitations": [
+    "All WORLD families remain required without BTC keyword or price prerequisites.",
+    "Water/food announcements are not global scarcity monitoring; energy policy is not physical grid telemetry.",
+    "Cyber, specialist AI, public-health outbreak timeliness and geographic/language diversity remain unproven.",
+    "No human labels, independent confirmation, scheduler or historical polls are manufactured."
+  ],
+  "metadata_totals": {
+    "fresh_24h_publication_or_update": 4,
+    "fresh_7d_publication_or_update": 89,
+    "fresh_update_only_7d": 79,
+    "source_url_records": 146
+  },
+  "phase_3": "IN_PROGRESS",
+  "replay_probe": {
+    "early_cutoff": "2026-11-01T04:41:44.730842+00:00",
+    "early_narrative_records": 0,
+    "late_narrative_records": 165,
+    "reopened_health_identical": true,
+    "scope": "Store boundary and reopen probe; not end-to-end historical reasoning or clock authentication"
+  },
+  "review": {
+    "article_count": 5,
+    "human_declared_pairs": 0,
+    "human_participation_authenticated": false,
+    "label_provenance": "External supplied packet only; agent URL checks are not human labels; no import or adjudication",
+    "original_versions_valid_at_cutoff": true,
+    "packet_hash_valid": true,
+    "pair_count": 3,
+    "pair_ids": [
+      "phase38-1",
+      "phase38-2",
+      "phase38-3"
+    ],
+    "pending_pairs": 3
+  },
+  "rights_scope": {
+    "ai_basis": "Bounded factual processing of eligible agency metadata under reuse basis; no explicit AI-specific grant claimed",
+    "blocked": "BBC/GDELT publisher reuse unresolved; CDC syndication redistribution restricted; CISA policy inaccessible; State current feed/rights unverified; EIA robots disallows RSS",
+    "excluded": "Article bodies, summaries, images, logos and third-party-host links",
+    "retained": "Agency headline, original URL, supplied dates and provenance only",
+    "reviewed_at": "2026-11-02",
+    "reviewer_kind": "agent_reviewed",
+    "storage_basis": "Agency public-domain/reuse policies and UK OGL v3.0; attribution retained",
+    "uncertainties": "US public-domain basis does not resolve every foreign jurisdiction; agency host alone cannot prove authorship of all linked works"
+  },
+  "schema_version": 1,
+  "scope": "Read-only canonical evidence; no network or production certification",
+  "sqlite_integrity": [
+    "ok"
+  ],
+  "world_families": [
+    {
+      "configured_feeds": 1,
+      "family": "WAR_GEOPOLITICS",
+      "fresh_24h_metadata": 1,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 1,
+      "family": "TRADE",
+      "fresh_24h_metadata": 0,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 2,
+      "family": "DROUGHT_WATER",
+      "fresh_24h_metadata": 2,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 2,
+      "family": "FLOOD_DISASTER",
+      "fresh_24h_metadata": 0,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 0,
+      "family": "WILDFIRE",
+      "fresh_24h_metadata": 0,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 2,
+      "family": "AGRICULTURE_FOOD",
+      "fresh_24h_metadata": 0,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 2,
+      "family": "ENERGY_GRID",
+      "fresh_24h_metadata": 0,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 1,
+      "family": "PUBLIC_HEALTH",
+      "fresh_24h_metadata": 0,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 2,
+      "family": "TECHNOLOGY",
+      "fresh_24h_metadata": 1,
+      "incident_coverage": "NOT PROVEN"
+    },
+    {
+      "configured_feeds": 0,
+      "family": "CYBERSECURITY",
+      "fresh_24h_metadata": 0,
+      "incident_coverage": "NOT PROVEN"
+    }
+  ]
+}
