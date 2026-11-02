@@ -102,6 +102,8 @@ def coordinate(
     clock=None,
     source_ids=None,
     observation_limit=None,
+    retention_limits=None,
+    window_start=None,
 ):
     """Run due configurations fairly, at most one request each, then persist health.
 
@@ -119,6 +121,15 @@ def coordinate(
         raise ValueError("one to sixteen distinct configurations required")
     if source_ids is not None and not set(source_ids) <= {c.source.source_id for c in configs}:
         raise ValueError("research filter contains an unconfigured source")
+    retention_limits = retention_limits or {}
+    if observation_limit is not None and not 1 <= observation_limit <= 500:
+        raise ValueError("observation limit must be between 1 and 500")
+    if (not set(retention_limits) <= {c.source.source_id for c in configs}
+            or any(not isinstance(n, int) or not 1 <= n <= 500 for n in retention_limits.values())):
+        raise ValueError("per-source retention limits require configured sources and caps 1..500")
+    _require_aware("window_start", window_start)
+    if window_start is not None and window_start > now:
+        raise ValueError("window_start must not be after run start")
     states = {c.fingerprint: _state(store, c, now, interval) for c in configs}
     # Round robin domains; oldest due within each domain rotates providers naturally.
     domains = sorted(
@@ -166,7 +177,8 @@ def coordinate(
                 poll_id=f"recurring-v1:{interval}:{slot}",
                 session=session,
                 clock=clock,
-                observation_limit=observation_limit,
+                observation_limit=retention_limits.get(config.source.source_id, observation_limit),
+                window_start=window_start,
             )
         )
     completed = max([now] + [r.observed_at for r in outcomes])
@@ -207,7 +219,18 @@ def coordinate(
             "rolling_window_gap": bool(gap_seconds and gap_seconds > 86400),
             "stale": success is None
             or completed - success.observed_at > timedelta(seconds=2 * interval),
-            "budget_deferred": config not in chosen and states[config.fingerprint][3] <= now,
+            "budget_deferred": config not in chosen and states[config.fingerprint][3] <= now
+            and (source_ids is None or config.source.source_id in source_ids),
+            "selection_status": "selected" if config in chosen else
+                "source_filter" if source_ids is not None and config.source.source_id not in source_ids else
+                "not_due_or_backoff" if states[config.fingerprint][3] > now else
+                "host_cooldown" if urlsplit(config.source.endpoint).hostname in recent_hosts else
+                "host_budget" if urlsplit(config.source.endpoint).hostname in used_hosts else "run_source_budget",
+            "query": config.query,
+            "run_started_at": now.isoformat(),
+            "run_completed_at": completed.isoformat(),
+            "retention_limit": retention_limits.get(config.source.source_id, observation_limit),
+            "window_start": window_start.isoformat() if window_start else None,
             "completeness": "unknown; rolling feeds cannot prove absence or recover missed history",
             "independence": "unknown; providers/domains are not independent confirmations",
         }
@@ -302,6 +325,10 @@ def main(argv=None):
     parser.add_argument("--store", required=True, help="EXACT graph information_store_path")
     parser.add_argument("--interval", type=int, default=900)
     parser.add_argument("--max-sources", type=int, default=4)
+    parser.add_argument("--retention-limit", type=int, default=12,
+                        help="Per-feed retained items, 1..500; parser bounds remain independent")
+    parser.add_argument("--window-start", type=datetime.fromisoformat,
+                        help="Aware publication/update window start; undated items remain unknown")
     args = parser.parse_args(argv)
     store = SQLiteInformationStore(args.store, read_only=args.command == "health")
     if args.command == "health":
@@ -330,7 +357,8 @@ def main(argv=None):
     with job_lock(store), requests.Session() as session:
         outcomes, health = coordinate(
             store, ELIGIBLE_CONFIGS, interval=args.interval, max_sources=args.max_sources,
-            session=PolicySession(session), observation_limit=12,
+            session=PolicySession(session), observation_limit=args.retention_limit,
+            window_start=args.window_start,
         )
     print(
         json.dumps(

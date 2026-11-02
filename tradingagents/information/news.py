@@ -24,6 +24,7 @@ from tradingagents.information.binance_spot import (
     MarketDataBatch,
     MarketDataCollectionError,
 )
+from tradingagents.information.news_evidence import feed_evidence
 from tradingagents.information.observations import Observation, Transformation, _require_aware
 from tradingagents.information.sources import WORLD_NEWS_CONFIG, NewsDiscoveryConfig
 
@@ -58,6 +59,14 @@ def _date(value, *, gdelt=False):
         return None
 
 
+class NewsParserOverflow(MarketDataCollectionError):
+    """Atomic rejection with a known response count, never a partial success."""
+
+    def __init__(self, count, limit):
+        super().__init__("news item limit exceeded")
+        self.count, self.limit = count, limit
+
+
 def parse_news_snapshot(
     text: str, config: NewsDiscoveryConfig, *, retrieved_at: datetime
 ) -> MarketDataBatch:
@@ -85,6 +94,8 @@ def parse_news_snapshot(
                     None,
                     x.get("seendate"),
                     x.get("domain"),
+                    None,
+                    None,
                 )
                 for x in items
             ]
@@ -100,6 +111,8 @@ def parse_news_snapshot(
                         None,
                         None,
                         None,
+                        x.findtext("description"),
+                        "rss.description",
                     )
                     for x in root.findall("./channel/item")
                 ]
@@ -119,15 +132,18 @@ def parse_news_snapshot(
                             x.findtext(atom + "updated"),
                             None,
                             None,
+                            "".join(x.find(atom + "summary").itertext())
+                            if x.find(atom + "summary") is not None else None,
+                            "atom.summary",
                         )
                     )
             else:
                 raise ValueError("expected RSS or Atom feed")
         if len(entries) > config.max_items:
-            raise ValueError("news item limit exceeded")
+            raise NewsParserOverflow(len(entries), config.max_items)
         rows = {}
         excluded_articles = 0
-        for title, original, pub_raw, updated_raw, seen_raw, publisher in entries:
+        for index, (title, original, pub_raw, updated_raw, seen_raw, publisher, summary, field) in enumerate(entries):
             title = " ".join(title.split())
             if not title or len(title) > 2000:
                 raise ValueError("missing or oversized headline")
@@ -140,7 +156,11 @@ def parse_news_snapshot(
                 continue
             published, updated = _date(pub_raw), _date(updated_raw)
             article_id = "article:" + _digest(canonical)
-            content_hash = _digest(json.dumps([title, pub_raw, updated_raw], ensure_ascii=False))
+            evidence = feed_evidence(config, summary, field)
+            content = [title, pub_raw, updated_raw]
+            if evidence.get("evidence_text"):
+                content.append(evidence)
+            content_hash = _digest(json.dumps(content, ensure_ascii=False))
             version_id = article_id + ":" + content_hash
             payload = {
                 "event_id": article_id,
@@ -149,7 +169,8 @@ def parse_news_snapshot(
                 "claim": title,
                 "domain": config.domain,
                 "content_hash": content_hash,
-                "content_scope": "headline and supplied publication/update fields; no article body",
+                "content_scope": "permitted feed summary; no article body"
+                if evidence.get("evidence_text") else "headline and supplied publication/update fields; no article body",
                 "original_url": original,
                 "canonical_url": canonical,
                 "published_raw": pub_raw,
@@ -197,6 +218,11 @@ def parse_news_snapshot(
                 "config_fingerprint": config.fingerprint,
                 "query": config.query,
                 "snapshot_hash": snapshot_hash,
+                "source_item_index": index,
+                "source_item_order": "provider response order; chronology not guaranteed",
+                "mention_identity": article_id,
+                "copy_lineage": "source/config/snapshot/retrieval; repetitions and revisions are not independent mentions",
+                **evidence,
             }
             # Source, domain and acquisition copy remain distinct evidence; URL overlap never adds votes.
             if licence := dict(config.source.metadata).get("licence_attribution"):
@@ -236,6 +262,14 @@ def parse_news_snapshot(
             tuple(sorted(rows.values(), key=lambda x: x.observation_id)),
             (),
             retrieved_at,
+            coverage=(CoverageRecord(
+                "news-snapshot:" + _digest(config.fingerprint + snapshot_hash + retrieved_at.isoformat()),
+                config.source.source_id, config.domain, "narrative.snapshot", retrieved_at,
+                CoverageStatus.UNKNOWN,
+                json.dumps({"snapshot_item_count": len(entries),
+                            "excluded_article_count": excluded_articles,
+                            "duplicate_item_count": len(entries) - excluded_articles - len(rows)}, sort_keys=True),
+            ),),
             source_definitions=(config.source_definition,),
         )
     except (ElementTree.ParseError, ValueError, TypeError, AttributeError, KeyError) as exc:
@@ -284,7 +318,7 @@ def fetch_news_snapshot(config, session):
 
 
 def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, clock=None,
-              observation_limit=None):
+              observation_limit=None, window_start=None):
     """Persist each outcome atomically; a durable poll ID retries without refetching.
 
     Callers use a new ID for each new poll; same ID/config resumes partial runs.
@@ -295,6 +329,7 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
         raise ValueError("bounded poll ID and at most 16 sources required")
     if observation_limit is not None and not 1 <= observation_limit <= 500:
         raise ValueError("observation limit must be between 1 and 500")
+    _require_aware("window_start", window_start)
     session = session or requests.Session()
     clock = clock or (lambda: datetime.now(UTC))
     outcomes = []
@@ -306,7 +341,10 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
             continue
         started = clock()
         _require_aware("poll start", started)
+        if window_start is not None and window_start > started:
+            raise ValueError("window_start must not be after poll start")
         text, failure, http_status, retry_after = None, None, None, None
+        parser_diagnostic = {}
         try:
             text = fetch_news_snapshot(config, session)
         except (requests.RequestException, MarketDataCollectionError, UnicodeError) as exc:
@@ -334,6 +372,14 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
                 batch = parse_news_snapshot(text, config, retrieved_at=completed)
             except MarketDataCollectionError as exc:
                 failure = type(exc).__name__
+                if isinstance(exc, NewsParserOverflow):
+                    parser_diagnostic = {"snapshot_item_count": exc.count,
+                                         "parser_overflow_count": exc.count - exc.limit,
+                                         "atomic_rejected_item_count": exc.count}
+        if window_start is not None and window_start > completed:
+            raise ValueError("window_start must not be after completion")
+        if batch.coverage:
+            parser_diagnostic = json.loads(batch.coverage[0].detail)
         batch = replace(
             batch,
             observations=tuple(
@@ -348,6 +394,15 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
             ),
         )
         parsed_count = len(batch.observations)
+        parsed_rows = batch.observations
+        # Window filtering uses only supplied publication/update, never guessed occurrence.
+        outside_window = {r.observation_id for r in parsed_rows
+                          if window_start is not None
+                          and (r.publication_time or r.effective_time) is not None
+                          and (r.publication_time or r.effective_time) < window_start}
+        batch = replace(batch, observations=tuple(r for r in parsed_rows
+                                                  if r.observation_id not in outside_window))
+        window_count = len(batch.observations)
         if observation_limit is not None:
             # Retain current usable reports, not a random hash-ordered historical slice.
             ordered = sorted(batch.observations, key=lambda row: (
@@ -362,6 +417,17 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
             if x.is_available_at(completed)
             and (x.effective_time is None or x.effective_time <= completed)
         )
+        retained = {r.observation_id for r in batch.observations}
+        manifest = [
+            {"article_id": r.subject, "version_id": r.payload["version_id"],
+             "source_item_index": r.payload["source_item_index"],
+             "publication_time": r.publication_time.isoformat() if r.publication_time else None,
+             "updated_at": r.payload["updated_at"],
+             "state": "outside_window" if r.observation_id in outside_window else
+                      "retained_available" if r.observation_id in eligible else
+                      "retained_future_gated" if r.observation_id in retained else "omitted_retention_cap"}
+            for r in sorted(parsed_rows, key=lambda r: r.payload["source_item_index"])
+        ]
         detail = json.dumps(
             {
                 "outcome": "failure" if failure else ("success" if batch.observations else "empty"),
@@ -374,12 +440,24 @@ def poll_once(store, configs=WORLD_NEWS_CONFIG, *, poll_id: str, session=None, c
                 "version": config.version,
                 "query": config.query,
                 "snapshot_hash": _digest(text) if text is not None else None,
+                "intake_contract": config.intake_contract,
                 "items": len(batch.observations),
-                "omitted_by_slice_limit": parsed_count - len(batch.observations),
-                "excluded_article_count": max(
-                    (r.payload.get("excluded_article_count", 0) for r in batch.observations),
-                    default=None,
-                ),
+                "parsed_unique_items": parsed_count,
+                "omitted_by_slice_limit": window_count - len(batch.observations),
+                "outside_window_count": len(outside_window),
+                "parser_limit": config.max_items,
+                "retention_limit": observation_limit,
+                "parser_overflow_count": 0 if not failure else None,
+                "excluded_article_count": None,
+                **parser_diagnostic,
+                "item_manifest": manifest,
+                "manifest_semantics": "URL-hash identity/date reconciliation only; omitted content not retained or available for inference",
+                "source_order": "provider response order; chronology unknown",
+                "retention_order": "available first, publication or update descending, observation ID descending",
+                "window_start": window_start.isoformat() if window_start else None,
+                "window_end": completed.isoformat(),
+                "window_semantics": "publication else update; missing dates retained as unknown; not occurrence",
+                "provider_window": "1d; upstream truncation unknown" if config.format == "gdelt" else "rolling feed; upstream truncation unknown",
                 "content_scope": "eligible agency links only"
                 if dict(config.source.metadata).get("article_host_suffix")
                 else "discovery headlines",

@@ -36,6 +36,9 @@ def health_report(store, configs, *, cutoff, interval=900):
         errors = Counter(d.get("error") or "unknown" for _, d in history
                          if d["outcome"] == "failure")
         last, detail = history[-1] if history else (None, {})
+        selections = [r for r in view.coverage if r.metric == "narrative.collection_health"
+                      and json.loads(r.detail).get("config") == config.fingerprint]
+        selection = max(selections, key=lambda r: (r.observed_at, r.coverage_id), default=None)
         successes = [r for r, d in history if d["outcome"] != "failure"]
         rows = [r for r in view.observations
                 if r.metric == "narrative.event" and r.is_available_at(cutoff)
@@ -93,6 +96,14 @@ def health_report(store, configs, *, cutoff, interval=900):
             "last_attempt": last.observed_at.isoformat() if last else None,
             "last_success": successes[-1].observed_at.isoformat() if successes else None,
             "last_error": detail.get("error"), "transport": transport,
+            "latest_intake": {key: detail.get(key) for key in (
+                "snapshot_item_count", "parsed_unique_items", "items", "retention_limit",
+                "omitted_by_slice_limit", "outside_window_count", "excluded_article_count",
+                "parser_overflow_count", "atomic_rejected_item_count", "window_start",
+                "window_end", "source_order", "provider_window")},
+            "intake_contract": "reported when recorded; null on legacy attempts means UNKNOWN",
+            "latest_selection": json.loads(selection.detail).get("selection_status", "unknown_legacy")
+            if selection else "unknown_not_recorded",
             "collection_unobserved": open_gap, "closed_unknown_intervals": gaps,
             "open_unknown_from": (last.observed_at+timedelta(seconds=interval)).isoformat()
             if last and open_gap else None,

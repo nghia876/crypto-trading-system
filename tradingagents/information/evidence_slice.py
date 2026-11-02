@@ -15,6 +15,7 @@ from xml.sax.saxutils import escape
 
 from tradingagents.information.evidence_review import review_packet
 from tradingagents.information.news import parse_news_snapshot, poll_once
+from tradingagents.information.news_evidence import replay_payload
 from tradingagents.information.polling import source_gap_report
 from tradingagents.information.sources import SPECIALIST_WORLD_CONFIG
 from tradingagents.information.store import SQLiteInformationStore
@@ -56,6 +57,11 @@ def acquire(store, *, poll_id, session=None, clock=None, limit=4):
         "outcomes": [{"source": o.source_id, "status": o.status.value,
                       "detail": json.loads(o.detail)} for o in outcomes],
         "specimens": [{"source_id": row.source_id, "title": row.payload["claim"],
+                       "intake_contract_version": 2,
+                       "source_item_index": row.payload["source_item_index"],
+                       "snapshot_item_count": row.payload["snapshot_item_count"],
+                       "excluded_article_count": row.payload["excluded_article_count"],
+                       "first_seen_time": row.first_seen_time.isoformat(),
                        "url": row.raw_reference, "published_raw": row.payload["published_raw"],
                        "retrieved_at": row.retrieved_at.isoformat(),
                        "snapshot_sha256": row.payload["snapshot_hash"]} for row in rows],
@@ -82,9 +88,11 @@ def replay_specimens(store, report):
         batch = parse_news_snapshot(text, config,
                                     retrieved_at=datetime.fromisoformat(specimen["retrieved_at"]))
         detail = outcomes[specimen["source_id"]]
-        rows = tuple(replace(row, payload=dict(row.payload) | {
+        rows = tuple(replace(row,
+            first_seen_time=datetime.fromisoformat(specimen.get("first_seen_time", specimen["retrieved_at"])),
+            payload=replay_payload(row.payload, specimen) | {
             "snapshot_hash": specimen["snapshot_sha256"],
-            "snapshot_item_count": detail["items"] + detail["omitted_by_slice_limit"],
+            "snapshot_item_count": detail.get("snapshot_item_count", detail["items"] + detail["omitted_by_slice_limit"]),
             "excluded_article_count": detail["excluded_article_count"],
         }) for row in batch.observations)
         store.append(replace(batch, observations=rows))

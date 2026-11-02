@@ -114,6 +114,22 @@ class NewsDiscoveryConfig:
     max_items: int = 100
     max_bytes: int = 2_000_000
 
+    @property
+    def intake_contract(self):
+        """Additive description: legacy fingerprints and source versions stay stable."""
+        metadata = dict(self.source.metadata)
+        return {
+            "parser_item_cap": self.max_items,
+            "response_byte_cap": self.max_bytes,
+            "source_order": "provider response order; chronology unknown",
+            "source_window": "1d" if self.format == "gdelt" else "unknown rolling window",
+            "retention_cap": "caller supplied; null means all successfully parsed items",
+            "upstream_omissions": "unknown",
+            "summary_rights": {right: metadata.get(f"summary_{right}", "unknown")
+                               for right in ("access", "retention", "inference", "redistribution")},
+            "full_body": "not collected by this feed adapter",
+        }
+
     def __post_init__(self):
         from urllib.parse import urlsplit
 

@@ -232,7 +232,7 @@ def _narrative_line(row, view=None):
             "available_at", "url", "evidence_id",
         )}
         data["attribution"] = row.payload.get("attribution")
-        data["status"] = "agency claim; accuracy unmeasured; independence unknown; contradiction search not performed"
+        data["status"] = "agency claim; accuracy unmeasured"
     if view is not None and (lifecycle := lifecycle_prompt(view, row.subject)) is not None:
         data = {key: data[key] for key in ("event_id", "claim", "domain", "evidence_id", "source", "published_at", "available_at")}
         data["claim_lifecycle"] = lifecycle
@@ -254,6 +254,19 @@ def _narrative_line(row, view=None):
             data["event_link_candidates"] = suggestions
     if licence := row.payload.get("licence_attribution"):
         data["licence_attribution"] = licence
+    if row.payload.get("source_type") == "original_specialist_news" and "claim_lifecycle" not in data:
+        # Evidence ID resolves canonical article identity in the store; avoid
+        # repeating a second long hash when it crowds out whole source domains.
+        data.pop("event_id", None)
+    data["evidence_level"] = row.payload.get("evidence_level", "HEADLINE_METADATA_ONLY")
+    if row.payload.get("evidence_text"):
+        data["feed_context"] = row.payload["evidence_text"]
+        data["context_provenance"] = {
+            "field": row.payload.get("evidence_field"),
+            "attribution": row.payload.get("evidence_attribution"),
+            "rights": row.payload.get("evidence_rights_reference"),
+            "truncated": row.payload.get("evidence_text_truncated"),
+        }
     return "- " + json.dumps(data, sort_keys=True)
 
 
@@ -290,7 +303,7 @@ def selected_narrative_events(view: InformationView) -> tuple[Observation, ...]:
     kept = []
     for row in ordered:
         size = len(_narrative_line(row, view)) + 1
-        if used + size <= NARRATIVE_CONTEXT_CHARS - 180:
+        if used + size <= NARRATIVE_CONTEXT_CHARS - 450:
             kept.append(row)
             used += size
     return tuple(kept)
@@ -306,4 +319,19 @@ def render_narrative_events(view: InformationView) -> list[str]:
         )
     if not rows:
         lines.append("- UNKNOWN; no selected eligible narrative events, not evidence of no events")
+    latest = {}
+    for record in view.coverage:
+        if record.coverage_id.startswith("news-poll:"):
+            detail = json.loads(record.detail)
+            key = detail.get("config", record.source_id)
+            if key not in latest or record.observed_at > latest[key][0]:
+                latest[key] = (record.observed_at, detail)
+    omissions = sum(d.get("omitted_by_slice_limit", 0) for _, d in latest.values())
+    failures = sum(d.get("outcome") == "failure" for _, d in latest.values())
+    lines.append(
+        f"- Coverage: selected={len(rows)}, canonical_candidates={len(narrative_events(view))}; "
+        f"latest-per-config acquisition omissions={omissions}, failures={failures} (not all history). "
+        "Copies/revisions are not mentions. Rights/offline/upstream gaps UNKNOWN; "
+        "uncollected content UNKNOWN."
+    )
     return lines

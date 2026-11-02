@@ -802,3 +802,30 @@ def test_recurring_poll_reaches_graph_at_cutoff(tmp_path, monkeypatch, offline):
     assert 'Ceasefire talks resume' in prompt and 'Quantum laboratory breakthrough' in prompt
     assert 'FUTURE WAR CORRECTION' not in prompt
     assert len(state['analysis_information']) <= 28000
+
+
+def test_checkpoint_a_partial_evidence_through_actual_graph(tmp_path, monkeypatch, offline):
+    from tests.test_acquisition_contract import permitted_config, summary_rss
+    from tests.test_broad_news import T, session_for
+    from tradingagents.information.narrative_events import render_narrative_events
+    from tradingagents.information.news import poll_once
+
+    store = SQLiteInformationStore(tmp_path / "checkpoint-a.db")
+    config = permitted_config()
+    xml = summary_rss("Retrieved context; negotiations remain provisional.")
+    poll_once(store, (config,), poll_id="a", session=session_for(xml), clock=lambda: T,
+              observation_limit=1)
+    later = T + timedelta(seconds=1)
+    poll_once(store, (config,), poll_id="b", session=session_for(summary_rss("FUTURE CONTEXT")),
+              clock=lambda: later)
+    model = PromptCapturingModel()
+    graph = _graph(tmp_path, monkeypatch, model, information_store_path=store.path)
+    state, _ = graph.propagate("BTCUSDT", T.date().isoformat(), asset_type="crypto", decision_time=T)
+    prompt = "\n".join(model.prompts)
+    assert "Retrieved context; negotiations remain provisional." in prompt
+    assert "FEED_SUMMARY" in prompt and "context_provenance" in prompt
+    assert "selected=1, canonical_candidates=1" in prompt
+    assert "uncollected content UNKNOWN" in prompt
+    assert "FUTURE CONTEXT" not in prompt
+    assert len(state["analysis_information"]) <= 28000
+    assert len("\n".join(render_narrative_events(store.view_at(T)))) <= 6000

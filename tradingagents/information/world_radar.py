@@ -20,6 +20,7 @@ import requests
 
 from tradingagents.information.evidence_review import review_packet
 from tradingagents.information.news import parse_news_snapshot
+from tradingagents.information.news_evidence import replay_payload
 from tradingagents.information.polling import coordinate, job_lock, source_gap_report
 from tradingagents.information.sources import (
     OPERATIONAL_ADDITIONS,
@@ -163,11 +164,13 @@ def coverage_metrics(view, configs=ELIGIBLE_CONFIGS):
             "human_reviews": 0}
 
 
-def run(store, *, session, now=None, clock=None, max_sources=6):
+def run(store, *, session, now=None, clock=None, max_sources=6,
+        observation_limit=12, retention_limits=None, window_start=None):
     policy = PolicySession(session)
     outcomes, health = coordinate(store, ELIGIBLE_CONFIGS, now=now, clock=clock,
                                   session=policy, interval=900, max_sources=max_sources,
-                                  observation_limit=12)
+                                  observation_limit=observation_limit,
+                                  retention_limits=retention_limits, window_start=window_start)
     cutoff = max(r.observed_at for r in health)
     view = store.view_at(cutoff)
     from tradingagents.information.source_health import health_report
@@ -185,6 +188,10 @@ def run(store, *, session, now=None, clock=None, max_sources=6):
         "articles": [dict(r, status="UNREVIEWED") for r in review_packet(view)
                      if r["evidence_id"] in selected],
         "specimens": [{"source_id": r.source_id, "title": r.payload["claim"],
+                       "intake_contract_version": 2,
+                       "source_item_index": r.payload["source_item_index"],
+                       "snapshot_item_count": r.payload["snapshot_item_count"],
+                       "excluded_article_count": r.payload["excluded_article_count"],
                        "url": r.raw_reference, "published_raw": r.payload["published_raw"],
                        "updated_raw": r.payload["updated_raw"],
                        "retrieved_at": r.retrieved_at.isoformat(),
@@ -213,7 +220,7 @@ def replay_specimens(store, specimens):
                                     retrieved_at=datetime.fromisoformat(item["retrieved_at"]))
         store.append(replace(batch, observations=tuple(
             replace(row, first_seen_time=datetime.fromisoformat(item["first_seen_time"]),
-                    payload=dict(row.payload) | {"snapshot_hash": item["snapshot_sha256"]})
+                    payload=replay_payload(row.payload, item) | {"snapshot_hash": item["snapshot_sha256"]})
             for row in batch.observations)))
 
 
@@ -221,12 +228,15 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--store", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--retention-limit", type=int, default=12)
+    parser.add_argument("--window-start", type=datetime.fromisoformat)
     args = parser.parse_args(argv)
     if args.report.exists():
         parser.error("report already exists; retain immutable prior results")
     store = SQLiteInformationStore(args.store)
     with job_lock(store), requests.Session() as session:
-        report = run(store, session=session)
+        report = run(store, session=session, observation_limit=args.retention_limit,
+                     window_start=args.window_start)
     with sqlite3.connect(store.path) as connection:
         report["sqlite_integrity"] = connection.execute("PRAGMA integrity_check").fetchone()[0]
     args.report.write_text(json.dumps(report, sort_keys=True, indent=2), encoding="utf-8")

@@ -1,3 +1,12 @@
+# Phase 3 Acquisition Upgrade Checkpoint A - 2026-11-02
+
+LOCAL ONLY; Phase 3 IN_PROGRESS. Explicit intake caps, windows, parser overflow,
+per-item omission reconciliation and source/run deferrals implemented. Bounded
+rights-gated summary contracts tested; operational summary clearance remains
+pending. Existing source rights/robots gates unchanged. No new live coverage,
+Checkpoint B/C or Phase 4/5 completion claimed. Same canonical SQLite and replay.
+See [implementation and validation](PHASE_3_CHECKPOINT_A.md).
+
 # Phase 3 operational exit assessment - 2026-11-02
 
 NO-GO; Phase 3 IN_PROGRESS. See [assessment and next actions](PHASE_3_EXIT_READINESS.md).
