@@ -1,0 +1,11 @@
+{
+  "run_id": "checkpoint-b-live-acceptance",
+  "query_id": "df9614fe8cc991b251324e41ab153522312781242f5c848f4539134a3371cc52",
+  "query": "fish scarcity tar balls",
+  "method": "chatgpt_assisted_manual",
+  "operator": "Codex agent using in-chat web research; not a human reviewer",
+  "observed_at": "2026-11-02T16:19:30+00:00",
+  "status": "empty",
+  "error": "No eligible new publisher result selected; search surfaced apparent copies and unreviewed sources. Empty eligible import is not zero web results.",
+  "results": []
+}

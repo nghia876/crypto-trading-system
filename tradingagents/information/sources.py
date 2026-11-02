@@ -133,7 +133,8 @@ class NewsDiscoveryConfig:
     def __post_init__(self):
         from urllib.parse import urlsplit
 
-        if self.domain not in WORLD_DISCOVERY_DOMAINS:
+        # WORLD is an unfiltered carrier, not an additional thematic exit criterion.
+        if self.domain not in (*WORLD_DISCOVERY_DOMAINS, "WORLD"):
             raise ValueError("unsupported discovery domain")
         if self.format not in {"rss", "atom", "gdelt"}:
             raise ValueError("unsupported discovery format")

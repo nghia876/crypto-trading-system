@@ -18,6 +18,7 @@ from xml.sax.saxutils import escape
 
 import requests
 
+from tradingagents.information.discovery_sources import DISCOVERY_CONFIGS, RELATED_CONFIGS
 from tradingagents.information.evidence_review import review_packet
 from tradingagents.information.news import parse_news_snapshot
 from tradingagents.information.news_evidence import replay_payload
@@ -33,6 +34,7 @@ from tradingagents.information.store import SQLiteInformationStore
 ELIGIBLE_CONFIGS = (SPECIALIST_WORLD_CONFIG + OPERATIONAL_ADDITIONS + UK_WORLD_CONFIG
                     + OPERATIONAL_REPAIR_CONFIG)
 REVIEWED_FINGERPRINTS = frozenset(c.fingerprint for c in ELIGIBLE_CONFIGS)
+PILOT_REVIEWED_FINGERPRINTS = frozenset(c.fingerprint for c in DISCOVERY_CONFIGS + RELATED_CONFIGS)
 USER_AGENT = "TradingAgentsWorldRadar/1.0"
 RIGHTS_SCOPE = {
     "reviewed_at": "2026-11-02", "reviewer_kind": "agent_reviewed",
@@ -64,12 +66,15 @@ class PolicySession:
     are refused. The feed adapter records denial as an unavailable polling attempt.
     """
 
-    def __init__(self, session, configs=ELIGIBLE_CONFIGS):
-        if any(c.fingerprint not in REVIEWED_FINGERPRINTS for c in configs):
+    def __init__(self, session, configs=ELIGIBLE_CONFIGS, *, wait_for_crawl_delay=False):
+        if any(c.fingerprint not in REVIEWED_FINGERPRINTS | PILOT_REVIEWED_FINGERPRINTS
+               for c in configs):
             raise ValueError("unreviewed WORLD configuration")
         self.session = session
         self.endpoints = {c.source.endpoint for c in configs}
         self.checks = {}
+        self.wait_for_crawl_delay = wait_for_crawl_delay
+        self.last_request = {}
 
     def get(self, url, **kwargs):
         if url not in self.endpoints:
@@ -104,6 +109,7 @@ class PolicySession:
                     "sha256": hashlib.sha256(raw).hexdigest() if raw else None,
                     "parser": parser if status == 200 else None,
                 }
+                self.last_request[origin] = time.monotonic()
             except (requests.RequestException, UnicodeError):
                 self.checks[origin] = {"checked_at": checked, "allowed": False,
                                        "error": "robots unavailable or invalid"}
@@ -113,9 +119,14 @@ class PolicySession:
             raise RobotsUnavailable("robots policy unverified")
         if not check["allowed"] or (parser and not parser.can_fetch(USER_AGENT, url)):
             raise RobotsDenied("robots policy blocked or unverified")
-        # A nonzero crawl delay needs an external later job; do not sleep/retry here.
+        # Default jobs defer; the finite pilot may explicitly honor a <=30s delay.
         if check.get("crawl_delay_seconds"):
-            raise RobotsDeferred("robots crawl delay requires deferred acquisition")
+            if not self.wait_for_crawl_delay:
+                raise RobotsDeferred("robots crawl delay requires deferred acquisition")
+            remaining = check["crawl_delay_seconds"] - (time.monotonic() - self.last_request[origin])
+            if remaining > 0:
+                time.sleep(remaining)
+        self.last_request[origin] = time.monotonic()
         return self.session.get(url, headers={"User-Agent": USER_AGENT}, **kwargs)
 
     def report(self):

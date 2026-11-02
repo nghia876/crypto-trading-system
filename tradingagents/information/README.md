@@ -399,3 +399,20 @@ FRED remains disabled by default. See `docs/project-handoff/M2A2_IMPLEMENTATION.
 The collector is caller driven; no scheduler, cross-process quota coordination
 or continuous source coverage is established. Broad world discovery remains an
 independent Phase 3 track in the same store and graph.
+
+# Adaptive WORLD discovery pilot (Checkpoint B)
+
+User-invoked, free, metadata-only publisher scan using the existing SQLite store:
+
+```text
+python -m tradingagents.information.adaptive_discovery --store ../canonical-information.sqlite3 --run-id world-20261103-01 --report ../world-20261103-01.json
+```
+
+This writes new evidence/run records to the supplied existing store. Reports are
+derived exports. Use a new run ID/report for a new session; existing IDs resume
+recorded output. Source cadence/backoff may defer collection. At most two broad
+feeds and one topic-selected related feed, with robots checks/delays. External
+search requires a recorded manual import; automatic queries search collected
+metadata only. Summaries remain rights-gated. Two-publisher live acceptance is
+NOT PROVEN: Global Voices works; SciDev's configured endpoint returned HTML.
+See [Checkpoint B evidence, rights, limits and manual import](../../docs/project-handoff/PHASE_3_CHECKPOINT_B.md).

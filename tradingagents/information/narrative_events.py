@@ -300,10 +300,11 @@ def selected_narrative_events(view: InformationView) -> tuple[Observation, ...]:
             if groups[domain]:
                 ordered.append(groups[domain].pop(0))
     used = len(NARRATIVE_NOTICE) + 1
+    reserve = 900 if any(c.metric == 'discovery.run' for c in view.coverage) else 450
     kept = []
     for row in ordered:
         size = len(_narrative_line(row, view)) + 1
-        if used + size <= NARRATIVE_CONTEXT_CHARS - 450:
+        if used + size <= NARRATIVE_CONTEXT_CHARS - reserve:
             kept.append(row)
             used += size
     return tuple(kept)
@@ -334,4 +335,14 @@ def render_narrative_events(view: InformationView) -> list[str]:
         "Copies/revisions are not mentions. Rights/offline/upstream gaps UNKNOWN; "
         "uncollected content UNKNOWN."
     )
+    research = [c for c in view.coverage if c.metric == 'discovery.run']
+    if research:
+        latest_run = max(research, key=lambda c: (c.observed_at, c.coverage_id))
+        detail = json.loads(latest_run.detail)
+        lines.append(
+            f"- WORLD research {detail['run_id'][:64]} at {latest_run.observed_at.isoformat()}: "
+            f"{len(detail['queries'])} local metadata queries; external search pending/manual; "
+            f"uncovered topics={','.join(detail['uncovered_topics'])}; "
+            "PC offline windows UNKNOWN; relations PROVISIONAL, origins unverified."
+        )
     return lines
