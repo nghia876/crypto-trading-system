@@ -342,7 +342,14 @@ def render_narrative_events(view: InformationView) -> list[str]:
         lines.append(
             f"- WORLD research {detail['run_id'][:64]} at {latest_run.observed_at.isoformat()}: "
             f"{len(detail['queries'])} local metadata queries; external search pending/manual; "
+            f"open-topic plans={len(detail.get('open_queries', []))}; "
             f"uncovered topics={','.join(detail['uncovered_topics'])}; "
             "PC offline windows UNKNOWN; relations PROVISIONAL, origins unverified."
         )
+        receipts = [c for c in view.coverage if c.metric == 'discovery.query'
+                    and c.subject == detail['run_id']]
+        if receipts:
+            lines.append(f"- Manual external search receipts={len(receipts)}; "
+                         "eligible results only; candidate URLs require rights review; "
+                         "search coverage incomplete, no independent corroboration implied.")
     return lines

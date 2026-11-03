@@ -26,13 +26,20 @@ def _channel(key, publisher, endpoint, host, rights, licence):
     ), "WORLD", max_items=100)
 
 
+SCIDEV_CANDIDATE = _channel(
+    "scidev", "SciDev.Net", "https://www.scidev.net/global/feed/", "scidev.net",
+    "https://www.scidev.net/content/media.html",
+    "CC BY 2.0 https://creativecommons.org/licenses/by/2.0/")
+
+# IPS RSS terms explicitly permit downloading/publishing attributed headlines.
+# Full articles require agreement; no snippets, media, training or body grant.
 DISCOVERY_CONFIGS = (
     _channel("globalvoices", "Global Voices", "https://globalvoices.org/feed/",
              "globalvoices.org", "https://globalvoices.org/about/global-voices-attribution-policy/",
              "CC BY 3.0 https://creativecommons.org/licenses/by/3.0/"),
-    _channel("scidev", "SciDev.Net", "https://www.scidev.net/global/feed/",
-             "scidev.net", "https://www.scidev.net/content/media.html",
-             "CC BY 2.0 https://creativecommons.org/licenses/by/2.0/"),
+    _channel("ips", "Inter Press Service", "https://www.ipsnews.net/feed/",
+             "ipsnews.net", "https://www.ipsnews.net/rss-feeds/",
+             "IPS RSS headline permission; full articles excluded; https://www.ipsnews.net/reprinting-articles/"),
 )
 
 # Directory https://globalvoices.org/feeds/ documents topic RSS subscriptions.

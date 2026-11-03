@@ -224,7 +224,7 @@ def test_cross_feed_host_backoff_blocks_adaptive_and_next_broad_run(tmp_path):
             return response
         if url == DISCOVERY_CONFIGS[1].source.endpoint:
             return session_for(rss('AI research and cyber regulation',
-                                   url='https://www.scidev.net/example')).get.return_value
+                                   url='https://www.ipsnews.net/example')).get.return_value
         return original(url, **kwargs)
     session.get.side_effect = get
     report = research(store, run_id='rate-1', now=T, clock=lambda: T, session=session)

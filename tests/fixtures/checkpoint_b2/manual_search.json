@@ -1,0 +1,52 @@
+[
+  {
+    "run_id": "checkpoint-b2-live-01",
+    "query_id": "b693ad6af87b02e8af1f3284bd915fee72a5bfa761440479c98287f2ff3f9509",
+    "query": "Armenia Lake Sevan biodiversity funding November 2026",
+    "method": "chatgpt_assisted_manual",
+    "operator": "Codex Work research session B2",
+    "observed_at": "2026-11-02T16:35:28.022009+00:00",
+    "status": "success",
+    "channels_covered": [
+      "ChatGPT web search; exact query; selected top visible results"
+    ],
+    "channels_missed": [
+      "No exhaustive ranking export; paywalled/full-text/social/non-English coverage unverified",
+      "Unreviewed publisher content excluded; empty means no eligible selected result"
+    ],
+    "candidate_sources": [
+      "https://news.am/en/news/1070443",
+      "https://www.undp.org/armenia/press-releases/eu-undp-and-government-armenia-launch-new-initiative-restore-and-protect-lake-sevan"
+    ],
+    "results": [
+      {
+        "source_id": "news.discovery.ips",
+        "title": "New Biodiversity Funding Brings Hope for Armenia\u2019s Lake Sevan",
+        "url": "https://www.ipsnews.net/2026/11/new-biodiversity-funding-brings-hope-for-armenias-lake-sevan/",
+        "published_raw": "Mon, 02 Nov 2026 09:25:54 +0000"
+      }
+    ]
+  },
+  {
+    "run_id": "checkpoint-b2-live-01",
+    "query_id": "f52d66b53e0179b57a9c1e9c97afd91584ce5ddf98b0ad8bcde739d84d4b8a76",
+    "query": "Haiti food insecurity WFP November 2026",
+    "method": "chatgpt_assisted_manual",
+    "operator": "Codex Work research session B2",
+    "observed_at": "2026-11-02T16:35:28.022009+00:00",
+    "status": "empty",
+    "channels_covered": [
+      "ChatGPT web search; exact query; selected top visible results"
+    ],
+    "channels_missed": [
+      "No exhaustive ranking export; paywalled/full-text/social/non-English coverage unverified",
+      "Unreviewed publisher content excluded; empty means no eligible selected result"
+    ],
+    "candidate_sources": [
+      "https://www.wfp.org/news/wfp-warnings-become-reality-food-insecurity-haiti-track-reach-record-highs",
+      "https://www.ipcinfo.org/ipc-country-analysis/details-map/en/c/1165467/?iso3=HTI",
+      "https://apnews.com/article/e7054f6124e386240f10c9ff3ad45331"
+    ],
+    "results": []
+  }
+]

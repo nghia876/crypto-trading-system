@@ -3,6 +3,11 @@
 Implementation is LOCAL ONLY. Operational acceptance is **NOT PROVEN**.
 Phase 3 remains IN_PROGRESS. No Checkpoint C, Phase 4 or Phase 5 advancement.
 
+Follow-up: [Checkpoint B2](PHASE_3_CHECKPOINT_B2.md) demonstrates IPS plus Global
+Voices in one November 2 bounded live test and actual open-topic manual imports.
+Three separated user-invoked sessions remain unmet. The source/access results
+below are historical Checkpoint B evidence, not current active-source selection.
+
 ## Authority and verified starting state
 
 Existing repo `nghia876/crypto-trading-system`, branch

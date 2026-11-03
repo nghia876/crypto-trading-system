@@ -1,3 +1,26 @@
+# Checkpoint B2 - bounded source diversity - 2026-11-03
+
+LOCAL ONLY; Phase 3 IN_PROGRESS; overall acceptance NOT PROVEN. November 2 live
+test demonstrated two separately operated non-official publishers: Global Voices
+and Inter Press Service. IPS RSS permits attributed headlines; summaries/snippets/
+full articles excluded. SciDev root alternative also returned HTML; replaced
+active candidate without weakening access/parser gates. Three feed requests:
+35 copies/33 distinct URLs; independent same-response traversal found no missing
+eligible items or cap omissions. Feed-level reconciliation is not global recall.
+First-seen publication ages 7.139-164.820h, median 98.573h; no alert SLA proven.
+
+Registered feeds, local adaptive metadata search and operator open-topic manual
+web search are separate channels. Two actual manual receipts: one eligible IPS
+result (already collected URL), five pending rights-review candidate URLs. No
+automatic global Python search API claimed. One B2 user-invoked execution; three
+separated sessions NOT MET. WFP/IPS Haiti attribution suggests a shared original,
+not independent corroboration. Canonical DB unchanged; temporary live test only.
+Full offline 1,643 tests +99 subtests; 33 focused; lint/syntax/diff/SQLite passed.
+Real graph replay within 6k narrative/28k total. No push or C/4/5 advancement.
+See [source rights, observations, gaps and next action](PHASE_3_CHECKPOINT_B2.md).
+Historical sections below describe their own dates and are superseded only where
+the current checkpoint supplies explicit evidence.
+
 # Phase 3 Acquisition Upgrade Checkpoint A - 2026-11-02
 
 LOCAL ONLY; Phase 3 IN_PROGRESS. Explicit intake caps, windows, parser overflow,

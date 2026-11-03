@@ -75,12 +75,19 @@ def _run_key(run_id):
     return "discovery-run:" + _digest(run_id)
 
 
-def research(store, *, run_id, session, now=None, clock=None, query_budget=8, retention=40):
+def research(store, *, run_id, session, now=None, clock=None, query_budget=8, retention=40,
+             open_queries=()):
     """Persist immutable run manifest alongside existing intake/health journals."""
     key = _run_key(run_id)
+    if (len(open_queries) > 4 or any(not isinstance(q, str) or not q.strip()
+                                   or len(q) > 256 for q in open_queries)):
+        raise ValueError('at most four nonempty open queries, <=256 characters each')
     existing = store.coverage_by_id(key)
     if existing:
-        return json.loads(existing.detail)
+        saved = json.loads(existing.detail)
+        if list(open_queries) != [q['query'] for q in saved.get('open_queries', [])]:
+            raise ValueError('existing run has different open queries; use a new run ID')
+        return saved
     now = now or datetime.now(UTC)
     _require_aware("now", now)
     if not 1 <= retention <= 100 or not 1 <= query_budget <= 16:
@@ -145,6 +152,15 @@ def research(store, *, run_id, session, now=None, clock=None, query_budget=8, re
         'run_id': run_id, 'started_at': now.isoformat(), 'completed_at': cutoff.isoformat(),
         'mode': 'publisher_feed_metadata_and_local_adaptive_search',
         'queries': queries, 'query_budget': query_budget, 'expansion_depth': 1,
+        'open_queries': [{"query": q, "query_id": _digest('open:' + q),
+                              "origin": 'operator_open_topic', "input_evidence_ids": [],
+                              "executor": 'manual_external_search', "status": 'pending',
+                              "fanout": 0, "channels_covered": [],
+                              "channels_missed": ['external search not yet performed']}
+                         for q in open_queries],
+        'discovery_channels': {'registered_feeds': [c.source.endpoint for c in DISCOVERY_CONFIGS],
+                               'local_search': 'collected metadata only',
+                               'open_web': 'manual receipt required; no Python search API'},
         'related_feed_decision': followup, 'max_feed_requests': 3,
         'repetition_window_hours': 24, 'corpus_items': len(rows),
         'query_candidates': len(candidates),
@@ -164,8 +180,15 @@ def research(store, *, run_id, session, now=None, clock=None, query_budget=8, re
                     'Use health.next_due; do not retry in a tight loop',
                     'Repair or replace invalid feed endpoints after a new exact rights review',
                     'Execute pending external queries manually and import only eligible metadata'],
-        'status': 'NOT_PROVEN' if len({r.payload['publisher_group'] for r in rows}) < 2 else 'PARTIAL_METADATA_PILOT',
+        'functioning_publishers_this_run': sorted({r.payload['publisher_group']
+            for r in view.observations
+            if r.observation_id in {eid for p in outcomes for eid in p.evidence_ids}}),
+        'publication_first_seen_lag_seconds': [{"evidence_id": r.observation_id,
+            "seconds": (r.first_seen_time-r.publication_time).total_seconds()}
+            for r in rows if r.publication_time is not None],
     }
+    report['status'] = ('PARTIAL_METADATA_PILOT'
+                        if len(report['functioning_publishers_this_run']) >= 2 else 'NOT_PROVEN')
     store.append(MarketDataBatch((), (), cutoff, (CoverageRecord(
         key, 'discovery.world', run_id, 'discovery.run', cutoff, CoverageStatus.UNKNOWN,
         json.dumps(report, sort_keys=True), tuple(r.observation_id for r in rows)),)))
@@ -183,14 +206,16 @@ def import_search(store, document, *, imported_at=None):
     if len(json.dumps(document)) > 100_000:
         raise ValueError('manual import exceeds 100KB')
     allowed = {'run_id', 'query_id', 'query', 'method', 'operator', 'observed_at',
-               'status', 'results', 'error'}
+               'status', 'results', 'error', 'channels_covered', 'channels_missed',
+               'candidate_sources'}
     if set(document) - allowed or len(document.get('error', '')) > 256:
         raise ValueError('manual import contains unsupported fields or oversized error')
     parent = store.coverage_by_id(_run_key(document['run_id']))
     if parent is None or parent.observed_at > at:
         raise ValueError('parent run must be available')
     report = json.loads(parent.detail)
-    query = next((q for q in report['queries'] if q['query_id'] == document['query_id']), None)
+    query = next((q for q in report['queries'] + report.get('open_queries', [])
+                  if q['query_id'] == document['query_id']), None)
     if query is None or document['query'] != query['query']:
         raise ValueError('exact recorded query required')
     if document['method'] not in {'human_manual', 'chatgpt_assisted_manual'}:
@@ -201,6 +226,22 @@ def import_search(store, document, *, imported_at=None):
         raise ValueError('manual observation must follow parent run and precede import')
     if not document.get('operator') or len(document['operator']) > 128:
         raise ValueError('bounded operator provenance required')
+    for field in ('channels_covered', 'channels_missed'):
+        values = document.get(field, [])
+        if (not isinstance(values, list) or len(values) > 8
+                or any(not isinstance(v, str) or not v.strip() or len(v) > 256 for v in values)):
+            raise ValueError('bounded channel coverage required')
+    if query.get('origin') == 'operator_open_topic' and not document.get('channels_covered'):
+        raise ValueError('open-topic search must identify the searched channel')
+    candidates = document.get('candidate_sources', [])
+    if not isinstance(candidates, list) or len(candidates) > 8:
+        raise ValueError('candidate budget exceeded')
+    for candidate in candidates:
+        if not isinstance(candidate, str) or len(candidate) > 2048:
+            raise ValueError('candidate must be a bounded URL only')
+        parts = urlsplit(candidate)
+        if parts.scheme != 'https' or not parts.hostname or parts.username or parts.password:
+            raise ValueError('candidate requires public HTTPS URL without credentials')
     results = document.get('results', [])
     if len(results) > 8 or document['status'] not in {'success', 'empty', 'failure'}:
         raise ValueError('manual query status or result budget invalid')
@@ -237,7 +278,11 @@ def import_search(store, document, *, imported_at=None):
                                   'manual_operator': document['operator'],
                                   'manual_observed_at': observed.isoformat()})
         for b in batches for r in b.observations)
-    detail = dict(document) | {'imported_at': at.isoformat(), 'evidence_ids': [r.observation_id for r in observations]}
+    detail = dict(document) | {'imported_at': at.isoformat(), 'available_at': at.isoformat(),
+        'origin': query.get('origin', 'retrieved_headline_expansion'),
+        'fanout': len(results) + len(candidates),
+        'candidate_approval_status': 'PENDING_CODE_RIGHTS_REVIEW; no candidate content acquired',
+        'evidence_ids': [r.observation_id for r in observations]}
     store.append(MarketDataBatch(observations, (), at, (CoverageRecord(
         key, 'discovery.manual', document['run_id'], 'discovery.query', at,
         CoverageStatus.UNKNOWN, json.dumps(detail, sort_keys=True),
@@ -254,6 +299,8 @@ def main(argv=None):
     parser.add_argument('--manual-import', type=Path)
     parser.add_argument('--retention', type=int, default=40)
     parser.add_argument('--query-budget', type=int, default=8)
+    parser.add_argument('--open-query', action='append', default=[],
+                        help='Operator topic outside collected corpus; max four; manual search required')
     args = parser.parse_args(argv)
     if args.report.exists() or (not args.run_id and not args.manual_import):
         parser.error('new report path and run ID or manual import required')
@@ -267,7 +314,8 @@ def main(argv=None):
             report = import_search(store, json.loads(args.manual_import.read_text(encoding='utf-8')))
         else:
             report = research(store, run_id=args.run_id, session=session,
-                              retention=args.retention, query_budget=args.query_budget)
+                              retention=args.retention, query_budget=args.query_budget,
+                              open_queries=args.open_query)
     with args.report.open('x', encoding='utf-8') as handle:
         json.dump(report, handle, indent=2)
 
