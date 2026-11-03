@@ -89,10 +89,14 @@ def test_old_corpus_does_not_prove_two_functioning_publishers_this_run(tmp_path)
     assert second['status'] == 'NOT_PROVEN'
 
 
-def test_b2_actual_metadata_receipts_reopen_pit_and_market_graph(tmp_path, monkeypatch, offline):  # noqa: F811
+@pytest.mark.parametrize('fixture_name,expected_copies', [
+    ('live_acceptance.json', 35), ('session_02.json', 38),
+])
+def test_b2_actual_metadata_receipts_reopen_pit_and_market_graph(
+        tmp_path, monkeypatch, offline, fixture_name, expected_copies):  # noqa: F811
     from tests.test_graph_end_to_end import PromptCapturingModel, _graph
     folder = Path(__file__).parent / 'fixtures/checkpoint_b2'
-    report = json.loads((folder / 'live_acceptance.json').read_text(encoding='utf-8'))
+    report = json.loads((folder / fixture_name).read_text(encoding='utf-8'))
     store = SQLiteInformationStore(tmp_path / 'test.db')
     for item in report['specimens']:
         config = next(c for c in DISCOVERY_CONFIGS+RELATED_CONFIGS
@@ -108,17 +112,19 @@ def test_b2_actual_metadata_receipts_reopen_pit_and_market_graph(tmp_path, monke
     store.append(MarketDataBatch((), (), at, (CoverageRecord(
         _run_key(report['run_id']), 'discovery.world', report['run_id'], 'discovery.run',
         at, CoverageStatus.UNKNOWN, json.dumps(report)),)))
-    assert len(store.view_at(at).observations) == 35
+    assert len(store.view_at(at).observations) == expected_copies
     assert set(report['functioning_publishers_this_run']) == {'Global Voices', 'Inter Press Service'}
     assert all(e['counts']['omitted'] == 0 for e in report['independent_enumeration'].values())
-    for doc, receipt in zip(json.loads((folder / 'manual_search.json').read_text(encoding='utf-8')),
+    documents = (report['research_log']['manual_receipt_documents'] if 'research_log' in report
+                 else json.loads((folder / 'manual_search.json').read_text(encoding='utf-8')))
+    for doc, receipt in zip(documents,
                             report['manual_verification']['receipts'], strict=True):
         at = datetime.fromisoformat(receipt['imported_at'])
         assert import_search(store, doc, imported_at=at) == receipt
     view = SQLiteInformationStore(store.path, read_only=True).view_at(at)
-    assert len(view.observations) == 35  # latest source/article version; re-observation is not a new article
-    assert report['manual_verification']['receipts'][0]['evidence_ids'][0] in {
-        r.observation_id for r in view.observations}
+    assert len(view.observations) == expected_copies  # re-observation is not a new article
+    assert {eid for receipt in report['manual_verification']['receipts']
+            for eid in receipt['evidence_ids']} <= {r.observation_id for r in view.observations}
     first = min(r.retrieved_at for r in view.observations)
     assert not store.view_at(first-timedelta(microseconds=1)).observations
     assert all(r.payload['independent_confirmation'] == 'unknown' for r in view.observations)

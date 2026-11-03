@@ -1,0 +1,2347 @@
+{
+  "run_id": "checkpoint-b2-live-02-network-enabled",
+  "started_at": "2026-11-03T07:01:42.093884+00:00",
+  "completed_at": "2026-11-03T07:02:07.659855+00:00",
+  "mode": "publisher_feed_metadata_and_local_adaptive_search",
+  "queries": [
+    {
+      "query_id": "df9614fe8cc991b251324e41ab153522312781242f5c848f4539134a3371cc52",
+      "query": "fish scarcity tar balls",
+      "input_evidence_ids": [
+        "news:f08b20388e395245f94f2bb9ce66629c6bcd767abf242868807007043e8084bb"
+      ],
+      "input_available_at": "2026-11-03T07:02:07.659855+00:00",
+      "reason": "first four distinct non-stop headline tokens; one hop",
+      "executor": "local_permitted_metadata",
+      "status": "executed",
+      "result_ids": [
+        "news:f08b20388e395245f94f2bb9ce66629c6bcd767abf242868807007043e8084bb"
+      ],
+      "external_status": "manual_search_pending",
+      "relation_status": "PROVISIONAL; lexical overlap only; origin UNKNOWN"
+    },
+    {
+      "query_id": "ddb08f10243a58950d840a19783c160219526f3cb6483b11c02f931c3d26321d",
+      "query": "albania rural youth campaigning",
+      "input_evidence_ids": [
+        "news:5c8943ee4b87b7daca1be9befcbf3dba60d38c4d4388f9c0c8dd32c92ce5f73b"
+      ],
+      "input_available_at": "2026-11-03T07:02:07.659855+00:00",
+      "reason": "first four distinct non-stop headline tokens; one hop",
+      "executor": "local_permitted_metadata",
+      "status": "executed",
+      "result_ids": [
+        "news:5c8943ee4b87b7daca1be9befcbf3dba60d38c4d4388f9c0c8dd32c92ce5f73b"
+      ],
+      "external_status": "manual_search_pending",
+      "relation_status": "PROVISIONAL; lexical overlap only; origin UNKNOWN"
+    },
+    {
+      "query_id": "f73d29b802efb5ca55a4b3da201b9d8be061e0ba43fcbe5a7923bd50ae5c50d7",
+      "query": "when chatbots become answer",
+      "input_evidence_ids": [
+        "news:f7834160751a93e137e2d03f8c76c981b8419943189d44cc8592511ee6103e35"
+      ],
+      "input_available_at": "2026-11-03T07:01:57.654286+00:00",
+      "reason": "first four distinct non-stop headline tokens; one hop",
+      "executor": "local_permitted_metadata",
+      "status": "executed",
+      "result_ids": [
+        "news:f7834160751a93e137e2d03f8c76c981b8419943189d44cc8592511ee6103e35"
+      ],
+      "external_status": "manual_search_pending",
+      "relation_status": "PROVISIONAL; lexical overlap only; origin UNKNOWN"
+    },
+    {
+      "query_id": "fb94c5c855c3af76e84a9aae4aef7e00e04c221a8252813f611565c740cd7b64",
+      "query": "myanmar journalist reflection when",
+      "input_evidence_ids": [
+        "news:ef118670b0f7c90b7a4bea8b14fe4dacdf176bbd1e45f0cab36ecd48b2678869"
+      ],
+      "input_available_at": "2026-11-03T07:01:57.654286+00:00",
+      "reason": "first four distinct non-stop headline tokens; one hop",
+      "executor": "local_permitted_metadata",
+      "status": "executed",
+      "result_ids": [
+        "news:ef118670b0f7c90b7a4bea8b14fe4dacdf176bbd1e45f0cab36ecd48b2678869"
+      ],
+      "external_status": "manual_search_pending",
+      "relation_status": "PROVISIONAL; lexical overlap only; origin UNKNOWN"
+    },
+    {
+      "query_id": "4685fe46caf74d78bd3832f7b67b59bcd2b48a5f02e3a3a39a63fcdde82586fd",
+      "query": "warning signals venezuela risk",
+      "input_evidence_ids": [
+        "news:e7524f3c00f50ffadb328fa77db8a4891a023d25c116a3f745f775449fde81ea"
+      ],
+      "input_available_at": "2026-11-03T07:01:57.654286+00:00",
+      "reason": "first four distinct non-stop headline tokens; one hop",
+      "executor": "local_permitted_metadata",
+      "status": "executed",
+      "result_ids": [
+        "news:e7524f3c00f50ffadb328fa77db8a4891a023d25c116a3f745f775449fde81ea"
+      ],
+      "external_status": "manual_search_pending",
+      "relation_status": "PROVISIONAL; lexical overlap only; origin UNKNOWN"
+    },
+    {
+      "query_id": "2a515d0d2b3261baee7c88ab4b2e8f7b4d324302cc5a69ef97859e712d384341",
+      "query": "bangladesh weighs tougher cyber",
+      "input_evidence_ids": [
+        "news:cf5e4b968919ee93429b582d1d984fa34d8c0739c5923c19f2b6f194eb3c50f8"
+      ],
+      "input_available_at": "2026-11-03T07:01:57.654286+00:00",
+      "reason": "first four distinct non-stop headline tokens; one hop",
+      "executor": "local_permitted_metadata",
+      "status": "executed",
+      "result_ids": [
+        "news:cf5e4b968919ee93429b582d1d984fa34d8c0739c5923c19f2b6f194eb3c50f8"
+      ],
+      "external_status": "manual_search_pending",
+      "relation_status": "PROVISIONAL; lexical overlap only; origin UNKNOWN"
+    },
+    {
+      "query_id": "3de0c44e6bab3554fdd8aeb25845cd5d492acfff28d070827ed5ff60202d608b",
+      "query": "streets social media army",
+      "input_evidence_ids": [
+        "news:ad2943db222023968e3a0f80dde7607478883df5356768f1d1c6a23ddf522bbd"
+      ],
+      "input_available_at": "2026-11-03T07:01:57.654286+00:00",
+      "reason": "first four distinct non-stop headline tokens; one hop",
+      "executor": "local_permitted_metadata",
+      "status": "executed",
+      "result_ids": [
+        "news:ad2943db222023968e3a0f80dde7607478883df5356768f1d1c6a23ddf522bbd"
+      ],
+      "external_status": "manual_search_pending",
+      "relation_status": "PROVISIONAL; lexical overlap only; origin UNKNOWN"
+    },
+    {
+      "query_id": "857cb9aeed95d0ddf4147831bb96e6eee15c889b478d47d65177867b44179c32",
+      "query": "digital publication sheds light",
+      "input_evidence_ids": [
+        "news:9ae071c78959fc2bf4d8afd26649d9bddeeaf56cb6a81b18b702161bdb9615b3"
+      ],
+      "input_available_at": "2026-11-03T07:01:57.654286+00:00",
+      "reason": "first four distinct non-stop headline tokens; one hop",
+      "executor": "local_permitted_metadata",
+      "status": "executed",
+      "result_ids": [
+        "news:9ae071c78959fc2bf4d8afd26649d9bddeeaf56cb6a81b18b702161bdb9615b3"
+      ],
+      "external_status": "manual_search_pending",
+      "relation_status": "PROVISIONAL; lexical overlap only; origin UNKNOWN"
+    }
+  ],
+  "query_budget": 8,
+  "expansion_depth": 1,
+  "open_queries": [
+    {
+      "query": "water agriculture energy disruption November 3 2026",
+      "query_id": "7a0c9f91b957e8df0b39ae8ac1b2a8c31b03bab64b78e242c21f455d6fc05d5a",
+      "origin": "operator_open_topic",
+      "input_evidence_ids": [],
+      "executor": "manual_external_search",
+      "status": "pending",
+      "fanout": 0,
+      "channels_covered": [],
+      "channels_missed": [
+        "external search not yet performed"
+      ]
+    },
+    {
+      "query": "Bangladesh cyber law AI abuse November 2026",
+      "query_id": "d49730916cb9714fb230761e2434dd13c3c0465fd22f8257f2efd115ddb109db",
+      "origin": "operator_open_topic",
+      "input_evidence_ids": [],
+      "executor": "manual_external_search",
+      "status": "pending",
+      "fanout": 0,
+      "channels_covered": [],
+      "channels_missed": [
+        "external search not yet performed"
+      ]
+    }
+  ],
+  "discovery_channels": {
+    "registered_feeds": [
+      "https://globalvoices.org/feed/",
+      "https://www.ipsnews.net/feed/"
+    ],
+    "local_search": "collected metadata only",
+    "open_web": "manual receipt required; no Python search API"
+  },
+  "related_feed_decision": {
+    "source_id": "news.discovery.globalvoices.environment",
+    "topic": "CLIMATE_DISASTER",
+    "input_evidence_ids": [
+      "news:0d7b50dae03eaf80c96426d0fdfbcde8c5b6788a18abde03483ba27acc2c94b9"
+    ],
+    "decided_at": "2026-11-03T07:01:57.654286+00:00",
+    "status": "executed",
+    "reason": "retrieved headline topic selects reviewed related feed; fanout=1",
+    "outcome": "success",
+    "completed_at": "2026-11-03T07:02:07.659855+00:00"
+  },
+  "max_feed_requests": 3,
+  "repetition_window_hours": 24,
+  "corpus_items": 36,
+  "query_candidates": 35,
+  "queries_suppressed_repetition": 0,
+  "queries_omitted_budget": 27,
+  "corpus_omitted": 0,
+  "topics": {
+    "WAR_GEOPOLITICS": [
+      "news:e7524f3c00f50ffadb328fa77db8a4891a023d25c116a3f745f775449fde81ea",
+      "news:470884bc0e4ada15361084c225fec3e53ed1fb1b8845d08b26257e4ff5e405e0",
+      "news:301ca401c3be7445f1d6de2b048eb9482276dbba73cdf5bfb647d08788ca93da",
+      "news:1faef63a8ad84b78ed71ecdf387bec5f3adc59e8413db87c998ac9350dca69f6"
+    ],
+    "TRADE": [],
+    "CLIMATE_DISASTER": [
+      "news:0d7b50dae03eaf80c96426d0fdfbcde8c5b6788a18abde03483ba27acc2c94b9"
+    ],
+    "WATER_FOOD": [
+      "news:f08b20388e395245f94f2bb9ce66629c6bcd767abf242868807007043e8084bb",
+      "news:301ca401c3be7445f1d6de2b048eb9482276dbba73cdf5bfb647d08788ca93da",
+      "news:0d7b50dae03eaf80c96426d0fdfbcde8c5b6788a18abde03483ba27acc2c94b9"
+    ],
+    "ENERGY_GRID": [
+      "news:e7524f3c00f50ffadb328fa77db8a4891a023d25c116a3f745f775449fde81ea"
+    ],
+    "HEALTH": [],
+    "SCIENCE_AI_TECH_CYBER": [
+      "news:f7834160751a93e137e2d03f8c76c981b8419943189d44cc8592511ee6103e35",
+      "news:e7524f3c00f50ffadb328fa77db8a4891a023d25c116a3f745f775449fde81ea",
+      "news:cf5e4b968919ee93429b582d1d984fa34d8c0739c5923c19f2b6f194eb3c50f8",
+      "news:0d7b50dae03eaf80c96426d0fdfbcde8c5b6788a18abde03483ba27acc2c94b9"
+    ],
+    "REGULATION": [
+      "news:cf5e4b968919ee93429b582d1d984fa34d8c0739c5923c19f2b6f194eb3c50f8",
+      "news:4da92a16a8511deae166f8777eecd58a14ba1bb95f2cef173728abb92b21621d"
+    ]
+  },
+  "uncovered_topics": [
+    "TRADE",
+    "HEALTH"
+  ],
+  "polls": [
+    {
+      "source_id": "news.discovery.ips",
+      "observed_at": "2026-11-03T07:01:45.447609+00:00",
+      "completeness": "unknown",
+      "config": "1c168d7b3c8b61f15f93a45bfac4f5696153403ee8e2f8d4dbda9ce8341f3a22",
+      "content_scope": "eligible agency links only",
+      "duplicate_item_count": 0,
+      "elapsed_wall_seconds": 3.349889,
+      "error": null,
+      "excluded_article_count": 0,
+      "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+      "http_status": null,
+      "intake_contract": {
+        "full_body": "not collected by this feed adapter",
+        "parser_item_cap": 100,
+        "response_byte_cap": 2000000,
+        "retention_cap": "caller supplied; null means all successfully parsed items",
+        "source_order": "provider response order; chronology unknown",
+        "source_window": "unknown rolling window",
+        "summary_rights": {
+          "access": "unknown",
+          "inference": "unknown",
+          "redistribution": "unknown",
+          "retention": "unknown"
+        },
+        "upstream_omissions": "unknown"
+      },
+      "item_manifest": [
+        {
+          "article_id": "article:b66ead2f8e08e174bb061fa67bb69ad58b96bb9a57363ae7a6ac301ece68ad63",
+          "publication_time": "2026-11-03T06:34:08+00:00",
+          "source_item_index": 0,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:b66ead2f8e08e174bb061fa67bb69ad58b96bb9a57363ae7a6ac301ece68ad63:17b6708813f7f8f127b7491aca47c4d00b09c3d9164f4124d0f62b13c995cd98"
+        },
+        {
+          "article_id": "article:4621b355e7feeaa345cabb4a19c00411c70bb0a795c29496283f73b54daec4b2",
+          "publication_time": "2026-11-03T06:28:41+00:00",
+          "source_item_index": 1,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:4621b355e7feeaa345cabb4a19c00411c70bb0a795c29496283f73b54daec4b2:e59ee8425fb1a0c97fdbc453e0d09754b67f120ec5c87e09d5acad95438e6a2f"
+        },
+        {
+          "article_id": "article:c12f406842f6275f2d4decac80562718402370f64d228d6e13fb6fd3163ac63e",
+          "publication_time": "2026-11-02T18:38:13+00:00",
+          "source_item_index": 2,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:c12f406842f6275f2d4decac80562718402370f64d228d6e13fb6fd3163ac63e:3b1d107c08652d8b2cca368b326441996cac44e80e503de01991e7e81de07e05"
+        },
+        {
+          "article_id": "article:e434da103e18dad3a46ae3198ae484549825864ce4b653d155c6c45def937cca",
+          "publication_time": "2026-11-02T09:25:54+00:00",
+          "source_item_index": 3,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:e434da103e18dad3a46ae3198ae484549825864ce4b653d155c6c45def937cca:0694928eb4cb73a233f71733200ef6e3e9351a1ebb0e09de194399d82fbaeb7f"
+        },
+        {
+          "article_id": "article:10d9d3b806f7b6ca6a94f897f898b50aa67a05c3d93c3c54dafe7bb865039266",
+          "publication_time": "2026-11-02T07:06:11+00:00",
+          "source_item_index": 4,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:10d9d3b806f7b6ca6a94f897f898b50aa67a05c3d93c3c54dafe7bb865039266:634c860f9989597abf473ee406865c44a1217da0b9f494aa22927c6f9697629e"
+        },
+        {
+          "article_id": "article:520835ea00494c0e43c7fbcf581cebb4fd08b3a03f0beea23ffb677cc57e85cf",
+          "publication_time": "2026-11-02T05:37:39+00:00",
+          "source_item_index": 5,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:520835ea00494c0e43c7fbcf581cebb4fd08b3a03f0beea23ffb677cc57e85cf:ec75ce1ea611e8d0432e742803fed1f3afdd774ac6d1aded48508074a55bbc45"
+        },
+        {
+          "article_id": "article:3daf987982314cccfbd11843fd10c8f1f40e95c5d4c032aa31876cd30756cc98",
+          "publication_time": "2026-11-02T05:26:36+00:00",
+          "source_item_index": 6,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:3daf987982314cccfbd11843fd10c8f1f40e95c5d4c032aa31876cd30756cc98:0bf3ddac33babfdd55dedf7b54a374f28d85a378c6fff56060b2a2ab526a29f6"
+        },
+        {
+          "article_id": "article:0cf909cabba4e19daf1bd029751f12fa241490a77d41413c5f3eec2a94ce45a2",
+          "publication_time": "2026-10-30T18:22:36+00:00",
+          "source_item_index": 7,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:0cf909cabba4e19daf1bd029751f12fa241490a77d41413c5f3eec2a94ce45a2:191a560cdac786769646bc0d5640ba0a9c76c69e08dfe14410931c63c639ce53"
+        },
+        {
+          "article_id": "article:6969f223159d97d5089da202748bd63812aa9305804c936bbe5570041591dc1b",
+          "publication_time": "2026-10-30T15:34:34+00:00",
+          "source_item_index": 8,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:6969f223159d97d5089da202748bd63812aa9305804c936bbe5570041591dc1b:2393eab1ad60ca82c1938f3163b496040556c1e751d528a92c578d28d1e81812"
+        },
+        {
+          "article_id": "article:6cf808873b78a2ad14a040158700a857e1b1804be6d6357167564a80bbfadf10",
+          "publication_time": "2026-10-30T13:08:00+00:00",
+          "source_item_index": 9,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:6cf808873b78a2ad14a040158700a857e1b1804be6d6357167564a80bbfadf10:7a154abd7f1e7057ae8c8f461856e8df73aca21f5443e11a9360d7999b723601"
+        },
+        {
+          "article_id": "article:1dad4c888a19c6263150dd57a60e7f37315feb2ac6af69a419025c272cc5370a",
+          "publication_time": "2026-10-30T08:59:03+00:00",
+          "source_item_index": 10,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:1dad4c888a19c6263150dd57a60e7f37315feb2ac6af69a419025c272cc5370a:53d7cd5de17b759a68cf5bdc74583c2b3a810b0def4181e5d72a57b9c51dff09"
+        },
+        {
+          "article_id": "article:cc6443a8c7809c446a88a9056bd4cb923dea8a727b8e96ee17226b08adc379ca",
+          "publication_time": "2026-10-30T05:55:41+00:00",
+          "source_item_index": 11,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:cc6443a8c7809c446a88a9056bd4cb923dea8a727b8e96ee17226b08adc379ca:8541fefcbd566a052a3ce31f0cc4f1b43c725cfb17b261061a2696e8e3cfd2ec"
+        },
+        {
+          "article_id": "article:de8964a85dea5d2e822fff2d9f65637f60d3ba5b73629b8a89e5e083440ddaac",
+          "publication_time": "2026-10-29T16:43:01+00:00",
+          "source_item_index": 12,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:de8964a85dea5d2e822fff2d9f65637f60d3ba5b73629b8a89e5e083440ddaac:c5c6f98d047a80dad687d49d47b4ccfaa9182ad11d972e86a12ff5ba8bb38af6"
+        },
+        {
+          "article_id": "article:1aed37dadd114ab7f709a95ed3c4bc96804d6fc1281340c7d76a4abd2f0b17ac",
+          "publication_time": "2026-10-29T13:59:53+00:00",
+          "source_item_index": 13,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:1aed37dadd114ab7f709a95ed3c4bc96804d6fc1281340c7d76a4abd2f0b17ac:388772ab080a77f828720ae8331eddae4f184a6c6e4fb1d9c49d6092215f4670"
+        },
+        {
+          "article_id": "article:e5f688ff31f8f51b74fe956ca6d4c5f25ea6c6256d04179b8a91fbf2f938d51c",
+          "publication_time": "2026-10-29T07:19:01+00:00",
+          "source_item_index": 14,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:e5f688ff31f8f51b74fe956ca6d4c5f25ea6c6256d04179b8a91fbf2f938d51c:fddf3e3c43f7350b1952ee5e6e06426e94f29b54ac964c5f65a8ffc336a29469"
+        },
+        {
+          "article_id": "article:58c35ee1ec72a4258d2c81a239383eeea019f43b36c92d5915d6e9ac4ac361c5",
+          "publication_time": "2026-10-28T12:01:51+00:00",
+          "source_item_index": 15,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:58c35ee1ec72a4258d2c81a239383eeea019f43b36c92d5915d6e9ac4ac361c5:6f2860b16c1f1e29889d766e87a9dea79e312158ea0de8fd8e7227542be3845c"
+        },
+        {
+          "article_id": "article:1432404517e627e94b2bd4d3ed9697a4cea7769da94366ea58c4f8c8da3e1d6a",
+          "publication_time": "2026-10-28T06:09:07+00:00",
+          "source_item_index": 16,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:1432404517e627e94b2bd4d3ed9697a4cea7769da94366ea58c4f8c8da3e1d6a:9404ca3d1577746e95ef465356978275e33b63144bafccc824e6aa000085e57b"
+        },
+        {
+          "article_id": "article:1f03959dd37bedf8b1a65a00a1abc7a6681fe16bae65c48f213a682b226dafca",
+          "publication_time": "2026-10-28T05:59:08+00:00",
+          "source_item_index": 17,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:1f03959dd37bedf8b1a65a00a1abc7a6681fe16bae65c48f213a682b226dafca:df1769072863f5779242723f464b6c2a3257f26c96c0077201714d4ed46684fa"
+        },
+        {
+          "article_id": "article:c0e843e24952974b2c077a14b4e121772fc93009aedd90f46b9a8fa1b6513b9b",
+          "publication_time": "2026-10-28T05:52:40+00:00",
+          "source_item_index": 18,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:c0e843e24952974b2c077a14b4e121772fc93009aedd90f46b9a8fa1b6513b9b:a76922ccac20416468a12f03445548c49592da4bc38d9a0053fc023dabfdb210"
+        },
+        {
+          "article_id": "article:e06167e1595f331228680a1d73476c1ce68092eb4b258fb6bd562a93ba1cd51a",
+          "publication_time": "2026-10-28T04:48:02+00:00",
+          "source_item_index": 19,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:e06167e1595f331228680a1d73476c1ce68092eb4b258fb6bd562a93ba1cd51a:c7e5e7c2a70dbe4b06fb8c1d9f7974e8edf350702c78854f38934479517db06c"
+        },
+        {
+          "article_id": "article:055cf084f541b0c3578b16d3ae5378178dc603db9a21b89744bb133de5878bbe",
+          "publication_time": "2026-10-27T07:38:08+00:00",
+          "source_item_index": 20,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:055cf084f541b0c3578b16d3ae5378178dc603db9a21b89744bb133de5878bbe:67618b7eeb876f3fa9f78367e42f9e4ea80f0c3260673b33f8a9c47e33ffa654"
+        },
+        {
+          "article_id": "article:30daf6427235665a0ce42a0d9622d0e30c1c8eab620094e8ed8c02c02268ceab",
+          "publication_time": "2026-10-27T07:23:47+00:00",
+          "source_item_index": 21,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:30daf6427235665a0ce42a0d9622d0e30c1c8eab620094e8ed8c02c02268ceab:c0f6ce0bec45524324dcfdb5621cdc8cefefc7d4fc693bfe5d3ef30490fd0f58"
+        },
+        {
+          "article_id": "article:7e500c112d3951b145a49cacbaf457dca22513ae13aaa4f80fd6c3fc1544f3c7",
+          "publication_time": "2026-10-27T06:53:23+00:00",
+          "source_item_index": 22,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:7e500c112d3951b145a49cacbaf457dca22513ae13aaa4f80fd6c3fc1544f3c7:bfc5fb5035fe625a1b31fb1349b04fa727af4912f35e78dda075185573a4e8c9"
+        },
+        {
+          "article_id": "article:06ed4b939f0b1ccf26d0a33989b439af39deb2264b667caab093ef5422e749bb",
+          "publication_time": "2026-10-27T06:41:50+00:00",
+          "source_item_index": 23,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:06ed4b939f0b1ccf26d0a33989b439af39deb2264b667caab093ef5422e749bb:7849eceefebad0af709268c26ae5f34d432bce8ceb82332ebe3ff3832ef09ecb"
+        },
+        {
+          "article_id": "article:1ab30f81e647b92c33fee5220ed38289863606a8c4059003210c0814c7ba19de",
+          "publication_time": "2026-10-26T15:53:00+00:00",
+          "source_item_index": 24,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:1ab30f81e647b92c33fee5220ed38289863606a8c4059003210c0814c7ba19de:7fe7286162f78c48141163d58d03ee2d016d5a248c064c807d9607461ebb174e"
+        },
+        {
+          "article_id": "article:a1dd1b5fc1bd63af563926006652bb95952d7c2b247d51cd2320ef5800646ca4",
+          "publication_time": "2026-10-26T08:43:42+00:00",
+          "source_item_index": 25,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:a1dd1b5fc1bd63af563926006652bb95952d7c2b247d51cd2320ef5800646ca4:7066725f407d945ba831bd1b9c9324b394f4d54be9bdf3f0df1082f2c3541fb7"
+        },
+        {
+          "article_id": "article:4840a65b546848aed92ad79fe824edeeb7bedfcca5786a1f43c0fb3d120b865e",
+          "publication_time": "2026-10-26T05:43:16+00:00",
+          "source_item_index": 26,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:4840a65b546848aed92ad79fe824edeeb7bedfcca5786a1f43c0fb3d120b865e:9a49f72bf63a87ea520530590db775ef563ea4cca09000a1b104cf33af8f0a1b"
+        },
+        {
+          "article_id": "article:48b2e781397f9f913785e1d5aa64ecdeec97892c9e115aaf23401359359079fb",
+          "publication_time": "2026-10-23T16:38:16+00:00",
+          "source_item_index": 27,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:48b2e781397f9f913785e1d5aa64ecdeec97892c9e115aaf23401359359079fb:8532921d824022f136e8121f4ae83e24234c43e4436ff664a91c8e5f86e02660"
+        },
+        {
+          "article_id": "article:a98010edde3f91c4ff486ec7a3360bd74bf82ac4096841a1aff639b0b5157d5f",
+          "publication_time": "2026-10-23T04:58:29+00:00",
+          "source_item_index": 28,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:a98010edde3f91c4ff486ec7a3360bd74bf82ac4096841a1aff639b0b5157d5f:6807bd6e0f37cf7e8f5b12a2f80487443c85b9280a274d8ea3acaa65557fa757"
+        },
+        {
+          "article_id": "article:3e247079eb0b037775be101f5cb166af0f0e64c6449d60e7fdfa70b3a38b89e1",
+          "publication_time": "2026-10-23T04:49:01+00:00",
+          "source_item_index": 29,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:3e247079eb0b037775be101f5cb166af0f0e64c6449d60e7fdfa70b3a38b89e1:3af7ed32040dd4b261ed30336739706ac6c64a21d7f6bf466fb600d8ba47ddc0"
+        },
+        {
+          "article_id": "article:237491a51e6424d10dbebc2f20347b79c41f4bdcf232f3eddb3fd3a1446e8b8d",
+          "publication_time": "2026-10-22T06:52:56+00:00",
+          "source_item_index": 30,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:237491a51e6424d10dbebc2f20347b79c41f4bdcf232f3eddb3fd3a1446e8b8d:50c3b936535696d50273ff43001f2238ac62e18ec910e87cf586d1fbdf574bd7"
+        },
+        {
+          "article_id": "article:b8e59d9357ec922570fbbcd012a9d26f67b325fcaa62b87f7a49489b18f809a5",
+          "publication_time": "2026-10-22T05:49:53+00:00",
+          "source_item_index": 31,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:b8e59d9357ec922570fbbcd012a9d26f67b325fcaa62b87f7a49489b18f809a5:b62e98b804957ae924b85d6e05052a4a332c91ba1e031afe109fb45c2ce1597f"
+        },
+        {
+          "article_id": "article:347f4971642f68665cffc5ca937d575e01309e8d0a590924e32c96aeb14baf4c",
+          "publication_time": "2026-10-22T04:42:00+00:00",
+          "source_item_index": 32,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:347f4971642f68665cffc5ca937d575e01309e8d0a590924e32c96aeb14baf4c:a56d40643ae3abb346a13a1bc8bce896cc624086dd612e435482dd211845f4f1"
+        },
+        {
+          "article_id": "article:22fe2e8a0dacc370dc495c2ffddb4ef150f060dffb0c63063acc3eb23b2e5780",
+          "publication_time": "2026-10-21T17:08:51+00:00",
+          "source_item_index": 33,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:22fe2e8a0dacc370dc495c2ffddb4ef150f060dffb0c63063acc3eb23b2e5780:5f6806b01c524ad9b925a6ad950ebf06dae4d1a4e662e308e5f51fd32cc4561d"
+        },
+        {
+          "article_id": "article:2bb1630c996536d163660fafb4a6ead331b9a6696a3684b9b576f40763074047",
+          "publication_time": "2026-10-21T10:21:30+00:00",
+          "source_item_index": 34,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:2bb1630c996536d163660fafb4a6ead331b9a6696a3684b9b576f40763074047:4ceecdcd57567d2fc32051c0fa46abd8cea2fb6a995b1d75acc3092a399e11ba"
+        }
+      ],
+      "items": 22,
+      "manifest_semantics": "URL-hash identity/date reconciliation only; omitted content not retained or available for inference",
+      "omitted_by_slice_limit": 0,
+      "outcome": "success",
+      "outside_window_count": 13,
+      "parsed_unique_items": 35,
+      "parser_limit": 100,
+      "parser_overflow_count": 0,
+      "provider_window": "rolling feed; upstream truncation unknown",
+      "query": "",
+      "request_started_at": "2026-11-03T07:01:42.097720+00:00",
+      "retention_limit": 40,
+      "retention_order": "available first, publication or update descending, observation ID descending",
+      "retry_after_seconds": null,
+      "snapshot_hash": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa",
+      "snapshot_item_count": 35,
+      "source_order": "provider response order; chronology unknown",
+      "version": "1",
+      "window_end": "2026-11-03T07:01:45.447609+00:00",
+      "window_semantics": "publication else update; missing dates retained as unknown; not occurrence",
+      "window_start": "2026-10-27T07:01:42.093884+00:00"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "observed_at": "2026-11-03T07:01:57.654286+00:00",
+      "completeness": "unknown",
+      "config": "a1541e97d4756fba20fa0f709b22de64d19dffd932ad791fbf38f48ddf48822b",
+      "content_scope": "eligible agency links only",
+      "duplicate_item_count": 0,
+      "elapsed_wall_seconds": 12.16039,
+      "error": null,
+      "excluded_article_count": 0,
+      "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+      "http_status": null,
+      "intake_contract": {
+        "full_body": "not collected by this feed adapter",
+        "parser_item_cap": 100,
+        "response_byte_cap": 2000000,
+        "retention_cap": "caller supplied; null means all successfully parsed items",
+        "source_order": "provider response order; chronology unknown",
+        "source_window": "unknown rolling window",
+        "summary_rights": {
+          "access": "unknown",
+          "inference": "unknown",
+          "redistribution": "unknown",
+          "retention": "unknown"
+        },
+        "upstream_omissions": "unknown"
+      },
+      "item_manifest": [
+        {
+          "article_id": "article:6ded87de6b6017b40bbc86bafee8d83436ab34fd14c419080e4769f4b5ad7483",
+          "publication_time": "2026-11-03T03:21:48+00:00",
+          "source_item_index": 0,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:6ded87de6b6017b40bbc86bafee8d83436ab34fd14c419080e4769f4b5ad7483:3d33616a6cd0b8f12c2cee5e143a558c1afacacf673d899848119667e0e3c2ac"
+        },
+        {
+          "article_id": "article:71d6b19e04252a506608a733253e47d81b63d4d57b92a077ee6731eb46ceec97",
+          "publication_time": "2026-11-02T23:49:55+00:00",
+          "source_item_index": 1,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:71d6b19e04252a506608a733253e47d81b63d4d57b92a077ee6731eb46ceec97:85c8d304334b75ef34c4d841b2e707101588c95b1423eb89c33283ba74ec7cc2"
+        },
+        {
+          "article_id": "article:dcefcd6523989618b4dc6d5a13c33e72d378624028400e61b12438c3fe85421a",
+          "publication_time": "2026-11-02T18:08:55+00:00",
+          "source_item_index": 2,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:dcefcd6523989618b4dc6d5a13c33e72d378624028400e61b12438c3fe85421a:436ff36c7e9424790da2823f6c2c2fbdc1f3d0c934df51cff8fac9d545f2b56c"
+        },
+        {
+          "article_id": "article:622bdd8b4e29ecdafbc556ecdc32eb5884518d5451f1f53b459344e5170dc3dc",
+          "publication_time": "2026-10-31T13:38:41+00:00",
+          "source_item_index": 3,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:622bdd8b4e29ecdafbc556ecdc32eb5884518d5451f1f53b459344e5170dc3dc:ecf4de054744f6ddab2150c5f35fd313e7051ab76de101db906a94b564121274"
+        },
+        {
+          "article_id": "article:34b46e8b2025248c9330639af1b243aea29e32daf6e2cded328311bcc6b53e93",
+          "publication_time": "2026-10-30T19:30:47+00:00",
+          "source_item_index": 4,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:34b46e8b2025248c9330639af1b243aea29e32daf6e2cded328311bcc6b53e93:b6cc3f1f2a5503901e1de711b5e9e9ae8671adc119e7534c0d2f2c3013b5a646"
+        },
+        {
+          "article_id": "article:cc3f8dae9378dc992f9a4d0838aa7ae56b574995626f2281f60b8060789961b1",
+          "publication_time": "2026-10-30T16:37:15+00:00",
+          "source_item_index": 5,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:cc3f8dae9378dc992f9a4d0838aa7ae56b574995626f2281f60b8060789961b1:d0afd733f897c4782f54ac31860cc021b589b485d929ccfb2d5caede17bcc122"
+        },
+        {
+          "article_id": "article:87d0c3d961e539a4e418b93b115c7b01b68e0812e216ce60af74e4d238108ca8",
+          "publication_time": "2026-10-30T08:16:14+00:00",
+          "source_item_index": 6,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:87d0c3d961e539a4e418b93b115c7b01b68e0812e216ce60af74e4d238108ca8:38b085dbbc13e2d3c8db4fdc8a59f3d6defdeb683ad201885c9c3546d2750261"
+        },
+        {
+          "article_id": "article:22e7bfbd65e9c6e69d12258cb07410504aabe88c017d058906980b218ad80375",
+          "publication_time": "2026-10-29T23:06:48+00:00",
+          "source_item_index": 7,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:22e7bfbd65e9c6e69d12258cb07410504aabe88c017d058906980b218ad80375:bc58f58e71e1cc6c90f51154d5292f8fa4bdb80a24327848928c5a7920d30fd8"
+        },
+        {
+          "article_id": "article:7e490cd78d58f532fde5e05de5c511c86f5206bd1eaa5c621e1313ca3af6225d",
+          "publication_time": "2026-10-29T18:13:03+00:00",
+          "source_item_index": 8,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:7e490cd78d58f532fde5e05de5c511c86f5206bd1eaa5c621e1313ca3af6225d:1b58d5073ffbf187b6ca78ee80c9d023103086d1fae6928bb638604f6dfe4cfd"
+        },
+        {
+          "article_id": "article:d8be33690e640182d49eb29de3c01f84fb5d5eb986018a02293d99b6e050a33f",
+          "publication_time": "2026-10-29T13:40:53+00:00",
+          "source_item_index": 9,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:d8be33690e640182d49eb29de3c01f84fb5d5eb986018a02293d99b6e050a33f:262839101bc53c6a54b498d22458d758a426347f15028bee40721983a281319d"
+        },
+        {
+          "article_id": "article:b61e20d7505c951756707002bfaa9464e1c036e87b07fd0af8a7a137af645ca6",
+          "publication_time": "2026-10-28T15:25:02+00:00",
+          "source_item_index": 10,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:b61e20d7505c951756707002bfaa9464e1c036e87b07fd0af8a7a137af645ca6:c95636f5d7f4c6ca749f7155600d9c5ab6fc6eb16f5ea5b21672792c87624a5e"
+        },
+        {
+          "article_id": "article:a50a41dff26fbffcc019bf067a1fb062a54806f9ed7de1a0560778666e585558",
+          "publication_time": "2026-10-28T07:51:42+00:00",
+          "source_item_index": 11,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:a50a41dff26fbffcc019bf067a1fb062a54806f9ed7de1a0560778666e585558:ae2566379a8a1c6fa44e81c10f08b2ebf8873a3d44892ef3f4d091524667197f"
+        },
+        {
+          "article_id": "article:895cb373e8217a572c33fb1c2e4d59e56a66904d2af5ff1189c2b003c1e2815d",
+          "publication_time": "2026-10-27T21:10:54+00:00",
+          "source_item_index": 12,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:895cb373e8217a572c33fb1c2e4d59e56a66904d2af5ff1189c2b003c1e2815d:878f66463f8bd40b7196a2499396c241b47d34416a66491647e97d5e17f9bd28"
+        },
+        {
+          "article_id": "article:f2c0a64e92257878b9a7cf16ccf8fad634db9a1281bee1ac114f64acce7c3293",
+          "publication_time": "2026-10-27T08:59:12+00:00",
+          "source_item_index": 13,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:f2c0a64e92257878b9a7cf16ccf8fad634db9a1281bee1ac114f64acce7c3293:14f3a13b96bef54069d325acd297b85797c14347dad2b923c1da27fdd8afc7a0"
+        },
+        {
+          "article_id": "article:114ef2a3c4d65d8a6141f412d8817ec7bcb34c99ca9c580b832e2d73a084c0ea",
+          "publication_time": "2026-10-26T19:45:17+00:00",
+          "source_item_index": 14,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:114ef2a3c4d65d8a6141f412d8817ec7bcb34c99ca9c580b832e2d73a084c0ea:d5f007774639caec4ffca48cc1abb6c7c794530bf6532f6ce135b00d84c384fd"
+        }
+      ],
+      "items": 14,
+      "manifest_semantics": "URL-hash identity/date reconciliation only; omitted content not retained or available for inference",
+      "omitted_by_slice_limit": 0,
+      "outcome": "success",
+      "outside_window_count": 1,
+      "parsed_unique_items": 15,
+      "parser_limit": 100,
+      "parser_overflow_count": 0,
+      "provider_window": "rolling feed; upstream truncation unknown",
+      "query": "",
+      "request_started_at": "2026-11-03T07:01:45.493896+00:00",
+      "retention_limit": 40,
+      "retention_order": "available first, publication or update descending, observation ID descending",
+      "retry_after_seconds": null,
+      "snapshot_hash": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509",
+      "snapshot_item_count": 15,
+      "source_order": "provider response order; chronology unknown",
+      "version": "1",
+      "window_end": "2026-11-03T07:01:57.654286+00:00",
+      "window_semantics": "publication else update; missing dates retained as unknown; not occurrence",
+      "window_start": "2026-10-27T07:01:42.093884+00:00"
+    },
+    {
+      "source_id": "news.discovery.globalvoices.environment",
+      "observed_at": "2026-11-03T07:02:07.659855+00:00",
+      "completeness": "unknown",
+      "config": "6fa211fee0c786f09900db5f5b283e55bd339189c15498cf3faf40b9b4ac6b23",
+      "content_scope": "eligible agency links only",
+      "duplicate_item_count": 0,
+      "elapsed_wall_seconds": 9.963852,
+      "error": null,
+      "excluded_article_count": 0,
+      "first_seen_semantics": "earliest locally stored observation of canonical article; retrieved_at is this copy",
+      "http_status": null,
+      "intake_contract": {
+        "full_body": "not collected by this feed adapter",
+        "parser_item_cap": 100,
+        "response_byte_cap": 2000000,
+        "retention_cap": "caller supplied; null means all successfully parsed items",
+        "source_order": "provider response order; chronology unknown",
+        "source_window": "unknown rolling window",
+        "summary_rights": {
+          "access": "unknown",
+          "inference": "unknown",
+          "redistribution": "unknown",
+          "retention": "unknown"
+        },
+        "upstream_omissions": "unknown"
+      },
+      "item_manifest": [
+        {
+          "article_id": "article:d8be33690e640182d49eb29de3c01f84fb5d5eb986018a02293d99b6e050a33f",
+          "publication_time": "2026-10-29T13:40:53+00:00",
+          "source_item_index": 0,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:d8be33690e640182d49eb29de3c01f84fb5d5eb986018a02293d99b6e050a33f:262839101bc53c6a54b498d22458d758a426347f15028bee40721983a281319d"
+        },
+        {
+          "article_id": "article:f2c0a64e92257878b9a7cf16ccf8fad634db9a1281bee1ac114f64acce7c3293",
+          "publication_time": "2026-10-27T08:59:12+00:00",
+          "source_item_index": 1,
+          "state": "retained_available",
+          "updated_at": null,
+          "version_id": "article:f2c0a64e92257878b9a7cf16ccf8fad634db9a1281bee1ac114f64acce7c3293:14f3a13b96bef54069d325acd297b85797c14347dad2b923c1da27fdd8afc7a0"
+        },
+        {
+          "article_id": "article:b2c6ac2d0365bdbe98f0870f9aacd4e815a7f22f1472bb1974312303347b8214",
+          "publication_time": "2026-10-22T20:06:56+00:00",
+          "source_item_index": 2,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:b2c6ac2d0365bdbe98f0870f9aacd4e815a7f22f1472bb1974312303347b8214:e81df659e5f3358450d9aa4f3e325d0087b98a650a128476a444d083ed8c3408"
+        },
+        {
+          "article_id": "article:e0d6e186fd94775acaeed12b030bd3ea565cfeb4103d430f6af9be545dbda6f2",
+          "publication_time": "2026-10-15T18:30:01+00:00",
+          "source_item_index": 3,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:e0d6e186fd94775acaeed12b030bd3ea565cfeb4103d430f6af9be545dbda6f2:ea2d35c52d064d2b16fdd3ed35e1e4ba53b4925d4957a796fad114c50365c58b"
+        },
+        {
+          "article_id": "article:5bb17aa0c30814a670c3b77d14b45d7d35393414565716fe796251c138d011b0",
+          "publication_time": "2026-10-13T18:21:20+00:00",
+          "source_item_index": 4,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:5bb17aa0c30814a670c3b77d14b45d7d35393414565716fe796251c138d011b0:115472b1da7849ac4ad49af57afd8a76d83f48e9947a6671b61697aa86f9071c"
+        },
+        {
+          "article_id": "article:96b43d4f4f63de30c8ebd6249b60cfbfd361168c3974601ebc1d9597405240ed",
+          "publication_time": "2026-10-08T05:00:54+00:00",
+          "source_item_index": 5,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:96b43d4f4f63de30c8ebd6249b60cfbfd361168c3974601ebc1d9597405240ed:7ea9c556713154cf837ff4f505656bc1c48b8aa3c439d497791de94b3a71231b"
+        },
+        {
+          "article_id": "article:4b22cd33341e6c2a026e5d1862e7c439db6e331f30f7c5ffad3af917a51af91d",
+          "publication_time": "2026-10-06T08:05:24+00:00",
+          "source_item_index": 6,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:4b22cd33341e6c2a026e5d1862e7c439db6e331f30f7c5ffad3af917a51af91d:f22220f85b03997b842ba90b2a39677b2f16d9f82ed500596ebf85ed257fb075"
+        },
+        {
+          "article_id": "article:bf89f65b02d84d048967efc776468fef9b077f7fa4ce64b34fb17bbed7f20f0a",
+          "publication_time": "2026-09-30T14:09:26+00:00",
+          "source_item_index": 7,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:bf89f65b02d84d048967efc776468fef9b077f7fa4ce64b34fb17bbed7f20f0a:06f24304f23e609e836dbdab330a615e4db08e6d7628b748b429b5eb65e592d0"
+        },
+        {
+          "article_id": "article:730e5c9273e0d547088cc8ce23654d4cfa10b12e310f259429d94932b959e252",
+          "publication_time": "2026-09-29T00:00:00+00:00",
+          "source_item_index": 8,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:730e5c9273e0d547088cc8ce23654d4cfa10b12e310f259429d94932b959e252:575a0554f5ecc0e840a7603561287a532169fa27201ee1658e727a65c2e99971"
+        },
+        {
+          "article_id": "article:dda0717d61b49e3c21088ff68bde2e733ae2892ff0b10470c33ac8d054563aec",
+          "publication_time": "2026-09-24T20:31:08+00:00",
+          "source_item_index": 9,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:dda0717d61b49e3c21088ff68bde2e733ae2892ff0b10470c33ac8d054563aec:1231e6e6e53e9120f471fbf4d4756c63c9fdcda2e9d6bd9bf0979afcbf940111"
+        },
+        {
+          "article_id": "article:7fd8dfb7c6beb10a769c3912a49d8eb7591565c994e859712c5db47d19fb69ad",
+          "publication_time": "2026-09-21T12:03:52+00:00",
+          "source_item_index": 10,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:7fd8dfb7c6beb10a769c3912a49d8eb7591565c994e859712c5db47d19fb69ad:858fa8acb7a70e05061f7d13538f485b0bfccc7a66753f50cbb686e99bddcc74"
+        },
+        {
+          "article_id": "article:0352e120218012858e6eb682e4f44b02314b10cf05ab2d8913dc5ea1eecd91a1",
+          "publication_time": "2026-09-16T18:03:47+00:00",
+          "source_item_index": 11,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:0352e120218012858e6eb682e4f44b02314b10cf05ab2d8913dc5ea1eecd91a1:74f4f130ad0834f9274d9af69b2685e0527d8739a46cc4f5c559bd1b550f1192"
+        },
+        {
+          "article_id": "article:c040dcaf9ef173b22b67819dea80c63f516171c8976f3f118f9b6d7ba63969b5",
+          "publication_time": "2026-09-14T18:56:04+00:00",
+          "source_item_index": 12,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:c040dcaf9ef173b22b67819dea80c63f516171c8976f3f118f9b6d7ba63969b5:512c50c95405061df3efda2d3b5d9ab416549e474c2301ab81e45a922756fccb"
+        },
+        {
+          "article_id": "article:cd892b5a96bb3cef2449643c42107b9929bbbbe00f3cdf54b72c394a9f958678",
+          "publication_time": "2026-09-14T09:19:57+00:00",
+          "source_item_index": 13,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:cd892b5a96bb3cef2449643c42107b9929bbbbe00f3cdf54b72c394a9f958678:91ebe19fa309f8d07ad8e2c9d5d404103f0c0dc59bbff389536f89b46da7fcdb"
+        },
+        {
+          "article_id": "article:1a29bc459ddf95c27426d74af6e593fdeec6ccc3f48a2d93e93b2a0e48d60329",
+          "publication_time": "2026-09-07T18:12:45+00:00",
+          "source_item_index": 14,
+          "state": "outside_window",
+          "updated_at": null,
+          "version_id": "article:1a29bc459ddf95c27426d74af6e593fdeec6ccc3f48a2d93e93b2a0e48d60329:b18f18cadb8f97c9a49a6db2cf83f191cf3043a575cc9e9f0371685426c62d22"
+        }
+      ],
+      "items": 2,
+      "manifest_semantics": "URL-hash identity/date reconciliation only; omitted content not retained or available for inference",
+      "omitted_by_slice_limit": 0,
+      "outcome": "success",
+      "outside_window_count": 13,
+      "parsed_unique_items": 15,
+      "parser_limit": 100,
+      "parser_overflow_count": 0,
+      "provider_window": "rolling feed; upstream truncation unknown",
+      "query": "",
+      "request_started_at": "2026-11-03T07:01:57.696003+00:00",
+      "retention_limit": 40,
+      "retention_order": "available first, publication or update descending, observation ID descending",
+      "retry_after_seconds": null,
+      "snapshot_hash": "3fed340da607ee8071ea6195500dfabbd7b03baa5059710a245512797940a37b",
+      "snapshot_item_count": 15,
+      "source_order": "provider response order; chronology unknown",
+      "version": "1",
+      "window_end": "2026-11-03T07:02:07.659855+00:00",
+      "window_semantics": "publication else update; missing dates retained as unknown; not occurrence",
+      "window_start": "2026-10-27T07:01:42.093884+00:00"
+    }
+  ],
+  "health": [
+    {
+      "source_id": "news.discovery.globalvoices",
+      "budget_deferred": false,
+      "completeness": "unknown; rolling feeds cannot prove absence or recover missed history",
+      "config": "a1541e97d4756fba20fa0f709b22de64d19dffd932ad791fbf38f48ddf48822b",
+      "consecutive_failures": 0,
+      "content_stale": false,
+      "domain": "WORLD",
+      "host_cooldown_seconds": 30,
+      "independence": "unknown; providers/domains are not independent confirmations",
+      "interval_seconds": 3600,
+      "last_attempt": "2026-11-03T07:01:57.654286+00:00",
+      "last_nonempty": "2026-11-03T07:01:57.654286+00:00",
+      "late": false,
+      "max_sources": 2,
+      "missed_interval_seconds": null,
+      "newest_publication": "2026-11-03T03:21:48+00:00",
+      "newest_source_update": null,
+      "next_due": "2026-11-03T08:01:57.654286+00:00",
+      "policy_version": "recurring-v1",
+      "publication_unknown_items": 0,
+      "query": "",
+      "retention_limit": 40,
+      "rolling_window_gap": false,
+      "run_completed_at": "2026-11-03T07:01:57.654286+00:00",
+      "run_started_at": "2026-11-03T07:01:42.093884+00:00",
+      "selection_status": "selected",
+      "slot": 498247,
+      "stale": false,
+      "update_is_not_publication_or_occurrence": true,
+      "window_start": "2026-10-27T07:01:42.093884+00:00"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "budget_deferred": false,
+      "completeness": "unknown; rolling feeds cannot prove absence or recover missed history",
+      "config": "1c168d7b3c8b61f15f93a45bfac4f5696153403ee8e2f8d4dbda9ce8341f3a22",
+      "consecutive_failures": 0,
+      "content_stale": false,
+      "domain": "WORLD",
+      "host_cooldown_seconds": 30,
+      "independence": "unknown; providers/domains are not independent confirmations",
+      "interval_seconds": 3600,
+      "last_attempt": "2026-11-03T07:01:45.447609+00:00",
+      "last_nonempty": "2026-11-03T07:01:45.447609+00:00",
+      "late": false,
+      "max_sources": 2,
+      "missed_interval_seconds": null,
+      "newest_publication": "2026-11-03T06:34:08+00:00",
+      "newest_source_update": null,
+      "next_due": "2026-11-03T08:01:45.447609+00:00",
+      "policy_version": "recurring-v1",
+      "publication_unknown_items": 0,
+      "query": "",
+      "retention_limit": 40,
+      "rolling_window_gap": false,
+      "run_completed_at": "2026-11-03T07:01:57.654286+00:00",
+      "run_started_at": "2026-11-03T07:01:42.093884+00:00",
+      "selection_status": "selected",
+      "slot": 498247,
+      "stale": false,
+      "update_is_not_publication_or_occurrence": true,
+      "window_start": "2026-10-27T07:01:42.093884+00:00"
+    },
+    {
+      "source_id": "news.discovery.globalvoices.environment",
+      "budget_deferred": false,
+      "completeness": "unknown; rolling feeds cannot prove absence or recover missed history",
+      "config": "6fa211fee0c786f09900db5f5b283e55bd339189c15498cf3faf40b9b4ac6b23",
+      "consecutive_failures": 0,
+      "content_stale": null,
+      "domain": "WORLD",
+      "host_cooldown_seconds": 30,
+      "independence": "unknown; providers/domains are not independent confirmations",
+      "interval_seconds": 3600,
+      "last_attempt": null,
+      "last_nonempty": null,
+      "late": false,
+      "max_sources": 2,
+      "missed_interval_seconds": null,
+      "newest_publication": null,
+      "newest_source_update": null,
+      "next_due": "0001-01-01T00:00:00+00:00",
+      "policy_version": "recurring-v1",
+      "publication_unknown_items": 0,
+      "query": "",
+      "retention_limit": 40,
+      "rolling_window_gap": false,
+      "run_completed_at": "2026-11-03T07:01:57.654286+00:00",
+      "run_started_at": "2026-11-03T07:01:42.093884+00:00",
+      "selection_status": "source_filter",
+      "slot": 498247,
+      "stale": true,
+      "update_is_not_publication_or_occurrence": true,
+      "window_start": "2026-10-27T07:01:42.093884+00:00"
+    },
+    {
+      "source_id": "news.discovery.globalvoices.technology",
+      "budget_deferred": false,
+      "completeness": "unknown; rolling feeds cannot prove absence or recover missed history",
+      "config": "441e40dcf2b5f7a458fe51addfdb4fc215c13759720227792fcd7f00302fc829",
+      "consecutive_failures": 0,
+      "content_stale": null,
+      "domain": "WORLD",
+      "host_cooldown_seconds": 30,
+      "independence": "unknown; providers/domains are not independent confirmations",
+      "interval_seconds": 3600,
+      "last_attempt": null,
+      "last_nonempty": null,
+      "late": false,
+      "max_sources": 2,
+      "missed_interval_seconds": null,
+      "newest_publication": null,
+      "newest_source_update": null,
+      "next_due": "0001-01-01T00:00:00+00:00",
+      "policy_version": "recurring-v1",
+      "publication_unknown_items": 0,
+      "query": "",
+      "retention_limit": 40,
+      "rolling_window_gap": false,
+      "run_completed_at": "2026-11-03T07:01:57.654286+00:00",
+      "run_started_at": "2026-11-03T07:01:42.093884+00:00",
+      "selection_status": "source_filter",
+      "slot": 498247,
+      "stale": true,
+      "update_is_not_publication_or_occurrence": true,
+      "window_start": "2026-10-27T07:01:42.093884+00:00"
+    }
+  ],
+  "robots": {
+    "https://www.ipsnews.net": {
+      "checked_at": "2026-11-03T07:01:42.097732+00:00",
+      "status": 200,
+      "allowed": true,
+      "crawl_delay_seconds": 0,
+      "sha256": "57ea3ea3ccfbad533ad3c1d98fd99a5b91533d59c8540762ad9de490bbdb7f20"
+    },
+    "https://globalvoices.org": {
+      "checked_at": "2026-11-03T07:01:45.493913+00:00",
+      "status": 200,
+      "allowed": true,
+      "crawl_delay_seconds": 10,
+      "sha256": "443bdc1eda6b30fcccc5b2e20e3606fcba05f2ed013766887653f8a7e7b2e936"
+    }
+  },
+  "retention_per_source": 40,
+  "source_selection": [
+    "news.discovery.globalvoices",
+    "news.discovery.ips"
+  ],
+  "unknowns": [
+    "PC offline windows UNKNOWN",
+    "upstream feed omissions UNKNOWN",
+    "publisher diversity is not independent reporting",
+    "external web search not automatically executed",
+    "summaries rights gated"
+  ],
+  "actions": [
+    "Inspect polls.error and robots before diagnosing publisher outage",
+    "Use health.next_due; do not retry in a tight loop",
+    "Repair or replace invalid feed endpoints after a new exact rights review",
+    "Execute pending external queries manually and import only eligible metadata"
+  ],
+  "functioning_publishers_this_run": [
+    "Global Voices",
+    "Inter Press Service"
+  ],
+  "publication_first_seen_lag_seconds": [
+    {
+      "evidence_id": "news:f08b20388e395245f94f2bb9ce66629c6bcd767abf242868807007043e8084bb",
+      "seconds": 597765.654286
+    },
+    {
+      "evidence_id": "news:5c8943ee4b87b7daca1be9befcbf3dba60d38c4d4388f9c0c8dd32c92ce5f73b",
+      "seconds": 408064.654286
+    },
+    {
+      "evidence_id": "news:f7834160751a93e137e2d03f8c76c981b8419943189d44cc8592511ee6103e35",
+      "seconds": 300670.654286
+    },
+    {
+      "evidence_id": "news:ef118670b0f7c90b7a4bea8b14fe4dacdf176bbd1e45f0cab36ecd48b2678869",
+      "seconds": 391734.654286
+    },
+    {
+      "evidence_id": "news:e7524f3c00f50ffadb328fa77db8a4891a023d25c116a3f745f775449fde81ea",
+      "seconds": 553863.654286
+    },
+    {
+      "evidence_id": "news:cf5e4b968919ee93429b582d1d984fa34d8c0739c5923c19f2b6f194eb3c50f8",
+      "seconds": 515415.654286
+    },
+    {
+      "evidence_id": "news:ad2943db222023968e3a0f80dde7607478883df5356768f1d1c6a23ddf522bbd",
+      "seconds": 311082.654286
+    },
+    {
+      "evidence_id": "news:9ae071c78959fc2bf4d8afd26649d9bddeeaf56cb6a81b18b702161bdb9615b3",
+      "seconds": 374109.654286
+    },
+    {
+      "evidence_id": "news:810d694e7a45786cad7ec74e4aa37e7687370778c095dd5074fe0c23d805e83c",
+      "seconds": 341143.654286
+    },
+    {
+      "evidence_id": "news:6194d060c4564dcdf8d2bff450040ad6680ec46751b339bc2a6ae01d589b1253",
+      "seconds": 25922.654286
+    },
+    {
+      "evidence_id": "news:60339105dd9ab1b09838d5ed2c609877d2ccf972b7bc6a365db29f25fbadc2c3",
+      "seconds": 235396.654286
+    },
+    {
+      "evidence_id": "news:4da92a16a8511deae166f8777eecd58a14ba1bb95f2cef173728abb92b21621d",
+      "seconds": 13209.654286
+    },
+    {
+      "evidence_id": "news:2bbdd14e73233c7bc1705c2a826fc95efd9c31595df049a7612520c3ee144d00",
+      "seconds": 46382.654286
+    },
+    {
+      "evidence_id": "news:16af5e57498016953e2b1b1a8374a759edb3c62b0660e2b2c132deac4f06068c",
+      "seconds": 488215.654286
+    },
+    {
+      "evidence_id": "news:fd8db3e45df35ebdc2746903c0fb678e8aeb99ddb303260f77c8bc54c1fe02b4",
+      "seconds": 77751.447609
+    },
+    {
+      "evidence_id": "news:f765b23ebe2b12508f32aca5a731816d9661ab2066a08220290c797d0e8ae521",
+      "seconds": 86134.447609
+    },
+    {
+      "evidence_id": "news:d05495318b93e571b743a75357af3d670b15428ab60488f4fabe5f4bcf41cdd9",
+      "seconds": 602617.447609
+    },
+    {
+      "evidence_id": "news:ccbd955eb738696f465733fe70888e8d4e81dc20edfcf8bd636e75df28e9d15c",
+      "seconds": 323625.447609
+    },
+    {
+      "evidence_id": "news:cb5f477fbe3059d221948df8786c5c5c02b08a15ebd312d5ce0bf0305d724908",
+      "seconds": 522157.447609
+    },
+    {
+      "evidence_id": "news:c50ea6d0d8e30a2ae3e7cf1d4fd332d834fc343123e2f296dc02d95cab1213f1",
+      "seconds": 430964.447609
+    },
+    {
+      "evidence_id": "news:9efd588277585cbe3bbf13f74da6ba402327fb74f733aa4641223f76b623076d",
+      "seconds": 526423.447609
+    },
+    {
+      "evidence_id": "news:8a4704ddd964ebfc582dcc0d636dc55ea6b475177e10e377e14954da7750189e",
+      "seconds": 603478.447609
+    },
+    {
+      "evidence_id": "news:813d634344dc67980a2be11219ea40bb315928bc333fc10477ec7f888112adb9",
+      "seconds": 1657.447609
+    },
+    {
+      "evidence_id": "news:76d50b09113f3849e78dcfae07778d3b1279cd4d4de635d5f4de895fd8d297b0",
+      "seconds": 1984.447609
+    },
+    {
+      "evidence_id": "news:6a8af040a6333d8c6b24d61ff335bb2af860254765a00d21a23195305a549b37",
+      "seconds": 406912.447609
+    },
+    {
+      "evidence_id": "news:5fe0148b1e22667e9ce0262e5b61cd8a3a7863c45448fededa23c6ac6e276bcb",
+      "seconds": 44612.447609
+    },
+    {
+      "evidence_id": "news:470884bc0e4ada15361084c225fec3e53ed1fb1b8845d08b26257e4ff5e405e0",
+      "seconds": 338562.447609
+    },
+    {
+      "evidence_id": "news:44bb81bb63089b0526f2120294e577fb2afae29f366ab9bc1bc8762d882fbcb7",
+      "seconds": 92109.447609
+    },
+    {
+      "evidence_id": "news:31565b75cf59cae1ca435b3592a1c5179d5ecfe6568101f7f395d9aa9b0ea343",
+      "seconds": 397124.447609
+    },
+    {
+      "evidence_id": "news:301ca401c3be7445f1d6de2b048eb9482276dbba73cdf5bfb647d08788ca93da",
+      "seconds": 91446.447609
+    },
+    {
+      "evidence_id": "news:2e5546d46e52b2089b436e8a55a9860ff90d8fd82001879ee5b33898bba2abe7",
+      "seconds": 304749.447609
+    },
+    {
+      "evidence_id": "news:238a514268689f2cb280c28396c812b121e4b3477a5218d901ee18864b618e13",
+      "seconds": 522545.447609
+    },
+    {
+      "evidence_id": "news:1faef63a8ad84b78ed71ecdf387bec5f3adc59e8413db87c998ac9350dca69f6",
+      "seconds": 349564.447609
+    },
+    {
+      "evidence_id": "news:12e3a38aa4084422e6f8f4a887c599f7f8f17dc916ea23950b8aa037c5e66483",
+      "seconds": 521558.447609
+    },
+    {
+      "evidence_id": "news:0d7b50dae03eaf80c96426d0fdfbcde8c5b6788a18abde03483ba27acc2c94b9",
+      "seconds": 500394.447609
+    },
+    {
+      "evidence_id": "news:050e7f8da326f1c78126b148c1024f88073f61d1325d6e6f5841bfe298a2c032",
+      "seconds": 314831.447609
+    }
+  ],
+  "status": "PARTIAL_METADATA_PILOT",
+  "specimens": [
+    {
+      "source_id": "news.discovery.ips",
+      "title": "From 44 Countries, One Shared Commitment: A Child Marriage-Free World",
+      "url": "https://www.ipsnews.net/2026/10/from-44-countries-one-shared-commitment-a-child-marriage-free-world/",
+      "published_raw": "Tue, 27 Oct 2026 07:23:47 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "Choosing the Next UN Secretary-General: The Threat of Veto or Veto Itself Must Not Silence the World",
+      "url": "https://www.ipsnews.net/2026/10/choosing-the-next-un-secretary-general-the-threat-of-veto-or-veto-itself-must-not-silence-the-world/",
+      "published_raw": "Tue, 27 Oct 2026 07:38:08 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "Fish scarcity, tar balls, and stranded dolphins: The hidden costs of offshore platforms in Cameroon waters",
+      "url": "https://globalvoices.org/2026/10/27/fish-scarcity-tar-balls-and-displaced-dolphins-the-hidden-costs-of-offshore-platforms-in-cameroon-waters/",
+      "published_raw": "Tue, 27 Oct 2026 08:59:12 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.globalvoices.environment",
+      "title": "Fish scarcity, tar balls, and stranded dolphins: The hidden costs of offshore platforms in Cameroon waters",
+      "url": "https://globalvoices.org/2026/10/27/fish-scarcity-tar-balls-and-displaced-dolphins-the-hidden-costs-of-offshore-platforms-in-cameroon-waters/",
+      "published_raw": "Tue, 27 Oct 2026 08:59:12 +0000",
+      "retrieved_at": "2026-11-03T07:02:07.659855+00:00",
+      "available_at": "2026-11-03T07:02:07.659855+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "3fed340da607ee8071ea6195500dfabbd7b03baa5059710a245512797940a37b"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "Warning Signals: Venezuela and the Risk of AI-Powered Chinese Digital Authoritarianism",
+      "url": "https://globalvoices.org/2026/10/27/warning-signals-venezuela-and-the-risk-of-ai-powered-chinese-digital-authoritarianism/",
+      "published_raw": "Tue, 27 Oct 2026 21:10:54 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "Farwiza Farhan\u2019s Fight To Save Tropical Hotspot of Indonesia \u2013 the Leuser",
+      "url": "https://www.ipsnews.net/2026/10/farwiza-farhans-fight-to-save-tropical-hotspot-of-indonesia-the-leuser/",
+      "published_raw": "Wed, 28 Oct 2026 04:48:02 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "Fifty Years at the Table: What Small Nations Need from the Next UN Secretary-General",
+      "url": "https://www.ipsnews.net/2026/10/fifty-years-at-the-table-what-small-nations-need-from-the-next-un-secretary-general/",
+      "published_raw": "Wed, 28 Oct 2026 05:52:40 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "The World Is Watching Norway. Will the Country Protect Antarctica?",
+      "url": "https://www.ipsnews.net/2026/10/the-world-is-watching-norway-will-the-country-protect-antarctica/",
+      "published_raw": "Wed, 28 Oct 2026 05:59:08 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "We Cannot Afford to Manage Chemicals One at a Time",
+      "url": "https://www.ipsnews.net/2026/10/we-cannot-afford-to-manage-chemicals-one-at-a-time/",
+      "published_raw": "Wed, 28 Oct 2026 06:09:07 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "Bangladesh weighs tougher cyber law as AI-generated abuse targets women",
+      "url": "https://globalvoices.org/2026/10/28/bangladesh-weighs-tougher-cyber-law-as-ai-generated-abuse-targets-women/",
+      "published_raw": "Wed, 28 Oct 2026 07:51:42 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "Flooding and Food Security: The Urgent Need for Research",
+      "url": "https://www.ipsnews.net/2026/10/flooding-and-food-security-the-urgent-need-for-research/",
+      "published_raw": "Wed, 28 Oct 2026 12:01:51 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "Support Global Voices\u2019 Spotlight: Justice as infrastructure",
+      "url": "https://globalvoices.org/2026/10/28/support-global-voices-spotlight-justice-as-infrastructure/",
+      "published_raw": "Wed, 28 Oct 2026 15:25:02 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "USA: \u2018Rights Can Be Hollowed out One Procedure at a Time until They Survive in Name Only\u2019",
+      "url": "https://www.ipsnews.net/2026/10/usa-rights-can-be-hollowed-out-one-procedure-at-a-time-until-they-survive-in-name-only/",
+      "published_raw": "Thu, 29 Oct 2026 07:19:01 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices.environment",
+      "title": "In Albania, rural youth are campaigning to solve local environmental problems",
+      "url": "https://globalvoices.org/2026/10/29/in-albania-rural-youth-are-campaigning-to-solve-local-environmental-problems/",
+      "published_raw": "Thu, 29 Oct 2026 13:40:53 +0000",
+      "retrieved_at": "2026-11-03T07:02:07.659855+00:00",
+      "available_at": "2026-11-03T07:02:07.659855+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "3fed340da607ee8071ea6195500dfabbd7b03baa5059710a245512797940a37b"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "In Albania, rural youth are campaigning to solve local environmental problems",
+      "url": "https://globalvoices.org/2026/10/29/in-albania-rural-youth-are-campaigning-to-solve-local-environmental-problems/",
+      "published_raw": "Thu, 29 Oct 2026 13:40:53 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "COP17 Celebrates Indigenous Leaders Amid Demand for Greater Inclusion in Biodiversity Decisions",
+      "url": "https://www.ipsnews.net/2026/10/cop17-celebrates-indigenous-leaders-amid-demand-for-greater-inclusion-in-biodiversity-decisions/",
+      "published_raw": "Thu, 29 Oct 2026 13:59:53 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "Why Dowry Still Dictating Women\u2019s Fate?",
+      "url": "https://www.ipsnews.net/2026/10/why-dowry-still-dictating-womens-fate/",
+      "published_raw": "Thu, 29 Oct 2026 16:43:01 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "A Myanmar journalist\u2019s reflection: \u2018When other people\u2019s pain becomes part of you\u2019",
+      "url": "https://globalvoices.org/2026/10/29/a-myanmar-journalists-reflection-when-other-peoples-pain-becomes-part-of-you/",
+      "published_raw": "Thu, 29 Oct 2026 18:13:03 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "A digital publication sheds light on Turkey\u2019s prison system",
+      "url": "https://globalvoices.org/2026/10/29/a-digital-publication-sheds-light-on-turkeys-prison-system/",
+      "published_raw": "Thu, 29 Oct 2026 23:06:48 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "Women and Girls\u2019 Death Toll in Armed Conflict Doubles since 2021",
+      "url": "https://www.ipsnews.net/2026/10/women-and-girls-death-toll-in-armed-conflict-doubles-since-2021/",
+      "published_raw": "Fri, 30 Oct 2026 05:55:41 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "How one Haitian entrepreneur found success by supporting all things local",
+      "url": "https://globalvoices.org/2026/10/30/how-one-haitian-entrepreneur-found-success-by-supporting-all-things-local/",
+      "published_raw": "Fri, 30 Oct 2026 08:16:14 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "UAE\u2019s UN Chief Candidate Faces Mounting Opposition Over Country\u2019s Role in Sudan War",
+      "url": "https://www.ipsnews.net/2026/10/uaes-un-chief-candidate-faces-mounting-opposition-over-countrys-role-in-sudan-war/",
+      "published_raw": "Fri, 30 Oct 2026 08:59:03 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "New Biodiversity Pledges Emerge at COP17, But Funding Gap Persists",
+      "url": "https://www.ipsnews.net/2026/10/new-biodiversity-pledges-emerge-at-cop17-but-funding-gap-persists/",
+      "published_raw": "Fri, 30 Oct 2026 13:08:00 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "African Athletes Should Be Free to Be Themselves",
+      "url": "https://www.ipsnews.net/2026/10/african-athletes-should-be-free-to-be-themselves/",
+      "published_raw": "Fri, 30 Oct 2026 15:34:34 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "How the streets and a social media army led Lula to a historic win in Brazil",
+      "url": "https://globalvoices.org/2026/10/30/how-the-streets-and-a-social-media-army-led-lula-to-a-historic-win-in-brazil/",
+      "published_raw": "Fri, 30 Oct 2026 16:37:15 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "Green Cities Can Make Room for New Homes and the Farms That Feed Them",
+      "url": "https://www.ipsnews.net/2026/10/green-cities-can-make-room-for-new-homes-and-the-farms-that-feed-them/",
+      "published_raw": "Fri, 30 Oct 2026 18:22:36 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "When chatbots become \u2018answer engines\u2019: AI, geopolitics and truth",
+      "url": "https://globalvoices.org/2026/10/30/when-chatbots-become-answer-engines-ai-geopolitics-and-truth/",
+      "published_raw": "Fri, 30 Oct 2026 19:30:47 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "In Kazakhstan, rural women are forming collectives to improve their livelihoods",
+      "url": "https://globalvoices.org/2026/10/31/in-kazakhstan-rural-women-are-forming-collectives-to-improve-their-livelihoods/",
+      "published_raw": "Sat, 31 Oct 2026 13:38:41 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "The UN Human Rights Council at 20: Credibility in Question",
+      "url": "https://www.ipsnews.net/2026/11/the-un-human-rights-council-at-20-credibility-in-question/",
+      "published_raw": "Mon, 02 Nov 2026 05:26:36 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "WFP Warnings Become a Reality as Food Insecurity in Haiti on Track to Reach Record Highs",
+      "url": "https://www.ipsnews.net/2026/11/wfp-warnings-become-a-reality-as-food-insecurity-in-haiti-on-track-to-reach-record-highs/",
+      "published_raw": "Mon, 02 Nov 2026 05:37:39 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "The Commonwealth Has 2.7 Billion Reasons to Act",
+      "url": "https://www.ipsnews.net/2026/11/the-commonwealth-has-2-7-billion-reasons-to-act/",
+      "published_raw": "Mon, 02 Nov 2026 07:06:11 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "New Biodiversity Funding Brings Hope for Armenia\u2019s Lake Sevan",
+      "url": "https://www.ipsnews.net/2026/11/new-biodiversity-funding-brings-hope-for-armenias-lake-sevan/",
+      "published_raw": "Mon, 02 Nov 2026 09:25:54 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "The Brazilian left\u2019s quest to \u2018tame\u2019 Meta: A narrative of denouncement and resistance",
+      "url": "https://globalvoices.org/2026/11/02/brazilian-lefts-quest-to-tame-meta-a-narrative-of-denouncement-and-resistance/",
+      "published_raw": "Mon, 02 Nov 2026 18:08:55 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "I Accuse",
+      "url": "https://www.ipsnews.net/2026/11/i-accuse/",
+      "published_raw": "Mon, 02 Nov 2026 18:38:13 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "In Kosovo, a new app makes reporting problems to the government fast and easy",
+      "url": "https://globalvoices.org/2026/11/02/in-kosovo-a-new-app-makes-reporting-problems-to-the-government-fast-and-easy/",
+      "published_raw": "Mon, 02 Nov 2026 23:49:55 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.globalvoices",
+      "title": "Unpacking Hong Kong\u2019s rule of law score according to the World Justice Project\u2019s ranking",
+      "url": "https://globalvoices.org/2026/11/03/unpacking-hong-kongs-rule-of-law-score-according-to-the-world-justice-projects-ranking/",
+      "published_raw": "Tue, 03 Nov 2026 03:21:48 +0000",
+      "retrieved_at": "2026-11-03T07:01:57.654286+00:00",
+      "available_at": "2026-11-03T07:01:57.654286+00:00",
+      "first_seen_time": "2026-11-03T07:01:57.654286+00:00",
+      "snapshot_sha256": "9283f6f5b5918283178d139c68787b585a927bf57b665ec5e1ac0b9fbcda3509"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "Is Gender Bias at the UN Coming to an Inglorious End?",
+      "url": "https://www.ipsnews.net/2026/11/is-gender-bias-at-the-un-coming-to-an-inglorious-end/",
+      "published_raw": "Tue, 03 Nov 2026 06:28:41 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    },
+    {
+      "source_id": "news.discovery.ips",
+      "title": "When the Young Stop Waiting: Europe\u2019s Gen Z Is Sending Us All a Message",
+      "url": "https://www.ipsnews.net/2026/11/when-the-young-stop-waiting-europes-gen-z-is-sending-us-all-a-message/",
+      "published_raw": "Tue, 03 Nov 2026 06:34:08 +0000",
+      "retrieved_at": "2026-11-03T07:01:45.447609+00:00",
+      "available_at": "2026-11-03T07:01:45.447609+00:00",
+      "first_seen_time": "2026-11-03T07:01:45.447609+00:00",
+      "snapshot_sha256": "7361c9bcaf354f81050a21407404dfe7532acf2cd797a9596867873010c8cbfa"
+    }
+  ],
+  "independent_enumeration": {
+    "https://www.ipsnews.net/feed/": {
+      "status": 200,
+      "content_type": "text/xml; charset=UTF-8",
+      "items": [
+        {
+          "index": 0,
+          "title": "When the Young Stop Waiting: Europe\u2019s Gen Z Is Sending Us All a Message",
+          "url": "https://www.ipsnews.net/2026/11/when-the-young-stop-waiting-europes-gen-z-is-sending-us-all-a-message/",
+          "published_raw": "Tue, 03 Nov 2026 06:34:08 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 1,
+          "title": "Is Gender Bias at the UN Coming to an Inglorious End?",
+          "url": "https://www.ipsnews.net/2026/11/is-gender-bias-at-the-un-coming-to-an-inglorious-end/",
+          "published_raw": "Tue, 03 Nov 2026 06:28:41 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 2,
+          "title": "I Accuse",
+          "url": "https://www.ipsnews.net/2026/11/i-accuse/",
+          "published_raw": "Mon, 02 Nov 2026 18:38:13 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 3,
+          "title": "New Biodiversity Funding Brings Hope for Armenia\u2019s Lake Sevan",
+          "url": "https://www.ipsnews.net/2026/11/new-biodiversity-funding-brings-hope-for-armenias-lake-sevan/",
+          "published_raw": "Mon, 02 Nov 2026 09:25:54 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 4,
+          "title": "The Commonwealth Has 2.7 Billion Reasons to Act",
+          "url": "https://www.ipsnews.net/2026/11/the-commonwealth-has-2-7-billion-reasons-to-act/",
+          "published_raw": "Mon, 02 Nov 2026 07:06:11 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 5,
+          "title": "WFP Warnings Become a Reality as Food Insecurity in Haiti on Track to Reach Record Highs",
+          "url": "https://www.ipsnews.net/2026/11/wfp-warnings-become-a-reality-as-food-insecurity-in-haiti-on-track-to-reach-record-highs/",
+          "published_raw": "Mon, 02 Nov 2026 05:37:39 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 6,
+          "title": "The UN Human Rights Council at 20: Credibility in Question",
+          "url": "https://www.ipsnews.net/2026/11/the-un-human-rights-council-at-20-credibility-in-question/",
+          "published_raw": "Mon, 02 Nov 2026 05:26:36 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 7,
+          "title": "Green Cities Can Make Room for New Homes and the Farms That Feed Them",
+          "url": "https://www.ipsnews.net/2026/10/green-cities-can-make-room-for-new-homes-and-the-farms-that-feed-them/",
+          "published_raw": "Fri, 30 Oct 2026 18:22:36 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 8,
+          "title": "African Athletes Should Be Free to Be Themselves",
+          "url": "https://www.ipsnews.net/2026/10/african-athletes-should-be-free-to-be-themselves/",
+          "published_raw": "Fri, 30 Oct 2026 15:34:34 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 9,
+          "title": "New Biodiversity Pledges Emerge at COP17, But Funding Gap Persists",
+          "url": "https://www.ipsnews.net/2026/10/new-biodiversity-pledges-emerge-at-cop17-but-funding-gap-persists/",
+          "published_raw": "Fri, 30 Oct 2026 13:08:00 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 10,
+          "title": "UAE\u2019s UN Chief Candidate Faces Mounting Opposition Over Country\u2019s Role in Sudan War",
+          "url": "https://www.ipsnews.net/2026/10/uaes-un-chief-candidate-faces-mounting-opposition-over-countrys-role-in-sudan-war/",
+          "published_raw": "Fri, 30 Oct 2026 08:59:03 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 11,
+          "title": "Women and Girls\u2019 Death Toll in Armed Conflict Doubles since 2021",
+          "url": "https://www.ipsnews.net/2026/10/women-and-girls-death-toll-in-armed-conflict-doubles-since-2021/",
+          "published_raw": "Fri, 30 Oct 2026 05:55:41 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 12,
+          "title": "Why Dowry Still Dictating Women\u2019s Fate?",
+          "url": "https://www.ipsnews.net/2026/10/why-dowry-still-dictating-womens-fate/",
+          "published_raw": "Thu, 29 Oct 2026 16:43:01 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 13,
+          "title": "COP17 Celebrates Indigenous Leaders Amid Demand for Greater Inclusion in Biodiversity Decisions",
+          "url": "https://www.ipsnews.net/2026/10/cop17-celebrates-indigenous-leaders-amid-demand-for-greater-inclusion-in-biodiversity-decisions/",
+          "published_raw": "Thu, 29 Oct 2026 13:59:53 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 14,
+          "title": "USA: \u2018Rights Can Be Hollowed out One Procedure at a Time until They Survive in Name Only\u2019",
+          "url": "https://www.ipsnews.net/2026/10/usa-rights-can-be-hollowed-out-one-procedure-at-a-time-until-they-survive-in-name-only/",
+          "published_raw": "Thu, 29 Oct 2026 07:19:01 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 15,
+          "title": "Flooding and Food Security: The Urgent Need for Research",
+          "url": "https://www.ipsnews.net/2026/10/flooding-and-food-security-the-urgent-need-for-research/",
+          "published_raw": "Wed, 28 Oct 2026 12:01:51 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 16,
+          "title": "We Cannot Afford to Manage Chemicals One at a Time",
+          "url": "https://www.ipsnews.net/2026/10/we-cannot-afford-to-manage-chemicals-one-at-a-time/",
+          "published_raw": "Wed, 28 Oct 2026 06:09:07 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 17,
+          "title": "The World Is Watching Norway. Will the Country Protect Antarctica?",
+          "url": "https://www.ipsnews.net/2026/10/the-world-is-watching-norway-will-the-country-protect-antarctica/",
+          "published_raw": "Wed, 28 Oct 2026 05:59:08 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 18,
+          "title": "Fifty Years at the Table: What Small Nations Need from the Next UN Secretary-General",
+          "url": "https://www.ipsnews.net/2026/10/fifty-years-at-the-table-what-small-nations-need-from-the-next-un-secretary-general/",
+          "published_raw": "Wed, 28 Oct 2026 05:52:40 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 19,
+          "title": "Farwiza Farhan\u2019s Fight To Save Tropical Hotspot of Indonesia \u2013 the Leuser",
+          "url": "https://www.ipsnews.net/2026/10/farwiza-farhans-fight-to-save-tropical-hotspot-of-indonesia-the-leuser/",
+          "published_raw": "Wed, 28 Oct 2026 04:48:02 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 20,
+          "title": "Choosing the Next UN Secretary-General: The Threat of Veto or Veto Itself Must Not Silence the World",
+          "url": "https://www.ipsnews.net/2026/10/choosing-the-next-un-secretary-general-the-threat-of-veto-or-veto-itself-must-not-silence-the-world/",
+          "published_raw": "Tue, 27 Oct 2026 07:38:08 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 21,
+          "title": "From 44 Countries, One Shared Commitment: A Child Marriage-Free World",
+          "url": "https://www.ipsnews.net/2026/10/from-44-countries-one-shared-commitment-a-child-marriage-free-world/",
+          "published_raw": "Tue, 27 Oct 2026 07:23:47 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 22,
+          "title": "Wanted: A Feminist UN Secretary-General for \u2018We the Peoples\u2019, Not the Powerful",
+          "url": "https://www.ipsnews.net/2026/10/wanted-a-feminist-un-secretary-general-for-we-the-peoples-not-the-powerful/",
+          "published_raw": "Tue, 27 Oct 2026 06:53:23 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 23,
+          "title": "Why Trump Expects the Nobel Peace Prize",
+          "url": "https://www.ipsnews.net/2026/10/why-trump-expects-the-nobel-peace-prize/",
+          "published_raw": "Tue, 27 Oct 2026 06:41:50 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 24,
+          "title": "France\u2019s New Protest Generation Rises",
+          "url": "https://www.ipsnews.net/2026/10/frances-new-protest-generation-rises/",
+          "published_raw": "Mon, 26 Oct 2026 15:53:00 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 25,
+          "title": "How Conflict Brings Biodiversity to the Brink",
+          "url": "https://www.ipsnews.net/2026/10/how-conflict-brings-biodiversity-to-the-brink/",
+          "published_raw": "Mon, 26 Oct 2026 08:43:42 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 26,
+          "title": "Upholding Human Rights & Public Safety: How Far Is Bangladesh?",
+          "url": "https://www.ipsnews.net/2026/10/upholding-human-rights-public-safety-how-far-is-bangladesh/",
+          "published_raw": "Mon, 26 Oct 2026 05:43:16 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 27,
+          "title": "Peace Needs Children\u2019s Voices",
+          "url": "https://www.ipsnews.net/2026/10/peace-needs-childrens-voices/",
+          "published_raw": "Fri, 23 Oct 2026 16:38:16 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 28,
+          "title": "Were Half of Venezuela\u2019s Oil Revenues Really Stolen? \u2014 Part II",
+          "url": "https://www.ipsnews.net/2026/10/were-half-of-venezuelas-oil-revenues-really-stolen-part-ii/",
+          "published_raw": "Fri, 23 Oct 2026 04:58:29 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 29,
+          "title": "The Eradication of Extreme Poverty by 2030: a Key UN goal will be a Missed Target",
+          "url": "https://www.ipsnews.net/2026/10/the-eradication-of-extreme-poverty-by-2030-a-key-un-goal-will-be-a-missed-target/",
+          "published_raw": "Fri, 23 Oct 2026 04:49:01 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 30,
+          "title": "International Day of Climate Action 2026",
+          "url": "https://www.ipsnews.net/2026/10/international-day-of-climate-action-2026/",
+          "published_raw": "Thu, 22 Oct 2026 06:52:56 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 31,
+          "title": "Bangladesh\u2019s Hidden Climate Bill: How Much Are We Losing Without Counting It?",
+          "url": "https://www.ipsnews.net/2026/10/bangladeshs-hidden-climate-bill-how-much-are-we-losing-without-counting-it/",
+          "published_raw": "Thu, 22 Oct 2026 05:49:53 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 32,
+          "title": "What a Seawater Sample Can Tell Scientists About Ocean Health",
+          "url": "https://www.ipsnews.net/2026/10/what-a-seawater-sample-can-tell-scientists-about-ocean-health/",
+          "published_raw": "Thu, 22 Oct 2026 04:42:00 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 33,
+          "title": "Were Half of Venezuela\u2019s Oil Revenues Really Stolen? \u2014 Part I",
+          "url": "https://www.ipsnews.net/2026/10/were-half-of-venezuelas-oil-revenues-really-stolen-part-i/",
+          "published_raw": "Wed, 21 Oct 2026 17:08:51 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 34,
+          "title": "The S\u00e1mi People and Reindeer Herding \u2013 a Struggle for S\u00e1pmi\u2019s Whole Nature",
+          "url": "https://www.ipsnews.net/2026/10/the-sami-people-and-reindeer-herding-a-struggle-for-sapmis-whole-nature/",
+          "published_raw": "Wed, 21 Oct 2026 10:21:30 +0000",
+          "classification": "outside_window"
+        }
+      ],
+      "counts": {
+        "retained": 22,
+        "omitted": 0,
+        "duplicates": 0,
+        "future": 0,
+        "outside_window": 13,
+        "ineligible": 0
+      },
+      "descending_publication_order": true,
+      "semantics": "Independent XML traversal of same bounded response; not global recall"
+    },
+    "https://globalvoices.org/feed/": {
+      "status": 200,
+      "content_type": "application/rss+xml; charset=UTF-8",
+      "items": [
+        {
+          "index": 0,
+          "title": "Unpacking Hong Kong\u2019s rule of law score according to the World Justice Project\u2019s ranking",
+          "url": "https://globalvoices.org/2026/11/03/unpacking-hong-kongs-rule-of-law-score-according-to-the-world-justice-projects-ranking/",
+          "published_raw": "Tue, 03 Nov 2026 03:21:48 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 1,
+          "title": "In Kosovo, a new app makes reporting problems to the government fast and easy",
+          "url": "https://globalvoices.org/2026/11/02/in-kosovo-a-new-app-makes-reporting-problems-to-the-government-fast-and-easy/",
+          "published_raw": "Mon, 02 Nov 2026 23:49:55 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 2,
+          "title": "The Brazilian left\u2019s quest to \u2018tame\u2019 Meta: A narrative of denouncement and resistance",
+          "url": "https://globalvoices.org/2026/11/02/brazilian-lefts-quest-to-tame-meta-a-narrative-of-denouncement-and-resistance/",
+          "published_raw": "Mon, 02 Nov 2026 18:08:55 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 3,
+          "title": "In Kazakhstan, rural women are forming collectives to improve their livelihoods",
+          "url": "https://globalvoices.org/2026/10/31/in-kazakhstan-rural-women-are-forming-collectives-to-improve-their-livelihoods/",
+          "published_raw": "Sat, 31 Oct 2026 13:38:41 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 4,
+          "title": "When chatbots become \u2018answer engines\u2019: AI, geopolitics and truth",
+          "url": "https://globalvoices.org/2026/10/30/when-chatbots-become-answer-engines-ai-geopolitics-and-truth/",
+          "published_raw": "Fri, 30 Oct 2026 19:30:47 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 5,
+          "title": "How the streets and a social media army led Lula to a historic win in Brazil",
+          "url": "https://globalvoices.org/2026/10/30/how-the-streets-and-a-social-media-army-led-lula-to-a-historic-win-in-brazil/",
+          "published_raw": "Fri, 30 Oct 2026 16:37:15 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 6,
+          "title": "How one Haitian entrepreneur found success by supporting all things local",
+          "url": "https://globalvoices.org/2026/10/30/how-one-haitian-entrepreneur-found-success-by-supporting-all-things-local/",
+          "published_raw": "Fri, 30 Oct 2026 08:16:14 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 7,
+          "title": "A digital publication sheds light on Turkey\u2019s prison system",
+          "url": "https://globalvoices.org/2026/10/29/a-digital-publication-sheds-light-on-turkeys-prison-system/",
+          "published_raw": "Thu, 29 Oct 2026 23:06:48 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 8,
+          "title": "A Myanmar journalist\u2019s reflection: \u2018When other people\u2019s pain becomes part of you\u2019",
+          "url": "https://globalvoices.org/2026/10/29/a-myanmar-journalists-reflection-when-other-peoples-pain-becomes-part-of-you/",
+          "published_raw": "Thu, 29 Oct 2026 18:13:03 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 9,
+          "title": "In Albania, rural youth are campaigning to solve local environmental problems",
+          "url": "https://globalvoices.org/2026/10/29/in-albania-rural-youth-are-campaigning-to-solve-local-environmental-problems/",
+          "published_raw": "Thu, 29 Oct 2026 13:40:53 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 10,
+          "title": "Support Global Voices\u2019 Spotlight: Justice as infrastructure",
+          "url": "https://globalvoices.org/2026/10/28/support-global-voices-spotlight-justice-as-infrastructure/",
+          "published_raw": "Wed, 28 Oct 2026 15:25:02 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 11,
+          "title": "Bangladesh weighs tougher cyber law as AI-generated abuse targets women",
+          "url": "https://globalvoices.org/2026/10/28/bangladesh-weighs-tougher-cyber-law-as-ai-generated-abuse-targets-women/",
+          "published_raw": "Wed, 28 Oct 2026 07:51:42 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 12,
+          "title": "Warning Signals: Venezuela and the Risk of AI-Powered Chinese Digital Authoritarianism",
+          "url": "https://globalvoices.org/2026/10/27/warning-signals-venezuela-and-the-risk-of-ai-powered-chinese-digital-authoritarianism/",
+          "published_raw": "Tue, 27 Oct 2026 21:10:54 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 13,
+          "title": "Fish scarcity, tar balls, and stranded dolphins: The hidden costs of offshore platforms in Cameroon waters",
+          "url": "https://globalvoices.org/2026/10/27/fish-scarcity-tar-balls-and-displaced-dolphins-the-hidden-costs-of-offshore-platforms-in-cameroon-waters/",
+          "published_raw": "Tue, 27 Oct 2026 08:59:12 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 14,
+          "title": "Volunteers from Poland remember how Poles opened their homes to Ukrainian refugees in 2022",
+          "url": "https://globalvoices.org/2026/10/26/volunteers-from-poland-remember-how-poles-opened-their-homes-to-ukrainian-refugees-in-2022/",
+          "published_raw": "Mon, 26 Oct 2026 19:45:17 +0000",
+          "classification": "outside_window"
+        }
+      ],
+      "counts": {
+        "retained": 14,
+        "omitted": 0,
+        "duplicates": 0,
+        "future": 0,
+        "outside_window": 1,
+        "ineligible": 0
+      },
+      "descending_publication_order": true,
+      "semantics": "Independent XML traversal of same bounded response; not global recall"
+    },
+    "https://globalvoices.org/-/topics/environment/feed/": {
+      "status": 200,
+      "content_type": "application/rss+xml; charset=UTF-8",
+      "items": [
+        {
+          "index": 0,
+          "title": "In Albania, rural youth are campaigning to solve local environmental problems",
+          "url": "https://globalvoices.org/2026/10/29/in-albania-rural-youth-are-campaigning-to-solve-local-environmental-problems/",
+          "published_raw": "Thu, 29 Oct 2026 13:40:53 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 1,
+          "title": "Fish scarcity, tar balls, and stranded dolphins: The hidden costs of offshore platforms in Cameroon waters",
+          "url": "https://globalvoices.org/2026/10/27/fish-scarcity-tar-balls-and-displaced-dolphins-the-hidden-costs-of-offshore-platforms-in-cameroon-waters/",
+          "published_raw": "Tue, 27 Oct 2026 08:59:12 +0000",
+          "classification": "retained"
+        },
+        {
+          "index": 2,
+          "title": "Venezuela faces a deepening energy crisis as protests grow",
+          "url": "https://globalvoices.org/2026/10/22/venezuela-faces-a-deepening-energy-crisis-as-protests-grow/",
+          "published_raw": "Thu, 22 Oct 2026 20:06:56 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 3,
+          "title": "Peru\u2019s Indigenous people in Cutivireni and Oviri take the front line against Amazon wildfires",
+          "url": "https://globalvoices.org/2026/10/15/perus-indigenous-people-in-cutivireni-and-oviri-take-the-front-line-against-amazon-wildfires/",
+          "published_raw": "Thu, 15 Oct 2026 18:30:01 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 4,
+          "title": "After flood disasters, Nepal needs clear numbers on aid and a reconstruction plan",
+          "url": "https://globalvoices.org/2026/10/13/after-flood-disasters-nepal-needs-clear-numbers-on-aid-and-a-reconstruction-plan/",
+          "published_raw": "Tue, 13 Oct 2026 18:21:20 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 5,
+          "title": "El Ni\u00f1o speeds climate crisis and tests Latin America\u2019s food security",
+          "url": "https://globalvoices.org/2026/10/08/el-nino-speeds-climate-crisis-and-tests-latin-americas-food-security/",
+          "published_raw": "Thu, 08 Oct 2026 05:00:54 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 6,
+          "title": "Young people are bridging the climate divide for Oceania and the Caribbean",
+          "url": "https://globalvoices.org/2026/10/06/young-people-are-bridging-the-climate-divide-for-oceania-and-the-caribbean/",
+          "published_raw": "Tue, 06 Oct 2026 08:05:24 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 7,
+          "title": "In Brazil\u2019s capital, residents grow their own heat-fighting solutions",
+          "url": "https://globalvoices.org/2026/09/30/in-brazils-capital-residents-grow-their-own-heat-fighting-solutions/",
+          "published_raw": "Wed, 30 Sep 2026 14:09:26 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 8,
+          "title": "When the right to protest remains, but demonstrating comes at a price",
+          "url": "https://globalvoices.org/2026/09/29/when-the-right-to-protest-remains-but-protesting-comes-at-a-price/",
+          "published_raw": "Tue, 29 Sep 2026 00:00:00 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 9,
+          "title": "Trinidad & Tobago\u2019s Special Operations Bill and the geography of development",
+          "url": "https://globalvoices.org/2026/09/24/trinidad-tobagos-special-operations-bill-and-the-geography-of-development/",
+          "published_raw": "Thu, 24 Sep 2026 20:31:08 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 10,
+          "title": "What deep sea mining could mean for Jamaica\u2019s fisherfolk",
+          "url": "https://globalvoices.org/2026/09/21/what-deep-sea-mining-could-mean-for-jamaicas-fisherfolk/",
+          "published_raw": "Mon, 21 Sep 2026 12:03:52 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 11,
+          "title": "The A\u2019uw\u1ebd-Xavante people's denunciation of megaprojects in Brazil",
+          "url": "https://globalvoices.org/2026/09/16/the-auwe-xavante-peoples-denunciation-of-megaprojects-in-brazil/",
+          "published_raw": "Wed, 16 Sep 2026 18:03:47 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 12,
+          "title": "\u2018Nest-flix\u2019 peregrine falcons become streaming stars of the 34th floor in Australia",
+          "url": "https://globalvoices.org/2026/09/14/nest-flix-peregrine-falcons-become-streaming-stars-of-the-34th-floor-in-australia/",
+          "published_raw": "Mon, 14 Sep 2026 18:56:04 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 13,
+          "title": "Who is responsible for protecting and preserving Indigenous cultures?",
+          "url": "https://globalvoices.org/2026/09/14/who-is-responsible-for-protecting-and-preserving-indigenous-cultures/",
+          "published_raw": "Mon, 14 Sep 2026 09:19:57 +0000",
+          "classification": "outside_window"
+        },
+        {
+          "index": 14,
+          "title": "When the tap runs dry: Women carry more than water in Kazakhstan",
+          "url": "https://globalvoices.org/2026/09/07/when-the-tap-runs-dry-women-carry-more-than-water-in-kazakhstan/",
+          "published_raw": "Mon, 07 Sep 2026 18:12:45 +0000",
+          "classification": "outside_window"
+        }
+      ],
+      "counts": {
+        "retained": 2,
+        "omitted": 0,
+        "duplicates": 0,
+        "future": 0,
+        "outside_window": 13,
+        "ineligible": 0
+      },
+      "descending_publication_order": true,
+      "semantics": "Independent XML traversal of same bounded response; not global recall"
+    }
+  },
+  "narrative_chars": 5602,
+  "pit_before_acquisition_count": 0,
+  "temporary_sqlite_integrity": "ok",
+  "canonical_integrity": "ok",
+  "canonical_sha256_before": "3e7548c55e59bf42e16a61c570122b98f5e056dcf2fa17c578d6c63a7595ec4b",
+  "canonical_sha256_after": "3e7548c55e59bf42e16a61c570122b98f5e056dcf2fa17c578d6c63a7595ec4b",
+  "external_listing_reconciliation": [
+    {
+      "publisher": "Inter Press Service",
+      "listing_url": "https://www.ipsnews.net/news/headlines/",
+      "observed_at": "2026-11-03T07:03:16.858119+00:00",
+      "method": "Manual independent web-surface listing; selected visible English stories, before URL comparison",
+      "urls": [
+        "https://www.ipsnews.net/2026/11/i-accuse/",
+        "https://www.ipsnews.net/2026/11/new-biodiversity-funding-brings-hope-for-armenias-lake-sevan/",
+        "https://www.ipsnews.net/2026/11/the-commonwealth-has-2-7-billion-reasons-to-act/",
+        "https://www.ipsnews.net/2026/11/wfp-warnings-become-a-reality-as-food-insecurity-in-haiti-on-track-to-reach-record-highs/",
+        "https://www.ipsnews.net/2026/11/the-un-human-rights-council-at-20-credibility-in-question/",
+        "https://www.ipsnews.net/2026/10/green-cities-can-make-room-for-new-homes-and-the-farms-that-feed-them/",
+        "https://www.ipsnews.net/2026/10/african-athletes-should-be-free-to-be-themselves/",
+        "https://www.ipsnews.net/2026/10/new-biodiversity-pledges-emerge-at-cop17-but-funding-gap-persists/"
+      ],
+      "retained": [
+        "https://www.ipsnews.net/2026/11/i-accuse/",
+        "https://www.ipsnews.net/2026/11/new-biodiversity-funding-brings-hope-for-armenias-lake-sevan/",
+        "https://www.ipsnews.net/2026/11/the-commonwealth-has-2-7-billion-reasons-to-act/",
+        "https://www.ipsnews.net/2026/11/wfp-warnings-become-a-reality-as-food-insecurity-in-haiti-on-track-to-reach-record-highs/",
+        "https://www.ipsnews.net/2026/11/the-un-human-rights-council-at-20-credibility-in-question/",
+        "https://www.ipsnews.net/2026/10/green-cities-can-make-room-for-new-homes-and-the-farms-that-feed-them/",
+        "https://www.ipsnews.net/2026/10/african-athletes-should-be-free-to-be-themselves/",
+        "https://www.ipsnews.net/2026/10/new-biodiversity-pledges-emerge-at-cop17-but-funding-gap-persists/"
+      ],
+      "missed": [],
+      "limitations": "Selected listing subset only; cached/relative website times unverified; not global recall"
+    },
+    {
+      "publisher": "Global Voices",
+      "listing_url": "https://globalvoices.org/",
+      "observed_at": "2026-11-03T07:03:16.858119+00:00",
+      "method": "Manual independent web-surface listing; selected visible English stories, before URL comparison",
+      "urls": [
+        "https://globalvoices.org/2026/11/03/unpacking-hong-kongs-rule-of-law-score-according-to-the-world-justice-projects-ranking/",
+        "https://globalvoices.org/2026/11/02/brazilian-lefts-quest-to-tame-meta-a-narrative-of-denouncement-and-resistance/",
+        "https://globalvoices.org/2026/11/02/in-kosovo-a-new-app-makes-reporting-problems-to-the-government-fast-and-easy/",
+        "https://globalvoices.org/2026/10/31/in-kazakhstan-rural-women-are-forming-collectives-to-improve-their-livelihoods/",
+        "https://globalvoices.org/2026/10/30/when-chatbots-become-answer-engines-ai-geopolitics-and-truth/",
+        "https://globalvoices.org/2026/10/30/how-the-streets-and-a-social-media-army-led-lula-to-a-historic-win-in-brazil/",
+        "https://globalvoices.org/2026/10/29/a-myanmar-journalists-reflection-when-other-peoples-pain-becomes-part-of-you/",
+        "https://globalvoices.org/2026/10/29/in-albania-rural-youth-are-campaigning-to-solve-local-environmental-problems/",
+        "https://globalvoices.org/2026/10/28/support-global-voices-spotlight-justice-as-infrastructure/",
+        "https://globalvoices.org/2026/10/28/bangladesh-weighs-tougher-cyber-law-as-ai-generated-abuse-targets-women/"
+      ],
+      "retained": [
+        "https://globalvoices.org/2026/11/03/unpacking-hong-kongs-rule-of-law-score-according-to-the-world-justice-projects-ranking/",
+        "https://globalvoices.org/2026/11/02/brazilian-lefts-quest-to-tame-meta-a-narrative-of-denouncement-and-resistance/",
+        "https://globalvoices.org/2026/11/02/in-kosovo-a-new-app-makes-reporting-problems-to-the-government-fast-and-easy/",
+        "https://globalvoices.org/2026/10/31/in-kazakhstan-rural-women-are-forming-collectives-to-improve-their-livelihoods/",
+        "https://globalvoices.org/2026/10/30/when-chatbots-become-answer-engines-ai-geopolitics-and-truth/",
+        "https://globalvoices.org/2026/10/30/how-the-streets-and-a-social-media-army-led-lula-to-a-historic-win-in-brazil/",
+        "https://globalvoices.org/2026/10/29/a-myanmar-journalists-reflection-when-other-peoples-pain-becomes-part-of-you/",
+        "https://globalvoices.org/2026/10/29/in-albania-rural-youth-are-campaigning-to-solve-local-environmental-problems/",
+        "https://globalvoices.org/2026/10/28/support-global-voices-spotlight-justice-as-infrastructure/",
+        "https://globalvoices.org/2026/10/28/bangladesh-weighs-tougher-cyber-law-as-ai-generated-abuse-targets-women/"
+      ],
+      "missed": [],
+      "limitations": "Selected listing subset only; cached/relative website times unverified; not global recall"
+    }
+  ],
+  "cross_session_comparison": {
+    "baseline_run_id": "checkpoint-b2-live-01",
+    "baseline_completed_at": "2026-11-02T16:34:37.622806+00:00",
+    "elapsed_seconds": 52024.471078,
+    "distinct_urls": 36,
+    "retained_overlap": 30,
+    "newly_observed_urls": [
+      "https://globalvoices.org/2026/11/02/brazilian-lefts-quest-to-tame-meta-a-narrative-of-denouncement-and-resistance/",
+      "https://globalvoices.org/2026/11/02/in-kosovo-a-new-app-makes-reporting-problems-to-the-government-fast-and-easy/",
+      "https://globalvoices.org/2026/11/03/unpacking-hong-kongs-rule-of-law-score-according-to-the-world-justice-projects-ranking/",
+      "https://www.ipsnews.net/2026/11/i-accuse/",
+      "https://www.ipsnews.net/2026/11/is-gender-bias-at-the-un-coming-to-an-inglorious-end/",
+      "https://www.ipsnews.net/2026/11/when-the-young-stop-waiting-europes-gen-z-is-sending-us-all-a-message/"
+    ],
+    "previous_urls_not_retained": [
+      {
+        "url": "https://globalvoices.org/2026/10/26/volunteers-from-poland-remember-how-poles-opened-their-homes-to-ukrainian-refugees-in-2022/",
+        "current_state": "outside_window"
+      },
+      {
+        "url": "https://www.ipsnews.net/2026/10/wanted-a-feminist-un-secretary-general-for-we-the-peoples-not-the-powerful/",
+        "current_state": "outside_window"
+      },
+      {
+        "url": "https://www.ipsnews.net/2026/10/why-trump-expects-the-nobel-peace-prize/",
+        "current_state": "outside_window"
+      }
+    ],
+    "semantics": "Separate temporary stores; comparison with exported observations, no production backfill or global recall"
+  },
+  "lag_summary_hours": {
+    "minimum": 0.4604021136111111,
+    "median": 95.93168081875001,
+    "maximum": 167.63290211361112,
+    "basis": "Copy-weighted isolated-store first seen; not production or occurrence latency"
+  },
+  "manual_verification": {
+    "receipts": [
+      {
+        "run_id": "checkpoint-b2-live-02-network-enabled",
+        "query_id": "7a0c9f91b957e8df0b39ae8ac1b2a8c31b03bab64b78e242c21f455d6fc05d5a",
+        "query": "water agriculture energy disruption November 3 2026",
+        "method": "chatgpt_assisted_manual",
+        "operator": "Codex Work B2 user-invoked session 02",
+        "observed_at": "2026-11-03T07:03:16.858119+00:00",
+        "status": "empty",
+        "channels_covered": [
+          "ChatGPT web search; exact recorded query",
+          "Manual inspection of publisher home/headlines links; selected eligible matching metadata"
+        ],
+        "channels_missed": [
+          "No exhaustive ranking export or global recall; social/non-English/paywall gaps",
+          "Candidate content excluded; empty means no eligible selected result"
+        ],
+        "candidate_sources": [
+          "https://www.gov.uk/government/publications/drought-prospects-for-agriculture/prospects-for-refilling-agriculture-storage-reservoirs-this-winter"
+        ],
+        "results": [],
+        "imported_at": "2026-11-03T07:03:16.858147+00:00",
+        "available_at": "2026-11-03T07:03:16.858147+00:00",
+        "origin": "operator_open_topic",
+        "fanout": 1,
+        "candidate_approval_status": "PENDING_CODE_RIGHTS_REVIEW; no candidate content acquired",
+        "evidence_ids": []
+      },
+      {
+        "run_id": "checkpoint-b2-live-02-network-enabled",
+        "query_id": "d49730916cb9714fb230761e2434dd13c3c0465fd22f8257f2efd115ddb109db",
+        "query": "Bangladesh cyber law AI abuse November 2026",
+        "method": "chatgpt_assisted_manual",
+        "operator": "Codex Work B2 user-invoked session 02",
+        "observed_at": "2026-11-03T07:03:16.858119+00:00",
+        "status": "success",
+        "channels_covered": [
+          "ChatGPT web search; exact recorded query",
+          "Manual inspection of publisher home/headlines links; selected eligible matching metadata"
+        ],
+        "channels_missed": [
+          "No exhaustive ranking export or global recall; social/non-English/paywall gaps",
+          "Candidate content excluded; empty means no eligible selected result"
+        ],
+        "candidate_sources": [
+          "https://ask-bangladesh.com/news/draft-cyber-law-on-ai-generated-abuse-sparks-free-speech-concerns",
+          "https://www.bssnews.net/js-session/401310",
+          "https://aipolicy.gov.bd/"
+        ],
+        "results": [
+          {
+            "source_id": "news.discovery.globalvoices",
+            "title": "Bangladesh weighs tougher cyber law as AI-generated abuse targets women",
+            "url": "https://globalvoices.org/2026/10/28/bangladesh-weighs-tougher-cyber-law-as-ai-generated-abuse-targets-women/",
+            "published_raw": "Wed, 28 Oct 2026 07:51:42 +0000"
+          }
+        ],
+        "imported_at": "2026-11-03T07:03:16.877760+00:00",
+        "available_at": "2026-11-03T07:03:16.877760+00:00",
+        "origin": "operator_open_topic",
+        "fanout": 4,
+        "candidate_approval_status": "PENDING_CODE_RIGHTS_REVIEW; no candidate content acquired",
+        "evidence_ids": [
+          "news:e31c63846d2cbf915251c6fc0e78874cd8d80c21e87539e2a5ddd2c9afd077e8"
+        ]
+      }
+    ],
+    "narrative_chars": 5766,
+    "pit_verified": true,
+    "retries_idempotent": true,
+    "distinct_user_invoked_sessions_this_execution": 1,
+    "total_separate_b2_sessions": 2,
+    "three_separated_sessions_gate": "NOT_MET"
+  },
+  "research_log": {
+    "manual_receipt_documents": [
+      {
+        "run_id": "checkpoint-b2-live-02-network-enabled",
+        "query_id": "7a0c9f91b957e8df0b39ae8ac1b2a8c31b03bab64b78e242c21f455d6fc05d5a",
+        "query": "water agriculture energy disruption November 3 2026",
+        "method": "chatgpt_assisted_manual",
+        "operator": "Codex Work B2 user-invoked session 02",
+        "observed_at": "2026-11-03T07:03:16.858119+00:00",
+        "status": "empty",
+        "channels_covered": [
+          "ChatGPT web search; exact recorded query",
+          "Manual inspection of publisher home/headlines links; selected eligible matching metadata"
+        ],
+        "channels_missed": [
+          "No exhaustive ranking export or global recall; social/non-English/paywall gaps",
+          "Candidate content excluded; empty means no eligible selected result"
+        ],
+        "candidate_sources": [
+          "https://www.gov.uk/government/publications/drought-prospects-for-agriculture/prospects-for-refilling-agriculture-storage-reservoirs-this-winter"
+        ],
+        "results": []
+      },
+      {
+        "run_id": "checkpoint-b2-live-02-network-enabled",
+        "query_id": "d49730916cb9714fb230761e2434dd13c3c0465fd22f8257f2efd115ddb109db",
+        "query": "Bangladesh cyber law AI abuse November 2026",
+        "method": "chatgpt_assisted_manual",
+        "operator": "Codex Work B2 user-invoked session 02",
+        "observed_at": "2026-11-03T07:03:16.858119+00:00",
+        "status": "success",
+        "channels_covered": [
+          "ChatGPT web search; exact recorded query",
+          "Manual inspection of publisher home/headlines links; selected eligible matching metadata"
+        ],
+        "channels_missed": [
+          "No exhaustive ranking export or global recall; social/non-English/paywall gaps",
+          "Candidate content excluded; empty means no eligible selected result"
+        ],
+        "candidate_sources": [
+          "https://ask-bangladesh.com/news/draft-cyber-law-on-ai-generated-abuse-sparks-free-speech-concerns",
+          "https://www.bssnews.net/js-session/401310",
+          "https://aipolicy.gov.bd/"
+        ],
+        "results": [
+          {
+            "source_id": "news.discovery.globalvoices",
+            "title": "Bangladesh weighs tougher cyber law as AI-generated abuse targets women",
+            "url": "https://globalvoices.org/2026/10/28/bangladesh-weighs-tougher-cyber-law-as-ai-generated-abuse-targets-women/",
+            "published_raw": "Wed, 28 Oct 2026 07:51:42 +0000"
+          }
+        ]
+      }
+    ],
+    "source_rights_rechecked": [
+      "https://www.ipsnews.net/rss-feeds/",
+      "https://globalvoices.org/about/global-voices-attribution-policy/"
+    ],
+    "lineage_note": "AskBangladesh explicitly says based on Global Voices reporting, 28 October 2026; shared origin, not independent corroboration. No body imported.",
+    "chronology_note": "Other Bangladesh legal/policy hits have older publication/update dates and distinct instruments; no claim that they confirm this draft or its legal status.",
+    "listing_access_failure": "IPS I Accuse article web-surface click returned Cache miss; headline URL remained visible in listing and acquired in RSS"
+  },
+  "canonical_final_sha256": "3e7548c55e59bf42e16a61c570122b98f5e056dcf2fa17c578d6c63a7595ec4b"
+}

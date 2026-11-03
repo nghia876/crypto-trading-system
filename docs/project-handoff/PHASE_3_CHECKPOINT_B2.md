@@ -1,5 +1,106 @@
 # Checkpoint B2 — Source diversity and discovery quality
 
+## Current follow-up — second user-invoked session, November 3, 2026
+
+**Two separate B2 research sessions completed; third remains unmet.** Overall
+acceptance remains NOT PROVEN and Phase 3 IN_PROGRESS. This follow-up started at
+local HEAD `93d7d91dd14fdc265c38b925af1b2ca1f1c30155`, clean tracked tree, same
+feature branch and two original untracked paths preserved. No push authorized or
+performed. Earlier November 2 evidence below remains historical and unchanged.
+
+Successful live run `checkpoint-b2-live-02-network-enabled` ran
+**07:01:42.093884–07:02:07.659855 UTC /14:01:42–14:02:07 Asia/Saigon, November 3**,
+14h27m after the previous session completed. One new explicit user invocation;
+preflight, collection and manual research are not counted as separate sessions.
+Initial ordinary-runtime attempt at 07:01:08Z failed both robots checks before
+any feed requests. Approved network diagnostic resolved both hosts, followed by
+one explicitly network-enabled acquisition. Initial failure is archived, not
+erased or counted as another session. No 429/503 or publisher backoff was bypassed;
+no security setting changed. A local diagnostic exporter initially could not
+handle zero observations; its empty-min calculation was fixed before archiving.
+
+| Same-response independent XML enumeration | Entries | Retained | Outside window | Missing eligible / cap omitted / duplicate / future / ineligible |
+|---|---:|---:|---:|---:|
+| IPS | 35 | 22 | 13 | 0 / 0 / 0 / 0 / 0 |
+| Global Voices general | 15 | 14 | 1 | 0 / 0 / 0 / 0 / 0 |
+| Global Voices environment | 15 | 2 | 13 | 0 / 0 / 0 / 0 / 0 |
+
+Both separately operated non-official publishers succeeded again; Global Voices
+10-second robots delay honored, IPS no applicable delay. Rights pages rechecked
+on research surface; narrow attributed metadata scopes unchanged, summaries/body/
+media/training still excluded. **38 copies /36 distinct URLs**; 30 overlap the
+previous 33-URL set, six newly observed, three previous URLs now outside the
+seven-day window (still enumerated, not lost by parser). No upstream/global recall
+or continuous coverage claim. Test stores are isolated, so comparisons use exported
+metadata; no historical backfill or continuity of production first-seen is implied.
+
+New examples (source-reported publication; no event/truth adjudication):
+
+- IPS: [When the Young Stop Waiting: Europe’s Gen Z Is Sending Us All a Message](https://www.ipsnews.net/2026/11/when-the-young-stop-waiting-europes-gen-z-is-sending-us-all-a-message/),
+  Nov 3 06:34:08Z; first seen 07:01:45.447609Z, **27m37s age**.
+- IPS: [Is Gender Bias at the UN Coming to an Inglorious End?](https://www.ipsnews.net/2026/11/is-gender-bias-at-the-un-coming-to-an-inglorious-end/),
+  Nov 3 06:28:41Z; same first seen, **33m04s age**.
+- Global Voices: [Unpacking Hong Kong’s rule of law score according to the World Justice Project’s ranking](https://globalvoices.org/2026/11/03/unpacking-hong-kongs-rule-of-law-score-according-to-the-world-justice-projects-ranking/),
+  Nov 3 03:21:48Z; first seen 07:01:57.654286Z, **3h40m10s age**.
+- Global Voices Kosovo app and Brazilian Meta reporting, and IPS “I Accuse”, also
+  newly observed. Non-BTC admission required no official or price prerequisites.
+
+Copy-weighted first-seen publication ages: min **0.460h**, median **95.932h**,
+max **167.633h**. Mix/rolling-window changes prevent interpreting the lower median
+as improved acquisition speed. No incident-detection SLA established.
+
+External benchmark improved beyond same-response traversal: independently selected
+eight visible IPS headline links and ten Global Voices featured/latest links on
+research-surface website listings, then compared URL identities: **18/18 retained,
+zero missing in that selected set**. Selection, listing URLs, observation time and
+each URL preserved. Research representations can be cached: IPS listing still
+displayed a November 2 header and omitted newer RSS items; relative homepage ages
+are not collection clocks. This is a small selected English-listing check, not
+global recall, exhaustive publisher recall or an independent event-truth label.
+IPS “I Accuse” article click returned research-surface Cache miss; its listing URL
+and RSS acquisition were still available. No repeated fetch or bypass.
+
+Actual open-topic queries:
+
+1. `water agriculture energy disruption November 3 2026`: selected GOV.UK drought/
+   reservoir report URL held as a new exact-path review lead; no eligible publisher
+   result selected for import. Existing government-family rights are not silently
+   applied to a new exact endpoint. Empty eligible set is not zero web results.
+2. `Bangladesh cyber law AI abuse November 2026`: manual web search plus inspected
+   Global Voices homepage/article link yielded one eligible GV metadata receipt
+   (already acquired URL), plus AskBangladesh, BSS and AI-policy candidate URLs.
+
+Receipts imported at 07:03:16Z with actual import-time availability, channel gaps,
+query IDs, origin, fanout and pending candidate-rights status. PIT and retries
+verified. Search/website inspection is explicitly manual; eight local metadata
+queries remain a separate lane. No automated global Python search API claim.
+AskBangladesh explicitly credits Global Voices reporting of October 28: **shared
+origin, not independent corroboration**. Older official legal/policy hits address
+different dates/instruments; no legal-status confirmation or claim equivalence
+inferred. No source body/snippet or confirmed lineage edge imported.
+
+Evidence: `tests/fixtures/checkpoint_b2/session_02.json` (including manual receipts,
+external listing URLs and cross-session comparison), and
+`session_02_initial_failure.json`. Temporary store integrity ok, PIT/retry checks
+passed, final canonical SHA256 unchanged at
+`3e7548c55e59bf42e16a61c570122b98f5e056dcf2fa17c578d6c63a7595ec4b`,
+canonical integrity ok. Temporary test store removed, no production writes.
+Live narrative render 5,602 chars; after receipts 5,766. Actual Market Analyst
+offline replay added for this specimen, <=6k narrative and <=28k prompt limits.
+Focused **34 passed**. Full offline **1,644 passed +99 subtests**, four expected
+skips, one integration deselected, 20 existing warnings, 62.90s; log in parent
+`checkpoint-b2-session02-regression.txt`. Tracked-project lint, AST syntax across
+245 Python files, diff whitespace and final canonical integrity/hash checks passed.
+Runtime implementation unchanged; only replay coverage, evidence and living docs.
+
+**Next bounded action: one further genuinely separate user-invoked B2 session**,
+with the same source/lag/omission and external-list checks. Do not manufacture the
+third session through immediate repeated calls, schedule it without instruction,
+or advance to C/4/5 yet. No new tool-reported security alert; no Defender log audit
+or proven benign finding concerning the earlier FileFix detection.
+
+## Original implementation and first session — November 2, 2026
+
 Implementation LOCAL ONLY. Phase 3 IN_PROGRESS; overall acceptance **NOT PROVEN**.
 Two functioning separately operated non-official publishers demonstrated in one
 bounded session. Three separately user-invoked research sessions remain unmet.

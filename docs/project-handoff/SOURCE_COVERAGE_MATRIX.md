@@ -1,3 +1,21 @@
+# B2 second user-invoked research session - 2026-11-03
+
+LOCAL ONLY; Phase 3 IN_PROGRESS; two separate B2 sessions recorded, third UNMET.
+Session 02: Nov 3 07:01:42-07:02:07 UTC /14:01:42-14:02:07 Asia/Saigon,
+14h27m after session 01. IPS and Global Voices succeeded again; robots honored.
+38 copies/36 URLs: 30 overlap, six newly observed, three prior URLs outside the
+seven-day window. Zero eligible feed-level misses/cap omissions. Independent
+selected website listing check: 18/18 retained; not exhaustive or global recall.
+Newest IPS item 27m37s old; copy-weighted median age 95.932h, not an alert SLA.
+Two manual open-topic receipts: one already-acquired GV result, four candidate
+URLs pending exact-path/source review. AskBangladesh credits GV: shared origin,
+not corroboration. Manual research remains distinct from local metadata search.
+Initial robots-unavailable attempt preserved before approved network-enabled run;
+no publisher rate-limit retry or security bypass. Canonical DB unchanged; temporary
+live store removed. Actual session-02 Market Analyst replay passes 6k/28k bounds.
+See [session results, tests, source rights and next action](PHASE_3_CHECKPOINT_B2.md).
+No push, scheduler, C/4/5 advancement. Next: one later user-invoked B2 session.
+
 # Checkpoint B2 - bounded source diversity - 2026-11-03
 
 LOCAL ONLY; Phase 3 IN_PROGRESS; overall acceptance NOT PROVEN. November 2 live
