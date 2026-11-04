@@ -293,7 +293,7 @@ def import_search(store, document, *, imported_at=None):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--store', type=Path, required=True)
+    parser.add_argument('--store', type=Path, help='Existing absolute path or shared opt-in environment')
     parser.add_argument('--report', type=Path, required=True)
     parser.add_argument('--run-id')
     parser.add_argument('--manual-import', type=Path)
@@ -304,9 +304,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.report.exists() or (not args.run_id and not args.manual_import):
         parser.error('new report path and run ID or manual import required')
-    if not args.store.is_file():
-        parser.error('use the existing canonical SQLite store')
-    store = SQLiteInformationStore(args.store)
+    from tradingagents.information.runtime_store import runtime_store_path
+
+    store = SQLiteInformationStore(runtime_store_path(args.store))
     with job_lock(store), requests.Session() as session:
         if args.manual_import:
             if args.manual_import.stat().st_size > 100_000:

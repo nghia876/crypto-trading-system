@@ -1,3 +1,14 @@
+# Focused operational persistence checkpoint - 2026-11-04
+
+P1 investigation PASS: both stores contain distinct real history (222/997
+observations). P2 private SQLite backups and entry-point guards PASS; single
+authority activation NOT PROVEN. P3 BLOCKED pending separately approved
+nondestructive reconciliation. Both original databases unchanged; no live
+collection or push. Full offline 1651 passed +99 subtests; Phase 3 IN_PROGRESS.
+Historical B2 sessions do not establish production-store continuity. Broad
+Checkpoint C was not advanced. This supersedes filename-based authority claims.
+See [findings and concrete proposal](../project-handoff/OPERATIONAL_PERSISTENCE_CHECKPOINT.md).
+
 # Phase 3 operational exit assessment - 2026-11-02
 
 NO-GO; Phase 3 IN_PROGRESS. See [assessment and next actions](../project-handoff/PHASE_3_EXIT_READINESS.md).

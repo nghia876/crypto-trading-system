@@ -342,8 +342,12 @@ class TradingAgentsGraph:
         )
         store_path = self.config.get("information_store_path")
         if store_path and asset_type == "crypto":
+            from tradingagents.information.runtime_store import runtime_store_path
+
             cutoff = decision_time or _information_decision_time(trade_date)
-            result = build_analysis_information(SQLiteInformationStore(store_path), cutoff)
+            result = build_analysis_information(
+                SQLiteInformationStore(runtime_store_path(store_path), read_only=True), cutoff
+            )
             initial_state["analysis_information"] = render_analysis_information(result)
             initial_state["messages"].append(("human", initial_state["analysis_information"]))
         else:

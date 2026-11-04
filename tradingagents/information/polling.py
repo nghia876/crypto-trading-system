@@ -322,7 +322,7 @@ def source_gap_report(view, configs=WORLD_NEWS_CONFIG):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("poll-once", "health"))
-    parser.add_argument("--store", required=True, help="EXACT graph information_store_path")
+    parser.add_argument("--store", help="Existing absolute path or shared opt-in environment")
     parser.add_argument("--interval", type=int, default=900)
     parser.add_argument("--max-sources", type=int, default=4)
     parser.add_argument("--retention-limit", type=int, default=12,
@@ -330,7 +330,11 @@ def main(argv=None):
     parser.add_argument("--window-start", type=datetime.fromisoformat,
                         help="Aware publication/update window start; undated items remain unknown")
     args = parser.parse_args(argv)
-    store = SQLiteInformationStore(args.store, read_only=args.command == "health")
+    from tradingagents.information.runtime_store import runtime_store_path
+
+    store = SQLiteInformationStore(
+        runtime_store_path(args.store), read_only=args.command == "health"
+    )
     if args.command == "health":
         from tradingagents.information.source_health import health_report
         from tradingagents.information.world_radar import ELIGIBLE_CONFIGS

@@ -9,6 +9,7 @@ import requests
 
 from tradingagents.information.adaptive_discovery import research
 from tradingagents.information.polling import job_lock
+from tradingagents.information.runtime_store import runtime_store_path
 from tradingagents.information.store import SQLiteInformationStore
 
 
@@ -18,7 +19,7 @@ def collect(path, backup, *, run_id, session, now=None, clock=None):
     On failure retain both files for inspection; never automatically overwrite
     the canonical store with a backup. All writers must honor the same lock.
     """
-    path, backup = Path(path).resolve(), Path(backup).resolve()
+    path, backup = runtime_store_path(path), Path(backup).resolve()
     if not path.is_file() or backup.exists() or path == backup:
         raise ValueError('existing store and unused distinct backup path required')
     store = SQLiteInformationStore(path, read_only=True)
@@ -43,7 +44,7 @@ def collect(path, backup, *, run_id, session, now=None, clock=None):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--store', type=Path, required=True)
+    parser.add_argument('--store', type=Path, help='Existing absolute path or shared opt-in environment')
     parser.add_argument('--backup', type=Path, required=True)
     parser.add_argument('--run-id', required=True)
     parser.add_argument('--allow-canonical-write', action='store_true')

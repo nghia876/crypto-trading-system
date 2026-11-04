@@ -110,6 +110,14 @@ def test_original_liquidity_combined_actual_graph(tmp_path, monkeypatch, offline
     assert "7999999" not in prompt
     assert len(state["analysis_information"]) <= 28000
 
+def test_graph_refuses_missing_evidence_store(tmp_path, monkeypatch, offline):
+    path = tmp_path / 'typo.sqlite3'
+    graph = _graph(tmp_path, monkeypatch, PromptCapturingModel(), information_store_path=path)
+    with pytest.raises(ValueError, match='existing information store'):
+        graph.create_run_state('BTCUSDT', TRADE_DATE, asset_type='crypto')
+    assert not path.exists()
+
+
 def test_real_usgs_slice_combined_actual_graph(tmp_path, monkeypatch, offline):
     import json
     from pathlib import Path

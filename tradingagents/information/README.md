@@ -405,7 +405,7 @@ independent Phase 3 track in the same store and graph.
 User-invoked, free, metadata-only publisher scan using the existing SQLite store:
 
 ```text
-python -m tradingagents.information.adaptive_discovery --store ../canonical-information.sqlite3 --run-id world-20261103-01 --report ../world-20261103-01.json
+python -m tradingagents.information.adaptive_discovery --store ABSOLUTE_APPROVED_EXISTING_PATH --run-id UNIQUE_SESSION_ID --report NEW_PRIVATE_REPORT_PATH
 ```
 
 This writes new evidence/run records to the supplied existing store. Reports are
@@ -416,3 +416,12 @@ search requires a recorded manual import; automatic queries search collected
 metadata only. Summaries remain rights-gated. Two-publisher live acceptance is
 NOT PROVEN: Global Voices works; SciDev's configured endpoint returned HTML.
 See [Checkpoint B evidence, rights, limits and manual import](../../docs/project-handoff/PHASE_3_CHECKPOINT_B.md).
+
+Operational selection requires an absolute existing path. The shared opt-in
+`TRADINGAGENTS_INFORMATION_STORE_PATH` supplies default graph configuration and
+polling/adaptive/research-session CLI selection when `--store` is omitted.
+Explicit configuration takes precedence; graph evidence access is read-only.
+No authority is activated automatically. The two historical private stores require
+reconciliation before activation; see the
+[persistence checkpoint](../../docs/project-handoff/OPERATIONAL_PERSISTENCE_CHECKPOINT.md).
+Use the backed-up research_session bridge for authorized operational collection.
