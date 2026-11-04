@@ -90,7 +90,7 @@ def test_old_corpus_does_not_prove_two_functioning_publishers_this_run(tmp_path)
 
 
 @pytest.mark.parametrize('fixture_name,expected_copies', [
-    ('live_acceptance.json', 35), ('session_02.json', 38),
+    ('live_acceptance.json', 35), ('session_02.json', 38), ('session_03.json', 37),
 ])
 def test_b2_actual_metadata_receipts_reopen_pit_and_market_graph(
         tmp_path, monkeypatch, offline, fixture_name, expected_copies):  # noqa: F811

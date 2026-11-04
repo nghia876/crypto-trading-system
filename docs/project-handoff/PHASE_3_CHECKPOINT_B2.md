@@ -1,5 +1,96 @@
 # Checkpoint B2 — Source diversity and discovery quality
 
+## Third user-requested research session — November 4, 2026
+
+**Three-session acquisition gate MET. Overall B2 acceptance NOT PROVEN.**
+Inherited pilot acceptance also requires a same-incident cross-publisher example
+with reporting-origin evidence, rights-cleared informative context and independent
+human review (diagnosis items 4–5); those remain unmet. Phase 3 IN_PROGRESS;
+no C/4/5 advancement. Older sections below retain historical counts/next actions.
+
+Verified feature branch `phase-3-event-narrative-slice`, starting local HEAD
+`d422d1f44c6a3425acc8da08ce4741c0b4938c85`, clean tracked tree. Fresh read-only
+remote lookup returned `a619fe40e67606c92277eb886bd8b5c4aa03b93e`.
+One actual run `checkpoint-b2-live-03`: **2026-11-04 02:44:10.016298–
+02:44:35.562954 UTC /09:44:10–09:44:35 Asia/Bangkok (UTC+07)**.
+Started 19h42m02s after session 02; this is an unobserved manual-run interval,
+not measured PC-off time or continuous monitoring. Network permission granted
+before execution; no failed acquisition or retry in this session.
+
+| Independent traversal of same bounded XML | Entries | Retained copies | Outside seven days | Missing eligible / cap omissions / duplicates / future / ineligible |
+|---|---:|---:|---:|---:|
+| IPS | 35 | 23 | 12 | 0 / 0 / 0 / 0 / 0 |
+| Global Voices general | 15 | 13 | 2 | 0 / 0 / 0 / 0 / 0 |
+| Global Voices environment | 15 | 1 | 14 | 0 / 0 / 0 / 0 / 0 |
+
+**37 copies /36 distinct URLs**, two functioning separately operated publishers.
+Three successful polls, zero source failures/host deferrals; robots 200/allowed,
+GV 10-second delay honored, IPS no applicable delay. Existing hourly cadence,
+backoff and 100 parser items/2MB/40 retained per source unchanged. Research-surface
+rights-page recheck retained narrow attributed headline/link/date scope:
+[IPS RSS](https://www.ipsnews.net/rss-feeds/) and
+[GV attribution](https://globalvoices.org/about/global-voices-attribution-policy/).
+No summaries/snippets/bodies/media acquired; no training/AI-specific grant inferred.
+
+| Historical exported baseline | Baseline URLs | Overlap | New | Previous not retained |
+|---|---:|---:|---:|---:|
+| November 2 session 01 | 33 | 26 | 10 | 7 |
+| November 3 session 02 | 36 | 32 | 4 | 4 |
+
+All four departures since session 02 were enumerated outside-window. Since
+session 01, six departures outside-window; Polish refugee-volunteer URL absent
+from bounded responses, upstream cause UNKNOWN. Complete URL sets/states in
+session_03.json. Four new since session 02: GV Egypt/Mada Masr; IPS Mexico data
+centres, Midterms, UN Charter. These are comparisons of exported historical
+records from independent temporary stores, no live database continuity/backfill.
+
+Authentic non-BTC headlines, source-reported publication UTC:
+
+- IPS [Reviewing the UN Charter: Diplomatic Groundwork Should Begin](https://www.ipsnews.net/2026/11/reviewing-the-un-charter-diplomatic-groundwork-should-begin/):
+  Nov 3 18:27:21Z; test first seen Nov 4 02:44:13.430485Z (8h16m52s).
+- IPS [Data Centres Store Hazardous Chemicals in Mexico](https://www.ipsnews.net/2026/11/data-centres-store-hazardous-chemicals-in-mexico/):
+  Nov 3 15:09:35Z; same first seen (11h34m38s).
+- GV [Egypt’s crackdown on independent media reaches Mada Masr as editor faces trial](https://globalvoices.org/2026/11/03/egypts-crackdown-on-independent-media-reaches-mada-masr-as-editor-faces-trial/):
+  Nov 3 15:56:04Z; test first seen Nov 4 02:44:25.461955Z (10h48m21s).
+
+These are publisher claims, not independently verified events. Newest supplied
+IPS/GV dates are UN Charter/Egypt respectively; environment newest Oct 29
+13:40:53Z. Copy-weighted publication-to-first-seen age min **8.281h**, median
+**106.640h**, max **165.937h**. Isolated-store ages include older material; no
+production detection latency or SLA. XML reconciliation is independent of product
+parser but uses same responses, not global recall. No publisher-site benchmark
+performed this session; session 02's 18-link selected check remains historical.
+
+Two actual manual web searches: `water agriculture energy disruption November 4
+2026` and `cybersecurity technology regulation November 4 2026`. Each imported an
+empty eligible selected-result receipt and one URL-only pending rights-review lead
+(GOV.UK reservoir prospects; NIST OT security draft). Empty is not zero search
+results. No snippets/bodies imported or automatic global Python search claimed.
+Eight local metadata queries remain separate. Receipts recorded/imported
+02:45:20Z conservatively after actual search; no earlier availability claimed.
+
+Evidence: `tests/fixtures/checkpoint_b2/session_03.json`. Live temporary SQLite
+integrity ok; PIT before first acquisition zero. Reopen/PIT and actual Market
+Analyst graph replay pass with session-03 metadata/receipts and offline scripted
+model. Live narrative 5,516 chars; after receipts 5,680; replay enforces <=6,000
+narrative and <=28,000 each prompt. Focused **35 passed in 7.38s**
+(test_discovery_b2 + test_adaptive_discovery). Full suite NOT RUN this session.
+Private canonical integrity ok, before/after/final SHA256 unchanged:
+`3e7548c55e59bf42e16a61c570122b98f5e056dcf2fa17c578d6c63a7595ec4b`.
+Temporary live store removed; fixture is derived evidence, not operational store.
+
+Adopted v1.1 blueprint/master prompt/manifest, A/B, coverage/security consulted.
+Synced sources, original canonical DB, `.phase12-tools/` and earlier untracked
+diagnosis preserved. No runtime feature changes, dependencies, paid APIs, cloud,
+scheduling, push, main/merge/rebase/security changes. No new tool-reported alert;
+no Defender event audit or proven false-positive diagnosis.
+
+**Next recommended action within B2:** prepare one bounded same-incident
+cross-publisher origin/context packet under exact rights, then independent human
+adjudication. Recommendation is not authorization to expand features/checkpoints.
+Broad recall, informative content, independence, social/language coverage and
+offline losses remain limited/unknown. Local evidence commit only.
+
 ## Current follow-up — second user-invoked session, November 3, 2026
 
 **Two separate B2 research sessions completed; third remains unmet.** Overall

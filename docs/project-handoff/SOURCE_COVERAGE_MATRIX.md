@@ -1,3 +1,19 @@
+# B2 third user-requested research session - 2026-11-04
+
+Run checkpoint-b2-live-03, 02:44:10-02:44:35 UTC /09:44:10-09:44:35 Asia/Bangkok.
+Three-session acquisition gate MET; overall B2 NOT PROVEN pending same-incident
+origin/context evidence and independent human review. Phase 3 IN_PROGRESS.
+IPS retained 23/35; GV general 13/15; environment 1/15. All other entries outside
+seven days; zero eligible omissions/cap losses. 37 copies/36 URLs. Versus Nov 3:
+32 overlap, four new, four outside-window departures. Versus Nov 2: 26 overlap,
+ten new, seven departures (six outside-window; one absent, upstream cause unknown).
+Separate temporary stores/historical exports, no live DB continuity. Robots/delay
+honored, no source failures. Two actual manual empty-eligible search receipts with
+pending URL-only leads; no automatic global search. Canonical hash/integrity
+unchanged. Focused 35 passed; session-03 actual graph replay <=6k/28k. Full suite
+not run. No push/C/4/5 advancement. Next: bounded B2 origin/context review packet.
+See [full current evidence](PHASE_3_CHECKPOINT_B2.md). Older status is historical.
+
 # B2 second user-invoked research session - 2026-11-03
 
 LOCAL ONLY; Phase 3 IN_PROGRESS; two separate B2 sessions recorded, third UNMET.

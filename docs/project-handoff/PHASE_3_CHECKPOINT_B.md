@@ -1,5 +1,10 @@
 # Checkpoint B — Adaptive broad WORLD discovery — 2026-11-02
 
+November 4: [B2 session 03](PHASE_3_CHECKPOINT_B2.md) completes three separate
+user-invoked acquisition sessions. Overall B2 NOT PROVEN pending same-incident
+origin/context evidence and independent human review. Counts/next actions below
+are historical. No C/4/5 advancement or push.
+
 Implementation is LOCAL ONLY. Operational acceptance is **NOT PROVEN**.
 Phase 3 remains IN_PROGRESS. No Checkpoint C, Phase 4 or Phase 5 advancement.
 
