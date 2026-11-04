@@ -18,6 +18,7 @@ from tradingagents.information.binance_spot import (
     MarketDataCollectionError,
 )
 from tradingagents.information.claim_lifecycle import lifecycle_prompt
+from tradingagents.information.narrative_attention import sampled_attention
 from tradingagents.information.observations import Observation, Transformation
 from tradingagents.information.sources import Source
 from tradingagents.information.store import InformationView
@@ -300,7 +301,7 @@ def selected_narrative_events(view: InformationView) -> tuple[Observation, ...]:
             if groups[domain]:
                 ordered.append(groups[domain].pop(0))
     used = len(NARRATIVE_NOTICE) + 1
-    reserve = 900 if any(c.metric == 'discovery.run' for c in view.coverage) else 450
+    reserve = 1300 if any(c.metric == 'discovery.run' for c in view.coverage) else 850
     kept = []
     for row in ordered:
         size = len(_narrative_line(row, view)) + 1
@@ -313,6 +314,14 @@ def selected_narrative_events(view: InformationView) -> tuple[Observation, ...]:
 def render_narrative_events(view: InformationView) -> list[str]:
     rows = selected_narrative_events(view)
     lines = [NARRATIVE_NOTICE, *(_narrative_line(row, view) for row in rows)]
+    attention = sampled_attention(view)
+    lines.append(
+        f"- Sampled attention: first-known articles last/prior 24h="
+        f"{attention['current_articles']}/{attention['previous_articles']}; "
+        f"change={attention['article_change']}; retained versions={attention['retained_versions']}. "
+        "Repeated polls/copies are not new mentions. Origin/syndication/reach UNKNOWN; "
+        "not corroboration, credibility or acceleration; rumor state unchanged."
+    )
     omitted = len(narrative_events(view)) - len(rows)
     if omitted:
         lines.append(

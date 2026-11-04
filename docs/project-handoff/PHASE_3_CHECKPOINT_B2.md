@@ -1,5 +1,14 @@
 # Checkpoint B2 — Source diversity and discovery quality
 
+## Authorized bounded closeout — November 4, 2026
+
+Three independent user-requested sessions demonstrated in the two-publisher pilot.
+Bounded acquisition pilot closed with limitations; broader B2 NOT PROVEN. Informative
+rights-cleared context, independently corroborated shared incidents, general automated
+search and global coverage remain unmet. User explicitly authorized bounded C work.
+See [current scope and tests](PHASE_3_CHECKPOINT_C1.md). Older no-C instructions below
+describe historical authorization; they are not current scope.
+
 ## Third user-requested research session — November 4, 2026
 
 **Three-session acquisition gate MET. Overall B2 acceptance NOT PROVEN.**
