@@ -1,3 +1,13 @@
+# Disposable reconciliation evaluation - 2026-11-04
+
+Evaluation-only union PASS: 1219 observations, 140 source histories, 163 coverage,
+zero gaps; 47 overlapping subjects preserved, no key conflicts. Originals and
+backups unchanged. 75 PIT cutoffs, actual offline graph and fresh-process replay
+pass; full offline 1661 +99 subtests. No new acquisition, rights expansion,
+canonical activation, live continuity proof or Checkpoint C advancement.
+Historical BBC/EIA retention is not future collection authorization. Phase 3
+IN_PROGRESS. See [evaluation report](DISPOSABLE_RECONCILIATION_EVALUATION.md).
+
 # Focused operational persistence checkpoint - 2026-11-04
 
 P1 investigation PASS: both stores contain distinct real history (222/997

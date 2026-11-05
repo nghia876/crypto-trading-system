@@ -1,3 +1,15 @@
+# Disposable reconciliation evaluation update - 2026-11-04
+
+Separately approved disposable evaluation PASS: exact union 1219 observations,
+140 source-history rows, 163 coverage, zero gaps; no conflicting keys. Originals
+and backups unchanged. All 85 revision links and 985 coverage evidence references
+valid; 47 shared subjects retain all 141 copies. 75 PIT cutoffs and actual offline
+graph/restart pass within 6k/28k. Full offline 1661 +99 subtests pass. No active
+path, production migration, live collection or push. Phase 3 IN_PROGRESS;
+authority activation and longitudinal production continuity NOT PROVEN.
+See [evaluation and approval boundary](DISPOSABLE_RECONCILIATION_EVALUATION.md).
+Original stop/proposal below is historical; only disposable evaluation executed.
+
 # Focused operational persistence checkpoint - 2026-11-04
 
 Phase 3 IN_PROGRESS. P1 investigation PASS; authority unresolved. P2 backups and
