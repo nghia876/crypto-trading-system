@@ -42,6 +42,11 @@ DISCOVERY_CONFIGS = (
              "IPS RSS headline permission; full articles excluded; https://www.ipsnews.net/reprinting-articles/"),
 )
 
+# Reuse the exact registered metadata channels; do not create a second registry
+# or expand fingerprints/permissions on previously stored evidence. A political
+# seed may return either publisher without BTC keywords or official confirmation.
+POLITICAL_METADATA_FALLBACKS = DISCOVERY_CONFIGS
+
 # Directory https://globalvoices.org/feeds/ documents topic RSS subscriptions.
 RELATED_CONFIGS = (
     _channel("globalvoices.environment", "Global Voices",

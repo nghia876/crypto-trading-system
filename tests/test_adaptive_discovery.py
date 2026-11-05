@@ -121,7 +121,8 @@ def test_failures_empty_coverage_and_actionable_health(tmp_path):
     session.get.side_effect = requests.Timeout()
     report = research(store, run_id='blocked', now=T, clock=lambda: T, session=session)
     assert report['status'] == 'NOT_PROVEN'
-    assert len(report['uncovered_topics']) == 8
+    from tradingagents.information.adaptive_discovery import TOPICS
+    assert set(report['uncovered_topics']) == set(TOPICS)
     assert not report['queries'] and not report['related_feed_decision']
     assert all(p['error'] == 'RobotsUnavailable' for p in report['polls'])
     assert all(h['consecutive_failures'] == 1 for h in report['health']

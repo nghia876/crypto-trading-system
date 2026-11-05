@@ -273,6 +273,11 @@ def _narrative_line(row, view=None):
             "rights": row.payload.get("evidence_rights_reference"),
             "truncated": row.payload.get("evidence_text_truncated"),
         }
+    if view is not None:
+        from tradingagents.information.political_intelligence import political_prompt
+
+        if political := political_prompt(view, row):
+            data["political_context"] = political
     return "- " + json.dumps(data, sort_keys=True)
 
 

@@ -1,3 +1,14 @@
+# Political acquisition extension follow-up — 2026-11-05
+
+User-approved bounded political/electoral acquisition verified offline; Phase 3
+IN_PROGRESS. Explicit taxonomy, two pending manual queries/run, attributed review
+context and identity-conflict overlay reuse rights-bounded channels and budgets.
+Full offline 1686 +99 subtests; canonical 70-cutoff/actual-graph visibility PASS;
+original SHA/counts unchanged. No production writes, new collection or push.
+November 6 longitudinal collection remains pending separately. Dedicated official
+election/polling endpoints remain gaps. See
+[complete implementation report](POLITICAL_ELECTORAL_ACQUISITION.md).
+
 # Canonical activation resume — post-live repair follow-up — 2026-11-05
 
 Later user-approved read-only visibility repair resolves the post-live selector

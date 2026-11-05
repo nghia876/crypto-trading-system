@@ -17,9 +17,18 @@ from xml.sax.saxutils import escape
 import requests
 
 from tradingagents.information.binance_spot import CoverageRecord, CoverageStatus, MarketDataBatch
-from tradingagents.information.discovery_sources import DISCOVERY_CONFIGS, RELATED_CONFIGS
+from tradingagents.information.discovery_sources import (
+    DISCOVERY_CONFIGS,
+    POLITICAL_METADATA_FALLBACKS,
+    RELATED_CONFIGS,
+)
 from tradingagents.information.news import _digest, parse_news_snapshot, poll_once
 from tradingagents.information.observations import _require_aware
+from tradingagents.information.political_intelligence import (
+    POLITICAL_TOPICS,
+    political_link_candidates,
+    political_queries,
+)
 from tradingagents.information.polling import _state, coordinate, job_lock
 from tradingagents.information.store import SQLiteInformationStore
 from tradingagents.information.world_radar import PolicySession
@@ -33,6 +42,7 @@ TOPICS = {
     "HEALTH": r"health|disease|cholera|outbreak|vaccine|hospital",
     "SCIENCE_AI_TECH_CYBER": r"science|research|\bai\b|intelligence|tech|cyber|hack|chip",
     "REGULATION": r"regulat|legislat|law|policy|court|ban\b",
+    **POLITICAL_TOPICS,
 }
 STOP = frozenset(["the", "a", "an", "in", "on", "of", "for", "and", "to", "with", "from", "is", "are", "as", "at", "by", "how", "why", "new", "says", "amid", "after", "over", "under", "this", "that"])
 
@@ -133,6 +143,9 @@ def research(store, *, run_id, session, now=None, clock=None, query_budget=8, re
     previous = {q['query_id'] for p in prior
                 if cutoff - datetime.fromisoformat(p['completed_at']) < timedelta(days=1)
                 for q in p['queries']}
+    prior_political = {q['query_id'] for p in prior
+                       if cutoff - datetime.fromisoformat(p['completed_at']) < timedelta(days=1)
+                       for q in p.get('political_queries', [])}
     # Canonical URL identity collapses repeated polls and cross-channel copies.
     latest = {}
     for row in sorted(view.observations, key=lambda r: (r.available_at, r.observation_id)):
@@ -143,6 +156,7 @@ def research(store, *, run_id, session, now=None, clock=None, query_budget=8, re
     ordered = sorted(latest.values(), key=lambda r: (r.available_at, r.observation_id), reverse=True)
     rows = ordered[:200]
     queries = expand(rows, previous=previous, query_budget=query_budget)
+    politics = political_queries(rows, previous=prior_political)
     candidates = {_digest(' '.join(list(dict.fromkeys(_tokens(r.payload['claim'])))[:4]))
                   for r in rows if len(set(_tokens(r.payload['claim']))) >= 2}
     topics = {name: [r.observation_id for r in rows
@@ -152,6 +166,12 @@ def research(store, *, run_id, session, now=None, clock=None, query_budget=8, re
         'run_id': run_id, 'started_at': now.isoformat(), 'completed_at': cutoff.isoformat(),
         'mode': 'publisher_feed_metadata_and_local_adaptive_search',
         'queries': queries, 'query_budget': query_budget, 'expansion_depth': 1,
+        'political_queries': [dict(q, run_id=run_id, generated_at=cutoff.isoformat())
+                              for q in politics],
+        'political_query_budget': 2,
+        'political_registered_metadata_fallbacks': [c.source.source_id for c in POLITICAL_METADATA_FALLBACKS],
+        'political_scope': 'Acquisition only; no winner prediction, political ranking, BTC causality or trades',
+        'political_link_review': political_link_candidates(view),
         'open_queries': [{"query": q, "query_id": _digest('open:' + q),
                               "origin": 'operator_open_topic', "input_evidence_ids": [],
                               "executor": 'manual_external_search', "status": 'pending',
@@ -215,6 +235,7 @@ def import_search(store, document, *, imported_at=None):
         raise ValueError('parent run must be available')
     report = json.loads(parent.detail)
     query = next((q for q in report['queries'] + report.get('open_queries', [])
+                  + report.get('political_queries', [])
                   if q['query_id'] == document['query_id']), None)
     if query is None or document['query'] != query['query']:
         raise ValueError('exact recorded query required')
@@ -231,7 +252,7 @@ def import_search(store, document, *, imported_at=None):
         if (not isinstance(values, list) or len(values) > 8
                 or any(not isinstance(v, str) or not v.strip() or len(v) > 256 for v in values)):
             raise ValueError('bounded channel coverage required')
-    if query.get('origin') == 'operator_open_topic' and not document.get('channels_covered'):
+    if query.get('executor') == 'manual_external_search' and not document.get('channels_covered'):
         raise ValueError('open-topic search must identify the searched channel')
     candidates = document.get('candidate_sources', [])
     if not isinstance(candidates, list) or len(candidates) > 8:

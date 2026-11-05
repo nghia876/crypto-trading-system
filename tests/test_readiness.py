@@ -62,7 +62,8 @@ def test_readonly_reopen_and_no_go_even_with_valid_packet(tmp_path, capsys):
     assert result["replay_probe"]["early_narrative_records"] == 0
     assert result["replay_probe"]["late_narrative_records"] == 2
     assert result["replay_probe"]["reopened_health_identical"]
-    assert len(result["world_families"]) == 10
+    from tradingagents.information.sources import WORLD_DISCOVERY_DOMAINS
+    assert {r["family"] for r in result["world_families"]} == set(WORLD_DISCOVERY_DOMAINS)
     assert result == readiness_report(SQLiteInformationStore(store.path, read_only=True), packet, cutoff=T)
     path = tmp_path / "packet.json"
     path.write_text(json.dumps(packet), encoding="utf-8")

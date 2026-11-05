@@ -1,3 +1,14 @@
+# Political acquisition extension - 2026-11-05
+
+Phase 3 IN_PROGRESS. Bounded politics/elections taxonomy, manual-query seeds,
+attributed review/PIT and identity-conflict overlay implemented locally.
+1686 offline tests +99 subtests; 70 canonical historical views and actual
+Market Analyst visibility pass. Production counts/hash and 1706 protected hashes
+unchanged. Existing IPS/GV metadata fallback; dedicated official election/polling
+source gaps remain. No production writes, collection or push. November 6 session
+remains pending separately; C1/C2/readiness order unchanged. See
+[work report](../project-handoff/POLITICAL_ELECTORAL_ACQUISITION.md).
+
 # Focused operational persistence checkpoint - 2026-11-04
 
 P1 investigation PASS: both stores contain distinct real history (222/997

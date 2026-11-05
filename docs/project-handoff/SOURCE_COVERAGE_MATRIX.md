@@ -1,3 +1,16 @@
+# Political/electoral acquisition extension - 2026-11-05
+
+PARTIAL coverage; bounded offline implementation VERIFIED. Explicit political/
+electoral, fiscal/regulatory and international-relations domains; eight topic
+families, two pending manual queries/run, attributed claim/count/result/poll
+context and identity-conflict overlay. Registered IPS/GV metadata fallback only;
+no new endpoint or rights activated. Dedicated official election calendars,
+polling/results channels and real global political recall remain NOT PROVEN.
+No BTC, price, popularity, official-confirmation or language admission gate.
+Offline 1686 +99 subtests; canonical graph/PIT, counts/hash unchanged. No new
+production collection; November 6 session remains separate and pending.
+See [scope, sources, queries and tests](POLITICAL_ELECTORAL_ACQUISITION.md).
+
 # Post-live visibility repair - 2026-11-05
 
 LOCAL ONLY; Phase 3 IN_PROGRESS. Canonical store remains 1254 observations,
