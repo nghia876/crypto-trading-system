@@ -72,7 +72,8 @@ def main(argv=None):
     for path in (args.proposals, args.checks):
         if path.stat().st_size > 2_000_000:
             parser.error("input exceeds 2 MB")
-    result = prepare_packet(SQLiteInformationStore(args.store, read_only=True),
+    from tradingagents.information.runtime_store import runtime_store_path
+    result = prepare_packet(SQLiteInformationStore(runtime_store_path(args.store), read_only=True),
                             json.loads(args.proposals.read_text(encoding="utf-8")),
                             cutoff=datetime.fromisoformat(args.cutoff),
                             checks=json.loads(args.checks.read_text(encoding="utf-8")))

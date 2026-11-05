@@ -133,9 +133,9 @@ def main(argv=None):
     parser.add_argument("--as-of", help="aware ISO timestamp; default current UTC")
     parser.add_argument("--interval", type=int, default=900)
     args = parser.parse_args(argv)
+    from tradingagents.information.runtime_store import runtime_store_path
     from tradingagents.information.world_radar import ELIGIBLE_CONFIGS, RIGHTS_SCOPE
-
-    store = SQLiteInformationStore(args.store, read_only=True)
+    store = SQLiteInformationStore(runtime_store_path(args.store), read_only=True)
     report = health_report(store, ELIGIBLE_CONFIGS,
                            cutoff=datetime.fromisoformat(args.as_of) if args.as_of else datetime.now(UTC),
                            interval=args.interval)

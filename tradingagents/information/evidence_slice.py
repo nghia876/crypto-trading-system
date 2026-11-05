@@ -105,7 +105,8 @@ def main(argv=None):
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--poll-id", required=True)
     args = parser.parse_args(argv)
-    store = SQLiteInformationStore(args.store)
+    from tradingagents.information.runtime_store import runtime_store_path
+    store = SQLiteInformationStore(runtime_store_path(args.store))
     report = acquire(store, poll_id=args.poll_id, clock=lambda: datetime.now(UTC))
     with sqlite3.connect(store.path) as connection:
         report["sqlite_integrity"] = connection.execute("PRAGMA integrity_check").fetchone()[0]

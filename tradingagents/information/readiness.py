@@ -158,7 +158,8 @@ def main(argv=None):
     if args.packet.stat().st_size > 2_000_000:
         parser.error("packet exceeds 2 MB")
     packet = json.loads(args.packet.read_text(encoding="utf-8"))
-    result = readiness_report(SQLiteInformationStore(args.store, read_only=True), packet,
+    from tradingagents.information.runtime_store import runtime_store_path
+    result = readiness_report(SQLiteInformationStore(runtime_store_path(args.store), read_only=True), packet,
                               cutoff=datetime.fromisoformat(args.as_of) if args.as_of else datetime.now(UTC),
                               interval=args.interval)
     print(json.dumps(result, sort_keys=True, indent=2))

@@ -1,3 +1,23 @@
+# Resume update — activated, post-live graph gate blocked — 2026-11-05
+
+The original pre-promotion stop below is historical. Frozen matcher restored;
+full suite 1662 passed plus 99 subtests. Guarded activation completed, then ONE
+live IPS/GV session added 35 rows (1254 total). Restart/PIT/recovery passed.
+STOPPED at post-live graph assertion: none of the new evidence IDs reached
+actual graph prompts. Phase 3 remains IN_PROGRESS; no further collection/push.
+See [complete resume report](CANONICAL_ACTIVATION_RESUME_REPORT.md).
+
+# Authorized activation attempt — guarded stop — 2026-11-05
+
+STOPPED BEFORE PROMOTION. Fresh exact-union/integrity/PIT checks, both original
+archives and staged scripted graph passed. Full offline suite: 1661 passed +99
+subtests, one frozen-manifest reproducibility failure introduced by a draft CLI
+edit changing the recorded whole-file matcher fingerprint. No activation,
+collection, commit or push. Originals unchanged; draft code remains uncommitted.
+See [current stop state and next action](CANONICAL_ACTIVATION_GUARDED_STOP.md).
+Earlier approval boundaries below are historical; user has now authorized guarded
+activation, but this attempt stopped on verification before any production switch.
+
 # Disposable reconciliation evaluation update - 2026-11-04
 
 Separately approved disposable evaluation PASS: exact union 1219 observations,

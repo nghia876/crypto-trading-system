@@ -216,7 +216,8 @@ def main(argv=None):
     else:
         if args.store is None or not args.store.is_file():
             parser.error("existing canonical store required")
-        store = SQLiteInformationStore(args.store, read_only=args.action != "apply")
+        from tradingagents.information.runtime_store import runtime_store_path
+        store = SQLiteInformationStore(runtime_store_path(args.store), read_only=args.action != "apply")
         if args.action == "apply":
             result = {"review_id": apply_article_review(store, read(args.articles)).observation_id}
         else:

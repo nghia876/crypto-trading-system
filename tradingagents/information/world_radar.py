@@ -244,7 +244,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.report.exists():
         parser.error("report already exists; retain immutable prior results")
-    store = SQLiteInformationStore(args.store)
+    from tradingagents.information.runtime_store import runtime_store_path
+    store = SQLiteInformationStore(runtime_store_path(args.store))
     with job_lock(store), requests.Session() as session:
         report = run(store, session=session, observation_limit=args.retention_limit,
                      window_start=args.window_start)

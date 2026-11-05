@@ -113,6 +113,13 @@ class SQLiteInformationStore:
     )
 
     def __init__(self, path: str | Path, *, read_only: bool = False) -> None:
+        from tradingagents.information.runtime_store import (
+            configured_store_path,
+            runtime_store_path,
+        )
+
+        if configured_store_path() is not None:
+            path = runtime_store_path(path)
         self.path = str(path)
         self.read_only = read_only
         if self.path == ":memory:":
