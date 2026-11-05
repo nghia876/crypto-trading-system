@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import Counter
 from datetime import UTC, datetime, timedelta
 from email.utils import parsedate_to_datetime
 from urllib.parse import urlsplit, urlunsplit
@@ -227,17 +228,21 @@ def _narrative_line(row, view=None):
             content_hash=row.payload.get("content_hash"),
             version_id=row.payload.get("version_id"),
         )
-    if row.payload.get("source_type") == "original_specialist_news":
+    if row.payload.get("source_type") in {"original_specialist_news", "publisher_rss"}:
         data = {key: data[key] for key in (
             "event_id", "claim", "domain", "source", "published_at", "updated_at",
             "available_at", "url", "evidence_id",
         )}
         data["attribution"] = row.payload.get("attribution")
-        data["status"] = "agency claim; accuracy unmeasured"
+        if row.payload.get("source_type") == "publisher_rss":
+            data["status"] = "source-reported claim; accuracy unmeasured"
+            data["credibility"] = row.payload.get("credibility")
+        else:
+            data["status"] = "agency claim; accuracy unmeasured"
     if view is not None and (lifecycle := lifecycle_prompt(view, row.subject)) is not None:
         data = {key: data[key] for key in ("event_id", "claim", "domain", "evidence_id", "source", "published_at", "available_at")}
         data["claim_lifecycle"] = lifecycle
-        if row.payload.get("source_type") == "original_specialist_news":
+        if row.payload.get("source_type") in {"original_specialist_news", "publisher_rss"}:
             data["attribution"] = row.payload.get("attribution")
     if view is not None:
         incidents = incident_prompt(view, row)
@@ -255,7 +260,7 @@ def _narrative_line(row, view=None):
             data["event_link_candidates"] = suggestions
     if licence := row.payload.get("licence_attribution"):
         data["licence_attribution"] = licence
-    if row.payload.get("source_type") == "original_specialist_news" and "claim_lifecycle" not in data:
+    if row.payload.get("source_type") in {"original_specialist_news", "publisher_rss"} and "claim_lifecycle" not in data:
         # Evidence ID resolves canonical article identity in the store; avoid
         # repeating a second long hash when it crowds out whole source domains.
         data.pop("event_id", None)
@@ -272,14 +277,22 @@ def _narrative_line(row, view=None):
 
 
 def selected_narrative_events(view: InformationView) -> tuple[Observation, ...]:
-    """Round-robin domains then whole-record fit under the existing narrative budget.
+    """Round-robin discovery lanes then whole-record fit under the narrative budget.
 
     Latest version per canonical article across discovery sources is one candidate,
     never independent confirmation. Source-specific acquisition history stays stored.
     """
     groups = {}
     for row in narrative_events(view):
-        groups.setdefault(row.payload.get("domain", "MONETARY"), []).append(row)
+        domain = row.payload.get("domain", "MONETARY")
+        # Broad publisher feeds share WORLD, not a verified topic. Give each
+        # publisher one sampling turn, without multiplying copies into votes.
+        publisher = ""
+        if row.payload.get("source_type") == "publisher_rss":
+            publisher = row.payload.get("publisher_group")
+            if publisher in {None, "unknown", ""}:
+                publisher = row.source_id
+        groups.setdefault((domain, publisher), []).append(row)
     def priority(row):
         # Prefer timely original report formats over routine guidance/photo notices.
         # These are selection priorities, never semantic incident labels or BTC gates.
@@ -294,26 +307,50 @@ def selected_narrative_events(view: InformationView) -> tuple[Observation, ...]:
 
     for rows in groups.values():
         rows.sort(key=priority, reverse=True)
-    domains = sorted(groups, key=lambda domain: (priority(groups[domain][0]), domain), reverse=True)
+    has_publishers = any(publisher for _, publisher in groups)
+
+    def lane_priority(lane):
+        if not has_publishers:
+            return priority(groups[lane][0]), lane
+        recent, report, stamp, available = priority(groups[lane][0])
+        # Official URL shape is a within-lane format preference, not evidence
+        # that its domain is more important than another publisher's discovery.
+        return recent, stamp, report, available, lane
+
+    domains = sorted(groups, key=lane_priority, reverse=True)
     ordered = []
     while any(groups.values()):
         for domain in domains:
             if groups[domain]:
                 ordered.append(groups[domain].pop(0))
     used = len(NARRATIVE_NOTICE) + 1
-    reserve = 1300 if any(c.metric == 'discovery.run' for c in view.coverage) else 850
+    # The footer's text/source list is fixed for this view; only count digits
+    # vary. Reject definite non-fits before recomputing attention/history totals.
+    empty_footer = _narrative_footer(view, ())
+    footer_floor = sum(len(line) + 1 for line in empty_footer
+                       if not line.startswith("- UNKNOWN; no selected")) - len(str(len(ordered)))
     kept = []
     for row in ordered:
         size = len(_narrative_line(row, view)) + 1
-        if used + size <= NARRATIVE_CONTEXT_CHARS - reserve:
-            kept.append(row)
-            used += size
+        # Include exact disclosure cost; leave the consumer's heading/omission
+        # allowance intact so it cannot silently drop selected records/accounting.
+        if used + size + footer_floor <= NARRATIVE_CONTEXT_CHARS - 200:
+            trial = [*kept, row]
+            footer_size = sum(len(line) + 1 for line in _narrative_footer(view, trial))
+            if used + size + footer_size <= NARRATIVE_CONTEXT_CHARS - 200:
+                kept.append(row)
+                used += size
     return tuple(kept)
 
 
 def render_narrative_events(view: InformationView) -> list[str]:
     rows = selected_narrative_events(view)
-    lines = [NARRATIVE_NOTICE, *(_narrative_line(row, view) for row in rows)]
+    return [NARRATIVE_NOTICE, *(_narrative_line(row, view) for row in rows),
+            *_narrative_footer(view, rows)]
+
+
+def _narrative_footer(view, rows):
+    lines = []
     attention = sampled_attention(view)
     lines.append(
         f"- Sampled attention: first-known articles last/prior 24h="
@@ -322,11 +359,21 @@ def render_narrative_events(view: InformationView) -> list[str]:
         "Repeated polls/copies are not new mentions. Origin/syndication/reach UNKNOWN; "
         "not corroboration, credibility or acceleration; rumor state unchanged."
     )
-    omitted = len(narrative_events(view)) - len(rows)
-    if omitted:
-        lines.append(
-            f"- OMITTED {omitted} narrative candidates due to domain selection/size budget; evidence may be missing."
-        )
+    candidates = narrative_events(view)
+    counts = Counter(row.source_id for row in candidates)
+    kept = Counter(row.source_id for row in rows)
+    publishers = {row.source_id for row in candidates
+                  if row.payload.get("source_type") == "publisher_rss"}
+    sources = sorted(counts, key=lambda source: (source not in publishers, source))[:4]
+    # Bound disclosure independently of the number/length of registered sources.
+    detail = "; ".join(f"{source[:48]}={kept[source]}/{counts[source]}"
+                       for source in sources)
+    lines.append(
+        f"- Selection: candidates={len(candidates)}, included={len(rows)}, "
+        f"OMITTED={len(candidates) - len(rows)} (whole-record budget); "
+        f"source included/candidates: {detail or 'none'}; other_sources={len(counts) - len(sources)}. "
+        "Domain/publisher lanes, not importance/truth; omitted relevance UNKNOWN."
+    )
     if not rows:
         lines.append("- UNKNOWN; no selected eligible narrative events, not evidence of no events")
     latest = {}
@@ -339,10 +386,9 @@ def render_narrative_events(view: InformationView) -> list[str]:
     omissions = sum(d.get("omitted_by_slice_limit", 0) for _, d in latest.values())
     failures = sum(d.get("outcome") == "failure" for _, d in latest.values())
     lines.append(
-        f"- Coverage: selected={len(rows)}, canonical_candidates={len(narrative_events(view))}; "
-        f"latest-per-config acquisition omissions={omissions}, failures={failures} (not all history). "
-        "Copies/revisions are not mentions. Rights/offline/upstream gaps UNKNOWN; "
-        "uncollected content UNKNOWN."
+        f"- Coverage: selected={len(rows)}, canonical_candidates={len(candidates)}; "
+        f"latest-per-config acquisition omissions={omissions}, failures={failures}; "
+        "not all history. Rights/offline/upstream gaps and uncollected content UNKNOWN."
     )
     research = [c for c in view.coverage if c.metric == 'discovery.run']
     if research:

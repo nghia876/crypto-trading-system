@@ -1,3 +1,20 @@
+# Post-live visibility repair - 2026-11-05
+
+LOCAL ONLY; Phase 3 IN_PROGRESS. Canonical store remains 1254 observations,
+143 source histories, 167 coverage, zero gaps. No new collection or DB writes.
+All 35 latest IPS/GV records are PIT-eligible narrative candidates; official URL
+priority and asymmetric rendering cost previously omitted all 35. Focused repair
+admits two actual stored IDs (one/publisher), four historical specialist records,
+and accurate bounded omission accounting into actual Market Analyst prompts.
+Post-live narrative/mixed/largest prompt: 5386/15365/22877 chars. Full offline
+1666 passed +99 subtests; 70 exact historical views, no backdating/future leakage.
+Canonical hash and protected data unchanged; rights/frozen fixtures preserved.
+Longitudinal separately invoked real-session persistence remains NOT PROVEN;
+then C1/C2 under separate authorization. No push or Phase 4/5 advancement. See
+[root cause, evidence IDs, replay and remaining gate](POST_LIVE_EVIDENCE_VISIBILITY_REPAIR.md).
+Older sections below retain their own dated status.
+
+
 # Disposable reconciliation evaluation - 2026-11-04
 
 Evaluation-only union PASS: 1219 observations, 140 source histories, 163 coverage,

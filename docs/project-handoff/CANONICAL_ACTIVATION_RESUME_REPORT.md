@@ -1,3 +1,16 @@
+# Canonical activation resume — post-live repair follow-up — 2026-11-05
+
+Later user-approved read-only visibility repair resolves the post-live selector
+blocker described in the historical report below. All 35 actual records are
+eligible candidates; repaired actual Market Analyst prompts contain one IPS and
+one GV ID plus bounded accounting (33 new records omitted by budget). Canonical
+SHA/counts unchanged. Full offline 1666 +99 subtests; longitudinal independent
+real-session persistence remains NOT PROVEN. No collection, database writes,
+rights expansion, push or Checkpoint C/Phase 4/5 advancement. See
+[full repair evidence and remaining gate](POST_LIVE_EVIDENCE_VISIBILITY_REPAIR.md).
+
+The following records the original activation session and its stop condition.
+
 # Canonical activation resume — stopped at post-live graph gate — 2026-11-05
 
 Phase 3 remains IN_PROGRESS. Canonical SQLite activation and one live metadata
