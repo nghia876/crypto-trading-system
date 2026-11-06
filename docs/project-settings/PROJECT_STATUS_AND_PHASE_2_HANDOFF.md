@@ -1,3 +1,10 @@
+# C2-A offline spot contracts - 2026-11-06
+
+Local offline contracts VERIFIED; providers BLOCKED; Phase 3 IN_PROGRESS.
+48 focused tests; 1746 full +99 subtests. Production counts/hash unchanged.
+No live calls, production writes/migration or push. See
+[C2-A handoff](../project-handoff/C2A_OFFLINE_CONTRACTS_20261106.md).
+
 # Bounded C1 checkpoint - 2026-11-06
 
 Local event identity and sampled propagation checkpoint PASS; Phase 3 IN_PROGRESS.

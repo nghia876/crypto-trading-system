@@ -40,6 +40,10 @@ def build_analysis_information(
 def render_analysis_information(result: AnalysisInformationInput) -> str:
     """Render cutoff, signal freshness, recorded coverage, and source lineage."""
     state = result.market_state
+    from tradingagents.information.spot_microstructure import (
+        render_spot_evidence,
+        selected_spot_evidence,
+    )
     spot = state.spot
     spot_evidence = spot.evidence_observation_ids[-21:]
     spot_evidence_label = (
@@ -74,8 +78,9 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
         f"- Treasury 10-year yield: {_value(state.treasury_yield.yield_pct)}%; "
         f"freshness: {state.treasury_yield.freshness}; "
         f"evidence IDs: {_ids((state.treasury_yield.evidence_observation_id,))}",
-        "Macro series:",
     ]
+    lines.extend(render_spot_evidence(result.view))
+    lines.append("Macro series:")
     for item in sorted(state.macro.series, key=lambda item: (item.series_id, item.metric)):
         lines.append(
             f"- {item.series_id} ({item.metric}): {_value(item.value)}; "
@@ -105,6 +110,7 @@ def render_analysis_information(result: AnalysisInformationInput) -> str:
     lines.extend(render_narrative_events(result.view))
     selected_ids = {item.observation_id for item in selected_narrative_events(result.view)}
     core_ids = {
+        *(item.observation_id for item in selected_spot_evidence(result.view)),
         *(item.observation_id for item in selected_narrative_events(result.view)),
         *spot_evidence,
         state.funding.evidence_observation_id,

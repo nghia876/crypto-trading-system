@@ -1,3 +1,11 @@
+# C2-A spot evidence contracts - 2026-11-06
+
+Offline synthetic contracts VERIFIED; Kraken and Bitstamp remain BLOCKED.
+Required collection/retention/internal AI/third-party rights not verified.
+48 focused tests; canonical production unchanged; no provider activated.
+See [contracts](C2A_OFFLINE_CONTRACTS_20261106.md) and
+[dated rights investigation](C2A_RIGHTS_RESEARCH_20261106.md).
+
 # Political/electoral acquisition extension - 2026-11-05
 
 PARTIAL coverage; bounded offline implementation VERIFIED. Explicit political/
