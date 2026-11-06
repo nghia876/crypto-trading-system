@@ -1,3 +1,19 @@
+# November 6 operational checkpoint — 2026-11-06
+
+Longitudinal persistence, fresh acquisition and actual analyst visibility PASS.
+Second live run `canonical-longitudinal-20261106T023810Z` retained 37 metadata
+retrievals: eight genuinely new articles, 29 unchanged copies, zero content
+revisions. Canonical observations 1254 → 1291; source histories 143 → 146;
+coverage 167 → 171; data gaps remain zero (manual-run unknown intervals are
+separately disclosed). Original rows, 70 historical cutoffs and seven new
+boundaries passed. Two fresh-process actual offline graph runs agree and include
+new IPS/GV evidence within all prompt limits. Fresh backup and isolated restore
+verified. No production code changes or push. Phase 3 remains IN_PROGRESS;
+next C1 propagation, then C2 BTC microstructure. See
+[full operational report and identity ledger](NOVEMBER_6_LONGITUDINAL_VERIFICATION.md).
+
+The entries below are historical checkpoint records.
+
 # Political acquisition extension follow-up — 2026-11-05
 
 User-approved bounded political/electoral acquisition verified offline; Phase 3
