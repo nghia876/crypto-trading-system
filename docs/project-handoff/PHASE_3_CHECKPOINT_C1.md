@@ -1,3 +1,15 @@
+# Bounded C1 event identity and sampled propagation — 2026-11-06
+
+LOCAL implementation/offline checkpoint PASS; Phase 3 IN_PROGRESS. Stable
+provisional article roots, conservative reviewed incident associations/conflict
+quarantine, sampled novelty/revision/repeat/session measures and compact actual
+Market Analyst headers. Real Nov5/Nov6: 35 new URLs, then 37 retrievals =8 new,
+29 unchanged, zero revisions. Real independent same-incident publisher case NOT
+PROVEN. Full offline 1698 +99 subtests; 70 historical views/11 boundaries pass.
+Production SHA/counts unchanged; no live collection, migration or push. See
+[security review, exact capabilities and evidence](C1_EVENT_PROPAGATION_20261106.md).
+Earlier checkpoint records below retain their historical scope/status.
+
 # Focused operational persistence checkpoint - 2026-11-04
 
 P1 investigation PASS: both stores contain distinct real history (222/997

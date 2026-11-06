@@ -278,6 +278,14 @@ def _narrative_line(row, view=None):
 
         if political := political_prompt(view, row):
             data["political_context"] = political
+        if row.payload.get('source_type') == 'publisher_rss' and row in (*view.evidence_history, *view.observations):
+            from tradingagents.information.event_propagation import compact_annotation
+
+            data["c1"] = compact_annotation(view, row)
+            # C1 validates the complete reviewed association for conflicts. Keep
+            # article/claim records separate and avoid repeating the older header.
+            if data['c1'].get('associations'):
+                data.pop('incidents', None)
     return "- " + json.dumps(data, sort_keys=True)
 
 
@@ -312,6 +320,10 @@ def selected_narrative_events(view: InformationView) -> tuple[Observation, ...]:
 
     for rows in groups.values():
         rows.sort(key=priority, reverse=True)
+        # A definitely oversized first item must not consume its lane's first
+        # chance and starve a fitting publisher behind it. Preserve all candidates
+        # for exact omission accounting; only move definite nonfits to the end.
+        rows.sort(key=lambda r: len(str(r.payload.get('claim', ''))) > NARRATIVE_CONTEXT_CHARS)
     has_publishers = any(publisher for _, publisher in groups)
 
     def lane_priority(lane):
@@ -360,10 +372,27 @@ def _narrative_footer(view, rows):
     lines.append(
         f"- Sampled attention: first-known articles last/prior 24h="
         f"{attention['current_articles']}/{attention['previous_articles']}; "
-        f"change={attention['article_change']}; retained versions={attention['retained_versions']}. "
+        f"change={attention['article_change']}; retained retrieval records={attention['retained_versions']}. "
         "Repeated polls/copies are not new mentions. Origin/syndication/reach UNKNOWN; "
         "not corroboration, credibility or acceleration; rumor state unchanged."
     )
+    from tradingagents.information.event_propagation import collection_sessions
+
+    sessions = collection_sessions(view)
+    if any(r.payload.get('source_type') == 'publisher_rss' for r in view.observations):
+        lines.append('- C1: article roots, not proven incidents; headline topics/quoted allegations tentative; '
+                     'denial/correction is not confirmation. observed_24h=[new URL, revised version, unchanged retrieval].')
+    if sessions:
+        summaries = []
+        for session in sessions[-2:]:
+            summaries.append(
+                f"({session['start_exclusive']},{session['end_inclusive']}] "
+                f"retrieval/new/revised/unchanged={session['retrievals']}/{session['new_urls']}/"
+                f"{session['revisions']}/{session['unchanged_retrievals']}"
+            )
+        lines.append("- Recorded session samples: " + "; ".join(summaries) +
+                     f"; earlier_sessions_omitted={max(0, len(sessions)-2)}. "
+                     "Between-session/offline coverage UNKNOWN; not a continuous denominator.")
     candidates = narrative_events(view)
     counts = Counter(row.source_id for row in candidates)
     kept = Counter(row.source_id for row in rows)

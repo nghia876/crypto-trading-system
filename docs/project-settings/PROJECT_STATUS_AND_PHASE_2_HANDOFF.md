@@ -1,3 +1,15 @@
+# Bounded C1 checkpoint - 2026-11-06
+
+Local event identity and sampled propagation checkpoint PASS; Phase 3 IN_PROGRESS.
+Real Nov5/Nov6: 35 new URLs, then 37 retrievals =8 new/29 unchanged/0 revisions.
+Independent same-incident publisher case remains NOT PROVEN. Actual final graph:
+5429 narrative/15448 mixed/22960 max-prompt chars. Full offline 1698 +99 subtests;
+70 historical views/11 boundaries pass. Canonical 1291/146/171/0 and SHA unchanged.
+Post-push content review clean with Defender audit limitations. No collection,
+production write, migration, source-rights expansion or push. C2 next under
+separate bounded authorization; no Phase 4/5 advance. See
+[complete C1 handoff](../project-handoff/C1_EVENT_PROPAGATION_20261106.md).
+
 # Political acquisition extension - 2026-11-05
 
 Phase 3 IN_PROGRESS. Bounded politics/elections taxonomy, manual-query seeds,
