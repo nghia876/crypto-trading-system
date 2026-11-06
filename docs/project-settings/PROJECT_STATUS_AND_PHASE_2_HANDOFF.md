@@ -1,3 +1,16 @@
+# C2-C repeated Kraken BTC/USD acquisition - 2026-11-06
+
+Two separate bounded real sessions completed at 15:00:52-15:00:57 and
+15:02:12-15:02:17 UTC+07:00. Canonical SQLite: 1375 observations /152 source
+histories /177 coverage /2 sampled-gap records; all earlier rows preserved.
+Each session added 20 new trade IDs and one sampled 10+10 L2 book.
+Live trade overlap was zero, so that live case remains unobserved; isolated
+overlap tests and actual-receipt idempotency are reported separately.
+Full offline: 1765 passed +99 subtests; C2 focused 67 passed.
+Manual opt-in, private raw data, compact derived context, 120-second freshness.
+No product-code change, scheduler, trading, paid API, model training or push.
+Phase 3 IN_PROGRESS. See [complete continuity report](../project-handoff/C2C_KRAKEN_CONTINUITY_20261106.md).
+
 # C2-B live Kraken BTC/USD manual integration - 2026-11-06
 
 Official public AssetPairs/Ticker/Depth/Trades one-shot acquisition PASS.
