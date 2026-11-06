@@ -209,7 +209,7 @@ def normalize_spot_response(config, kind, data, received_at):
 
 
 def ingest_spot_evidence(store, config, *, kind, data, received_at, receipt_id,
-                         configured_venues=ENABLED_VENUES, failure=None):
+                         configured_venues=ENABLED_VENUES, failure=None, raw_reference=None):
     """Atomically append evidence, receipt, health/coverage and sampled gaps.
 
     Same source/config/kind receipt ID must have identical data/time. Trade/snapshot conflicts
@@ -219,6 +219,8 @@ def ingest_spot_evidence(store, config, *, kind, data, received_at, receipt_id,
     config.require_permission(configured_venues)
     received_at = _time(received_at, "received_at")
     _label(receipt_id, "receipt_id")
+    if raw_reference is not None:
+        _label(raw_reference, "private raw_reference")
     if kind not in {DEPTH, TRADES}:
         raise ValueError("unsupported C2 evidence kind")
     # Normalize before opening/writing anything; malformed responses are atomic failures.
@@ -233,7 +235,8 @@ def ingest_spot_evidence(store, config, *, kind, data, received_at, receipt_id,
     receipt_key = "c2-receipt:" + identity
     event = data.get("exchange_event_at")
     digest = _hash([normalized, failure, cursor, continuity, data.get("sequence"),
-                    _time(event, "exchange_event_at").isoformat() if event is not None else None])
+                    _time(event, "exchange_event_at").isoformat() if event is not None else None]
+                   + ([raw_reference] if raw_reference is not None else []))
     # Validation may inspect future-known records solely to reject clock rollback
     # or identity reuse. They never enter normalization or analyst selection.
     all_history = store.view_at(datetime.max.replace(tzinfo=UTC)).evidence_history
@@ -284,6 +287,7 @@ def ingest_spot_evidence(store, config, *, kind, data, received_at, receipt_id,
             # Required envelope event_time is a LOCAL identity anchor, never a fabricated exchange time.
             event_time=at, first_seen_time=first_seen, retrieved_at=received_at,
             schema_version=SCHEMA, unit=f"{config.quote}/{config.base};quantity={config.base}",
+            raw_reference=raw_reference,
             quality=ObservationQuality.LOW if payload.get("integrity") == "invalid" or versions else ObservationQuality.UNKNOWN,
             quality_notes=("exchange_event_at nullable/untrusted; envelope event_time is local identity anchor",),
         )
@@ -310,7 +314,7 @@ def ingest_spot_evidence(store, config, *, kind, data, received_at, receipt_id,
          "clock_skew_count": sum(p["clock_skew"] for p in normalized),
          "exchange_ages_seconds": [p["exchange_age_seconds"] for p in normalized],
          "coverage": "sampled; missing records unknown; no ID-contiguity assumption"},
-        received_at, received_at, received_at, schema_version=SCHEMA,
+        received_at, received_at, received_at, schema_version=SCHEMA, raw_reference=raw_reference,
     )
     detail = json.dumps({"config": config.fingerprint, "outcome": "failure" if failure else "invalid" if invalid else "sampled",
                          "received_records": len(normalized), "duplicates": duplicates,
@@ -372,6 +376,10 @@ def render_spot_evidence(view):
     result = ["- BTC spot microstructure: sampled venue-local evidence; completeness UNKNOWN; quotes are not executions."]
     for row in rows:
         p = row.payload
+        if row.source_id == "spot.kraken.btcusd.public":
+            from tradingagents.information.kraken_spot import render_derived
+            result.append(render_derived(view, row))
+            continue
         age = (view.decision_time-row.retrieved_at).total_seconds()
         stale = age > p["stale_seconds"]
         reported_stale = p["exchange_age_seconds"] is not None and p["exchange_age_seconds"] > p["stale_seconds"]

@@ -1,3 +1,15 @@
+# C2-B live Kraken BTC/USD manual integration - 2026-11-06
+
+Official public AssetPairs/Ticker/Depth/Trades one-shot acquisition PASS.
+Canonical SQLite: 1319 observations/148 source histories/173 coverage/0 gaps.
+Retained 10 L2 levels/side, 20 executions, ticker last price and raw receipts.
+Raw data local/private; only compact derived metrics enter analyst prompts.
+Scoped private API research assessment, not an express AI licence.
+Manual opt-in only; no scheduler, OHLCV acquisition, trading or push.
+Final full offline: 1765 passed +99 subtests. Phase 3 IN_PROGRESS.
+See [implementation and live result](C2B_KRAKEN_MANUAL_20261106.md).
+Earlier entries retain their historical scope/authorization.
+
 # C2-A spot evidence contracts - 2026-11-06
 
 Offline synthetic contracts VERIFIED; Kraken and Bitstamp remain BLOCKED.
